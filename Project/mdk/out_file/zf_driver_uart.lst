@@ -1,0 +1,537 @@
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_driver_uart
+OBJECT MODULE PLACED IN .\out_file\zf_driver_uart.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\..\libraries\zf_driver\zf_driver_uart.c LARGE NOALIAS WARNINGLEVEL
+                    -(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\
+                    -..\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_driver_uart.lst) TABS(2) OBJECT(.\out_file\zf_driver_u
+                    -art.obj) 
+
+stmt  level    source
+
+    1          /********************************************************************************************************
+             -*************
+    2          * STC32G Opensourec Library 即（STC32G 开源库）是一个基于官方 SDK 接口的第三方开源库
+    3          * Copyright (c) 2022 SEEKFREE 逐飞科技
+    4          *
+    5          * 本文件是STC 开源库的一部分
+    6          *
+    7          * STC32G 开源库 是免费软件
+    8          * 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许可证）的条款
+    9          * 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修改它
+   10          *
+   11          * 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
+   12          * 甚至没有隐含的适销性或适合特定用途的保证
+   13          * 更多细节请参见 GPL
+   14          *
+   15          * 您应该在收到本开源库的同时收到一份 GPL 的副本
+   16          * 如果没有，请参阅<https://www.gnu.org/licenses/>
+   17          *
+   18          * 额外注明：
+   19          * 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版本
+   20          * 许可申明英文版在 libraries/doc 文件夹下的 GPL3_permission_statement.txt 文件中
+   21          * 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
+   22          * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
+   23          *
+   24          * 文件名称          
+   25          * 公司名称          成都逐飞科技有限公司
+   26          * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
+   27          * 开发环境          MDK FOR C251
+   28          * 适用平台          STC32G
+   29          * 店铺链接          https://seekfree.taobao.com/
+   30          *
+   31          * 修改记录
+   32          * 日期              作者           备注
+   33          * 2024-08-01        大W            first version
+   34          *********************************************************************************************************
+             -***********/
+   35          
+   36          #include "stdlib.h"
+   37          #include "zf_common_clock.h"
+   38          #include "zf_common_debug.h"
+   39          
+   40          #include "zf_driver_uart.h"
+   41          #include "zf_driver_timer.h"
+   42          #include "zf_driver_gpio.h"
+   43          
+   44          #pragma warning disable = 177
+   45          #pragma warning disable = 183
+   46          
+   47          uint8 xdata uart_rx_buff[UART_RESERVE][1] = {0};
+   48          
+   49          #define DMA_URXT_CFG(uart_n)    (*(unsigned char volatile far *)(0x7efa30 + uart_n*0x10))
+   50          #define DMA_URXT_CR(uart_n)       (*(unsigned char volatile far *)(0x7efa31 + uart_n*0x10))
+   51          #define DMA_URXT_STA(uart_n)      (*(unsigned char volatile far *)(0x7efa32 + uart_n*0x10))
+   52          #define DMA_URXT_AMT(uart_n)      (*(unsigned char volatile far *)(0x7efa33 + uart_n*0x10))
+   53          #define DMA_URXT_DONE(uart_n)     (*(unsigned char volatile far *)(0x7efa34 + uart_n*0x10))
+   54          #define DMA_URXT_TXAH(uart_n)     (*(unsigned char volatile far *)(0x7efa35 + uart_n*0x10))
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 2   
+
+   55          #define DMA_URXT_TXAL(uart_n)     (*(unsigned char volatile far *)(0x7efa36 + uart_n*0x10))
+   56          #define DMA_URXR_CFG(uart_n)      (*(unsigned char volatile far *)(0x7efa38 + uart_n*0x10))
+   57          #define DMA_URXR_CR(uart_n)       (*(unsigned char volatile far *)(0x7efa39 + uart_n*0x10))
+   58          #define DMA_URXR_STA(uart_n)      (*(unsigned char volatile far *)(0x7efa3a + uart_n*0x10))
+   59          #define DMA_URXR_AMT(uart_n)      (*(unsigned char volatile far *)(0x7efa3b + uart_n*0x10))
+   60          #define DMA_URXR_DONE(uart_n)     (*(unsigned char volatile far *)(0x7efa3c + uart_n*0x10))
+   61          #define DMA_URXR_RXAH(uart_n)     (*(unsigned char volatile far *)(0x7efa3d + uart_n*0x10))
+   62          #define DMA_URXR_RXAL(uart_n)     (*(unsigned char volatile far *)(0x7efa3e + uart_n*0x10))
+   63          
+   64          #define DMA_URXT_AMTH(uart_n)     (*(unsigned char volatile far *)(0x7efa88 + uart_n*0x04))
+   65          #define DMA_URXT_DONEH(uart_n)    (*(unsigned char volatile far *)(0x7efa89 + uart_n*0x04))
+   66          #define DMA_URXR_AMTH(uart_n)     (*(unsigned char volatile far *)(0x7efa8a + uart_n*0x04))
+   67          #define DMA_URXR_DONEH(uart_n)    (*(unsigned char volatile far *)(0x7efa8b + uart_n*0x04))
+   68          
+   69          
+   70          // 该数组禁止修改，内部使用,用户无需关心
+   71          static uart_function_enum uart_function_state[4] =
+   72          {
+   73              UART_FUNCTION_INIT,
+   74              UART_FUNCTION_INIT,
+   75              UART_FUNCTION_INIT,
+   76              UART_FUNCTION_INIT,
+   77          };
+   78          
+   79          //-------------------------------------------------------------------------------------------------------
+             -------------
+   80          // 函数简介     UART 外设确认功能状态 库内部调用
+   81          // 参数说明     index           UART 外设模块号
+   82          // 参数说明     mode            需要确的功能模块
+   83          // 返回参数     uint8           1-可以使用 0-不可以使用
+   84          // 使用示例     zf_assert(uart_funciton_check(UART_2, UART_FUNCTION_UART));
+   85          //-------------------------------------------------------------------------------------------------------
+             -------------
+   86          uint8 uart_funciton_check (uart_index_enum index, uart_function_enum mode)
+   87          {
+   88   1          uint8 return_state = 1;
+   89   1          if(UART_FUNCTION_INIT == uart_function_state[index])
+   90   1          {
+   91   2              uart_function_state[index] = mode;
+   92   2          }
+   93   1          else if(uart_function_state[index] == mode)
+   94   1          {
+   95   2              return_state = 1;
+   96   2          }
+   97   1          else
+   98   1          {
+   99   2              return_state = 0;
+  100   2          }
+  101   1          return return_state;
+  102   1      }
+  103          //-------------------------------------------------------------------------------------------------------
+             -------------
+  104          // 函数简介     串口发送数组
+  105          // 参数说明     uart_n       串口通道
+  106          // 参数说明     buff        要发送的数组地址
+  107          // 参数说明     len         数据长度
+  108          // 返回参数     void
+  109          // 使用示例     uart_write_buffer(UART_1, buff, 10);     //串口1发送10个buff数组。
+  110          //-------------------------------------------------------------------------------------------------------
+             -------------
+  111          void uart_write_buffer(uart_index_enum uart_n, const uint8 *buff, uint16 len)
+  112          {
+  113   1          #define BUFF_LEN 64
+  114   1        
+  115   1        // 因UART_DMA只能操作xdata区域的数据，所以，这里新建一个数组，搬移。
+  116   1        uint8 xdata tmp_buff[BUFF_LEN] = {0};
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 3   
+
+  117   1          uint16 tmp_len = 0;
+  118   1        while(len)
+  119   1        {
+  120   2              tmp_len = (len > BUFF_LEN) ? BUFF_LEN : len;        // 计算长度
+  121   2              memcpy(tmp_buff, buff, tmp_len);                    // 拷贝
+  122   2              len -= tmp_len;                                     // 去掉已经发送的长度
+  123   2              buff += tmp_len;                                    // 指针指向后面
+  124   2              
+  125   2              //  DMA_URXT_CFG(uart_n)  = 0x00;                 // DMA优先级低
+  126   2              DMA_URXT_STA(uart_n) = 0;                   // 清空标志位
+  127   2      
+  128   2              DMA_URXT_AMT(uart_n)  = (tmp_len - 1) & 0xff;   // 设置传输总字节数(低8位)：n+1
+  129   2              DMA_URXT_AMTH(uart_n) = (tmp_len - 1) >> 8;       // 设置传输总字节数(高8位)：n+1
+  130   2              DMA_URXT_TXAH(uart_n) = (uint8)((uint16)tmp_buff >> 8);
+  131   2              DMA_URXT_TXAL(uart_n) = (uint8)((uint16)tmp_buff);
+  132   2              DMA_URXT_CR(uart_n) = 0xC0;                   // 使能DMA TX功能
+  133   2      
+  134   2              while(!(DMA_URXT_STA(uart_n) & 0x01));              // 等待发送完成
+  135   2      
+  136   2              DMA_URXT_CR(uart_n) = 0x00;                   // 关闭DMA TX
+  137   2        }
+  138   1      }
+  139          //-------------------------------------------------------------------------------------------------------
+             -------------
+  140          // 函数简介     串口发送字符串
+  141          // 参数说明     uart_n       串口通道
+  142          // 参数说明     str         字符串首地址
+  143          // 返回参数     void
+  144          // 使用示例     uart_putstr(UART_1, (uint8 *)"12345")   //串口1发送12345这个字符串
+  145          //-------------------------------------------------------------------------------------------------------
+             -------------
+  146          void uart_write_string(uart_index_enum uart_n, const char *str)
+  147          {
+  148   1          uint16 len = strlen(str);
+  149   1          uart_write_buffer(uart_n, str, len);
+  150   1      }
+  151          
+  152          //-------------------------------------------------------------------------------------------------------
+             -------------
+  153          // 函数简介     串口发送一个字节
+  154          // 参数说明     uart_n       串口通道
+  155          // 参数说明     dat         串口数据
+  156          // 返回参数     void
+  157          // 使用示例     uart_write_byte(UART_1, 0x43);        //串口1发送0x43。
+  158          //-------------------------------------------------------------------------------------------------------
+             -------------
+  159          void uart_write_byte(uart_index_enum uart_n, const uint8 dat)
+  160          {
+  161   1          uart_write_buffer(uart_n, &dat, 1);
+  162   1      }
+  163          
+  164          //-------------------------------------------------------------------------------------------------------
+             -------------
+  165          // 函数简介     串口开始接收数据
+  166          // 参数说明     uart_n       串口通道
+  167          // 返回参数     void
+  168          // 使用示例     uart_rx_start_buff(UART_1);
+  169          //-------------------------------------------------------------------------------------------------------
+             -------------
+  170          void uart_rx_start_buff(uart_index_enum uart_n)
+  171          {
+  172   1          DMA_URXR_AMT(uart_n) = (1 - 1);                   // 设置接收的字节数
+  173   1          DMA_URXR_AMTH(uart_n) = (1 - 1) >> 8;               // 设置接收的字节数
+  174   1          DMA_URXR_RXAL(uart_n) = (uint8)((uint16)uart_rx_buff[uart_n]);    // 设置接收缓冲地址
+  175   1          DMA_URXR_RXAH(uart_n) = (uint8)((uint16)uart_rx_buff[uart_n] >> 8); // 设置接收缓冲地址
+  176   1          DMA_URXR_CR(uart_n) = 0xA1;                     // 开启DMA RX接收中断，开启DMA RX接收，清空FIFO
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 4   
+
+  177   1      }
+  178          
+  179          //-------------------------------------------------------------------------------------------------------
+             -------------
+  180          // 函数简介     打开串口接收中断
+  181          // 参数说明     uart_n       串口通道
+  182          // 参数说明     status      使能或者失能
+  183          // 返回参数     void
+  184          // 使用示例     uart_rx_irq(UART_1, ENABLE);        //打开串口1接收中断
+  185          //-------------------------------------------------------------------------------------------------------
+             -------------
+  186          void uart_rx_interrupt (uart_index_enum uart_n, uint8 status)
+  187          {
+  188   1        if(status)
+  189   1        {
+  190   2          DMA_URXR_CFG(uart_n) |= 0x80;
+  191   2        }
+  192   1        else
+  193   1        {
+  194   2          DMA_URXR_CFG(uart_n) &= ~0x80;
+  195   2        } 
+  196   1      }
+  197          
+  198          //-------------------------------------------------------------------------------------------------------
+             -------------
+  199          // 函数简介     读取串口接收的数据（whlie等待）
+  200          // 参数说明     uart_n           串口模块号(UART_1 - UART_4)
+  201          // 参数说明     *dat            接收数据的地址
+  202          // 返回参数     void
+  203          // 使用示例     dat = uart_read_byte(USART_1);       // 接收串口1数据  存在在dat变量里
+  204          //-------------------------------------------------------------------------------------------------------
+             -------------
+  205          uint8 uart_read_byte(uart_index_enum uart_n)
+  206          {
+  207   1        uint8 dat;
+  208   1        
+  209   1        // 等待串口有数据
+  210   1        while(!(DMA_URXR_STA(uart_n)&0x03));
+  211   1      
+  212   1        // 读取数据
+  213   1        dat = uart_rx_buff[uart_n][0];
+  214   1          
+  215   1        // 清空标志位
+  216   1        DMA_URXR_STA(uart_n) = 0x00;
+  217   1        
+  218   1        // 开始下一次接收
+  219   1        uart_rx_start_buff(uart_n);
+  220   1        return dat;
+  221   1      }
+  222          
+  223          //-------------------------------------------------------------------------------------------------------
+             -------------
+  224          // 函数简介     读取串口接收的数据（查询接收）
+  225          // 参数说明     uart_n           串口模块号(UART_1 - UART_8)
+  226          // 参数说明     *dat            接收数据的地址
+  227          // 返回参数     uint8           1：接收成功   0：未接收到数据
+  228          // 使用示例     uint8 dat; uart_query_byte(USART_1,&dat);       // 接收串口1数据  存在在dat变量里
+  229          //-------------------------------------------------------------------------------------------------------
+             -------------
+  230          uint8 uart_query_byte(uart_index_enum uart_n, uint8 *dat)
+  231          {
+  232   1        uint8 ret = 0; 
+  233   1      
+  234   1        // 读取数据
+  235   1        *dat = uart_rx_buff[uart_n][0];
+  236   1        
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 5   
+
+  237   1        if(DMA_URXR_STA(uart_n) & 0x03)
+  238   1        {
+  239   2          ret = 1;
+  240   2          
+  241   2          DMA_URXR_STA(uart_n) &= ~0x03;
+  242   2        }
+  243   1        else
+  244   1        {
+  245   2          ret = 0;
+  246   2        }
+  247   1        
+  248   1        // 开始下一次接收
+  249   1        uart_rx_start_buff(uart_n);
+  250   1      
+  251   1        return ret;
+  252   1      }
+  253          
+  254          //-------------------------------------------------------------------------------------------------------
+             -------------
+  255          // 函数简介     串口DMA初始化
+  256          // 参数说明     uart_n       串口通道
+  257          // 返回参数     void
+  258          // 使用示例     uart_dma_init(UART_1);
+  259          //-------------------------------------------------------------------------------------------------------
+             -------------
+  260          void uart_dma_init(uart_index_enum uart_n)
+  261          {
+  262   1        DMA_URXT_CFG(uart_n)  = 0x00; // DMA TX数据访问优先级最低，关闭DMA发送中断，
+  263   1        DMA_URXT_STA(uart_n)  = 0x00; // 清除DMA TX状态
+  264   1        DMA_URXT_CR(uart_n)   = 0x00; // 关闭DMA TX
+  265   1          
+  266   1        DMA_URXR_CFG(uart_n)  = 0x00; // 关闭DMA接收中断
+  267   1        DMA_URXR_STA(uart_n)  = 0x00; // 清除DMA RX状态
+  268   1        DMA_URXR_CR(uart_n)   = 0x00; // 关闭DMA RX
+  269   1      
+  270   1        DMA_URXR_AMT(uart_n)  = (1 - 1);                  // 设置接收的字节数
+  271   1        DMA_URXR_AMTH(uart_n) = (1 - 1)>>8;                 // 设置接收的字节数
+  272   1        DMA_URXR_RXAL(uart_n) = (uint8)((uint16)uart_rx_buff[uart_n]);    // 设置接收缓冲地址
+  273   1        DMA_URXR_RXAH(uart_n) = (uint8)((uint16)uart_rx_buff[uart_n] >> 8); // 设置接收缓冲地址
+  274   1        DMA_URXR_CFG(uart_n)  = 0x0F;                   // 中断优先级最高，DMA优先级最高
+  275   1        DMA_URXR_CR(uart_n)   = 0xA1;                   // 开启DMA RX，清空FIFO
+  276   1       
+  277   1      }
+  278          
+  279          //-------------------------------------------------------------------------------------------------------
+             -------------
+  280          // 函数简介     串口初始化
+  281          // 参数说明     uart_n       串口通道
+  282          // 参数说明     baud        波特率
+  283          // 参数说明     tx_pin      串口发送引脚号
+  284          // 参数说明     rx_pin      串口接收引脚号
+  285          // 返回参数     void
+  286          // 使用示例     uart_init(UART_2, 115200, UART2_TX_P11, UART2_RX_P10); //串口2初始化引脚号,TX为P11,RX为P1
+             -0
+  287          // 备注信息     所有的串口，都只能使用定时器2 做波特率发生器，所有的串口只能是同一个波特率。
+  288          //-------------------------------------------------------------------------------------------------------
+             -------------
+  289          void uart_init(uart_index_enum uart_n, uint32 baud, uart_pin_enum tx_pin, uart_pin_enum rx_pin)
+  290          {
+  291   1          uint16 brt;
+  292   1          
+  293   1        // 如果程序在输出了断言信息 并且提示出错位置在这里
+  294   1          // 就去查看你在什么地方调用这个函数 检查你的传入参数
+  295   1          // 这里是检查是否有重复使用UART1 和 UART2功能
+  296   1          // 比如初始化了 UART1 然后又初始化成 SPI1 这种用法是不允许的
+  297   1        // UART1和SPI1使用同一个寄存器，要么用UART1要么使用SPI1,只能是二选一。
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 6   
+
+  298   1        // UART2和SPI2使用同一个寄存器，要么用UART2要么使用SPI2,只能是二选一。
+  299   1          zf_assert(uart_funciton_check(uart_n, UART_FUNCTION_UART));
+  300   1        
+  301   1            
+  302   1        // 如果程序在输出了断言信息 并且提示出错位置在这里
+  303   1          // 就去查看你在什么地方调用这个函数 检查你的传入参数
+  304   1          // 这里是检查是否有重复使用定时器
+  305   1        // TIM2已经给串口用作波特率发生器了。不能再初始化为其他的。
+  306   1        zf_assert(timer_funciton_check(TIM_2, TIMER_FUNCTION_UART));
+  307   1        
+  308   1        
+  309   1        // 串口的RX和TX必须是一组切换，如果在这里进行报错，
+  310   1        // 则说明你选到不是同一组的引脚了
+  311   1        zf_assert(((tx_pin >> 8) & 0x0f) == ((rx_pin >> 8) & 0x0f));
+  312   1        
+  313   1        // 初始化GPIO
+  314   1        gpio_init(tx_pin&0xFF, GPO, 1, GPO_PUSH_PULL);
+  315   1        gpio_init(rx_pin&0xFF, GPI, 1, GPI_FLOATING_IN);
+  316   1        
+  317   1          brt = (uint16)(65536 - (system_clock / (baud + 2) / 4));
+  318   1          
+  319   1          switch(uart_n)
+  320   1          {
+  321   2              case UART_1:
+  322   2              {
+  323   3                  //            if(TIM_1 == tim_n)
+  324   3                  //            {
+  325   3                  //                SCON |= 0x50;
+  326   3                  //                TMOD |= 0x00;
+  327   3                  //                TL1 = brt;
+  328   3                  //                TH1 = brt >> 8;
+  329   3                  //                AUXR |= 0x40;
+  330   3                  //                TR1 = 0;  //关闭发送中断
+  331   3                  //
+  332   3                  //            }
+  333   3                  //            else if(TIM_2 == tim_n)
+  334   3                  {
+  335   4                      SCON |= 0x50;
+  336   4                      T2L = brt;
+  337   4                      T2H = brt >> 8;
+  338   4                      AUXR |= 0x15;
+  339   4                      TR1 = 0;  //关闭发送中断
+  340   4                  }
+  341   3                  
+  342   3                  P_SW1 &= ~(0x03 << 6);
+  343   3                  
+  344   3                  if((UART1_RX_P30 == rx_pin) && (UART1_TX_P31 == tx_pin))
+  345   3                  {
+  346   4                      P_SW1 |= 0x00;
+  347   4                  }
+  348   3                  else if((UART1_RX_P36 == rx_pin) && (UART1_TX_P37 == tx_pin))
+  349   3                  {
+  350   4                      P_SW1 |= 0x40;
+  351   4                  }
+  352   3                  else if((UART1_RX_P16 == rx_pin) && (UART1_TX_P17 == tx_pin))
+  353   3                  {
+  354   4                      P_SW1 |= 0x80;
+  355   4                  }
+  356   3                  else if((UART1_RX_P43 == rx_pin) && (UART1_TX_P44 == tx_pin))
+  357   3                  {
+  358   4                      P_SW1 |= 0xc0;
+  359   4                  }
+  360   3                  
+  361   3                  //            ES = 1; //允许串行口1中断
+  362   3                  break;
+  363   3              }
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 7   
+
+  364   2              
+  365   2              case UART_2:
+  366   2              {
+  367   3                  //            if(TIM_2 == tim_n)
+  368   3                  {
+  369   4                      S2CON |= 0x50;
+  370   4                      T2L = brt;
+  371   4                      T2H = brt >> 8;
+  372   4                      AUXR |= 0x14;
+  373   4                  }
+  374   3                  
+  375   3                  P_SW2 &= ~(0x01 << 0);
+  376   3                  
+  377   3                  if((UART2_RX_P10 == rx_pin) && (UART2_TX_P11 == tx_pin))
+  378   3                  {
+  379   4                      P_SW2 |= 0x00;
+  380   4                  }
+  381   3                  else if((UART2_RX_P46 == rx_pin) && (UART2_TX_P47 == tx_pin))
+  382   3                  {
+  383   4                      P_SW2 |= 0x01;
+  384   4                  }
+  385   3                  
+  386   3                  //            IE2 |= 0x01 << 0; //允许串行口2中断
+  387   3                  
+  388   3                  break;
+  389   3              }
+  390   2              
+  391   2              case UART_3:
+  392   2              {
+  393   3                  //            if(TIM_2 == tim_n)
+  394   3                  {
+  395   4                      S3CON |= 0x10;
+  396   4                      T2L = brt;
+  397   4                      T2H = brt >> 8;
+  398   4                      AUXR |= 0x14;
+  399   4                  }
+  400   3                  //            else if(TIM_3 == tim_n)
+  401   3                  //            {
+  402   3                  //                S3CON |= 0x50;
+  403   3                  //                T3L = brt;
+  404   3                  //                T3H = brt >> 8;
+  405   3                  //                T4T3M |= 0x0a;
+  406   3                  //            }
+  407   3                  
+  408   3                  P_SW2 &= ~(0x01 << 1);
+  409   3                  
+  410   3                  if((UART3_RX_P00 == rx_pin) && (UART3_TX_P01 == tx_pin))
+  411   3                  {
+  412   4                      P_SW2 |= 0x00;
+  413   4                  }
+  414   3                  else if((UART3_RX_P50 == rx_pin) && (UART3_TX_P51 == tx_pin))
+  415   3                  {
+  416   4                      P_SW2 |= 0x02;
+  417   4                  }
+  418   3                  
+  419   3                  //            IE2 |= 0x01 << 3; //允许串行口3中断
+  420   3                  
+  421   3                  break;
+  422   3              }
+  423   2              
+  424   2              case UART_4:
+  425   2              {
+  426   3                  //            if(TIM_2 == tim_n)
+  427   3                  {
+  428   4                      S4CON |= 0x10;
+  429   4                      T2L = brt;
+C251 COMPILER V5.60.0,  zf_driver_uart                                                     17/01/26  21:14:59  PAGE 8   
+
+  430   4                      T2H = brt >> 8;
+  431   4                      AUXR |= 0x14;
+  432   4                  }
+  433   3                  //            else if(TIM_4 == tim_n)
+  434   3                  //            {
+  435   3                  //                S4CON |= 0x50;
+  436   3                  //                T4L = brt;
+  437   3                  //                T4H = brt >> 8;
+  438   3                  //                T4T3M |= 0xa0;
+  439   3                  //            }
+  440   3                  
+  441   3                  P_SW2 &= ~(0x01 << 2);
+  442   3                  
+  443   3                  if((UART4_RX_P02 == rx_pin) && (UART4_TX_P03 == tx_pin))
+  444   3                  {
+  445   4                      P_SW2 |= 0x00;
+  446   4                  }
+  447   3                  else if((UART4_RX_P52 == rx_pin) && (UART4_TX_P53 == tx_pin))
+  448   3                  {
+  449   4      //                P5M0 = 0x00;
+  450   4      //                P5M1 = 0x01 << 2; //P5.2 需要设置为高阻
+  451   4                      P_SW2 |= 0x04;
+  452   4                  }
+  453   3                  
+  454   3                  //            IE2 |= 0x01 << 4; //允许串行口4中断
+  455   3                  
+  456   3                  break;
+  457   3              }
+  458   2              
+  459   2          }
+  460   1          
+  461   1        // uart dma 初始化
+  462   1          uart_dma_init(uart_n);
+  463   1          
+  464   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =      2433     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =       131     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =       129     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

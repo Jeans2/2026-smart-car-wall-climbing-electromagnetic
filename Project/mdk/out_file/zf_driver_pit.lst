@@ -1,0 +1,205 @@
+C251 COMPILER V5.60.0,  zf_driver_pit                                                      17/01/26  21:14:57  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_driver_pit
+OBJECT MODULE PLACED IN .\out_file\zf_driver_pit.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\..\libraries\zf_driver\zf_driver_pit.c LARGE NOALIAS WARNINGLEVEL(
+                    -3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\.
+                    -.\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_driver_pit.lst) TABS(2) OBJECT(.\out_file\zf_driver_pit
+                    -.obj) 
+
+stmt  level    source
+
+    1          /********************************************************************************************************
+             -*************
+    2          * STC32G Opensourec Library 即（STC32G 开源库）是一个基于官方 SDK 接口的第三方开源库
+    3          * Copyright (c) 2022 SEEKFREE 逐飞科技
+    4          *
+    5          * 本文件是STC 开源库的一部分
+    6          *
+    7          * STC32G 开源库 是免费软件
+    8          * 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许可证）的条款
+    9          * 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修改它
+   10          *
+   11          * 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
+   12          * 甚至没有隐含的适销性或适合特定用途的保证
+   13          * 更多细节请参见 GPL
+   14          *
+   15          * 您应该在收到本开源库的同时收到一份 GPL 的副本
+   16          * 如果没有，请参阅<https://www.gnu.org/licenses/>
+   17          *
+   18          * 额外注明：
+   19          * 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版本
+   20          * 许可申明英文版在 libraries/doc 文件夹下的 GPL3_permission_statement.txt 文件中
+   21          * 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
+   22          * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
+   23          *
+   24          * 文件名称          
+   25          * 公司名称          成都逐飞科技有限公司
+   26          * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
+   27          * 开发环境          MDK FOR C251
+   28          * 适用平台          STC32G
+   29          * 店铺链接          https://seekfree.taobao.com/
+   30          *
+   31          * 修改记录
+   32          * 日期              作者           备注
+   33          * 2024-08-01        大W            first version
+   34          *********************************************************************************************************
+             -***********/
+   35          
+   36          #include "zf_common_clock.h"
+   37          #include "zf_driver_pit.h"
+   38          
+   39          #pragma warning disable = 183
+   40          #pragma warning disable = 177
+   41          
+   42          //-------------------------------------------------------------------------------------------------------
+             -------------
+   43          //  @brief      定时器周期中断
+   44          //  @param      pit_n      定时器通道号
+   45          //  @param      time_ms    时间(ms)
+   46          //  @return     void
+   47          //  Sample usage:          pit_timer_ms(TIM_0, 10)
+   48          //               使用定时器0做周期中断，时间10ms一次。
+   49          //-------------------------------------------------------------------------------------------------------
+             -------------
+   50          void pit_init(pit_index_enum pit_n, uint32 period)
+   51          {
+   52   1        uint8 freq_div = 0;                
+C251 COMPILER V5.60.0,  zf_driver_pit                                                      17/01/26  21:14:57  PAGE 2   
+
+   53   1          uint16 period_temp = 0;               
+   54   1          uint16 temp = 0;
+   55   1      
+   56   1      
+   57   1        if(period > (255*65535))
+   58   1        {
+   59   2          // 设置定时器为12T模式防止溢出
+   60   2          period = period / 12;
+   61   2          
+   62   2          if(TIM0_PIT == pit_n)
+   63   2          {
+   64   3            AUXR &= ~0x80;    
+   65   3          }
+   66   2          else if(TIM1_PIT == pit_n)
+   67   2          {
+   68   3            AUXR &= ~0x40;    
+   69   3          }
+   70   2          else if(TIM2_PIT == pit_n)
+   71   2          {
+   72   3            AUXR &= ~0x04;    
+   73   3          }
+   74   2          else if(TIM3_PIT == pit_n)
+   75   2          {
+   76   3            T4T3M &= ~0x02; 
+   77   3          }
+   78   2          else if(TIM4_PIT == pit_n)
+   79   2          {
+   80   3            T4T3M &= ~0x20;   
+   81   3          }
+   82   2        
+   83   2      
+   84   2        }
+   85   1        else
+   86   1        {
+   87   2          // 设置为1T模式
+   88   2          if(TIM0_PIT == pit_n)
+   89   2          {
+   90   3            AUXR |= 0x80;   
+   91   3          }
+   92   2          else if(TIM1_PIT == pit_n)
+   93   2          {
+   94   3            AUXR |= 0x40;   
+   95   3          }
+   96   2          else if(TIM2_PIT == pit_n)
+   97   2          {
+   98   3            AUXR |= 0x04;   
+   99   3          }
+  100   2          else if(TIM3_PIT == pit_n)
+  101   2          {
+  102   3            T4T3M |= 0x02;  
+  103   3          }
+  104   2          else if(TIM4_PIT == pit_n)
+  105   2          {
+  106   3            T4T3M |= 0x20;    
+  107   3          }
+  108   2      
+  109   2        }
+  110   1          
+  111   1        
+  112   1        freq_div = ((period) >> 15);                   // 计算预分频
+  113   1        period_temp = ((period) / (freq_div+1));       // 计算自动重装载值
+  114   1      
+  115   1        temp = (uint16)65536 - period_temp;
+  116   1      
+  117   1          if(TIM0_PIT == pit_n)
+  118   1          {
+C251 COMPILER V5.60.0,  zf_driver_pit                                                      17/01/26  21:14:57  PAGE 3   
+
+  119   2          TM0PS = freq_div; // 设置分频值
+  120   2              TMOD |= 0x00;     // 模式 0
+  121   2              TL0 = temp;
+  122   2              TH0 = temp >> 8;
+  123   2              TR0 = 1;      // 启动定时器
+  124   2              ET0 = 1;      // 使能定时器中断
+  125   2          }
+  126   1          else if(TIM1_PIT == pit_n)
+  127   1          {
+  128   2          TM1PS = freq_div; // 设置分频值
+  129   2              TMOD |= 0x00; // 模式 0
+  130   2              TL1 = temp;
+  131   2              TH1 = temp >> 8;
+  132   2              TR1 = 1; // 启动定时器
+  133   2              ET1 = 1; // 使能定时器中断
+  134   2          }
+  135   1          else if(TIM2_PIT == pit_n)
+  136   1          {
+  137   2          TM2PS = freq_div; // 设置分频值
+  138   2              T2L = temp;
+  139   2              T2H = temp >> 8;
+  140   2              AUXR |= 0x10; // 启动定时器
+  141   2              IE2 |= 0x04; // 使能定时器中断
+  142   2          }
+  143   1          else if(TIM3_PIT == pit_n)
+  144   1          {
+  145   2          TM3PS = freq_div; // 设置分频值
+  146   2              T3L = temp;
+  147   2              T3H = temp >> 8;
+  148   2              T4T3M |= 0x08; // 启动定时器
+  149   2              IE2 |= 0x20; // 使能定时器中断
+  150   2          }
+  151   1          else if(TIM4_PIT == pit_n)
+  152   1          {
+  153   2          TM4PS = freq_div; // 设置分频值
+  154   2              T4L = temp;
+  155   2              T4H = temp >> 8;
+  156   2              T4T3M |= 0x80; // 启动定时器
+  157   2              IE2 |= 0x40; // 使能定时器中断
+  158   2          }
+  159   1        
+  160   1      }
+  161          
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       643     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =        11     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

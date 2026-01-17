@@ -1,0 +1,591 @@
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_common_debug
+OBJECT MODULE PLACED IN .\out_file\zf_common_debug.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\..\libraries\zf_common\zf_common_debug.c LARGE NOALIAS WARNINGLEVE
+                    -L(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..
+                    -\..\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_common_debug.lst) TABS(2) OBJECT(.\out_file\zf_common
+                    -_debug.obj) 
+
+stmt  level    source
+
+    1          /********************************************************************************************************
+             -*************
+    2          * STC32G Opensourec Library ¼´£¨STC32G ¿ªÔ´¿â£©ÊÇÒ»¸ö»ùÓÚ¹Ù·½ SDK ½Ó¿ÚµÄµÚÈý·½¿ªÔ´¿â
+    3          * Copyright (c) 2022 SEEKFREE Öð·É¿Æ¼¼
+    4          *
+    5          * ±¾ÎÄ¼þÊÇSTC ¿ªÔ´¿âµÄÒ»²¿·Ö
+    6          *
+    7          * STC32G ¿ªÔ´¿â ÊÇÃâ·ÑÈí¼þ
+    8          * Äú¿ÉÒÔ¸ù¾Ý×ÔÓÉÈí¼þ»ù½ð»á·¢²¼µÄ GPL£¨GNU General Public License£¬¼´ GNUÍ¨ÓÃ¹«¹²Ðí¿ÉÖ¤£©µÄÌõ¿î
+    9          * ¼´ GPL µÄµÚ3°æ£¨¼´ GPL3.0£©»ò£¨ÄúÑ¡ÔñµÄ£©ÈÎºÎºóÀ´µÄ°æ±¾£¬ÖØÐÂ·¢²¼ºÍ/»òÐÞ¸ÄËü
+   10          *
+   11          * ±¾¿ªÔ´¿âµÄ·¢²¼ÊÇÏ£ÍûËüÄÜ·¢»Ó×÷ÓÃ£¬µ«²¢Î´¶ÔÆä×÷ÈÎºÎµÄ±£Ö¤
+   12          * ÉõÖÁÃ»ÓÐÒþº¬µÄÊÊÏúÐÔ»òÊÊºÏÌØ¶¨ÓÃÍ¾µÄ±£Ö¤
+   13          * ¸ü¶àÏ¸½ÚÇë²Î¼û GPL
+   14          *
+   15          * ÄúÓ¦¸ÃÔÚÊÕµ½±¾¿ªÔ´¿âµÄÍ¬Ê±ÊÕµ½Ò»·Ý GPL µÄ¸±±¾
+   16          * Èç¹ûÃ»ÓÐ£¬Çë²ÎÔÄ<https://www.gnu.org/licenses/>
+   17          *
+   18          * ¶îÍâ×¢Ã÷£º
+   19          * ±¾¿ªÔ´¿âÊ¹ÓÃ GPL3.0 ¿ªÔ´Ðí¿ÉÖ¤Ð­Òé ÒÔÉÏÐí¿ÉÉêÃ÷ÎªÒëÎÄ°æ±¾
+   20          * Ðí¿ÉÉêÃ÷Ó¢ÎÄ°æÔÚ libraries/doc ÎÄ¼þ¼ÐÏÂµÄ GPL3_permission_statement.txt ÎÄ¼þÖÐ
+   21          * Ðí¿ÉÖ¤¸±±¾ÔÚ libraries ÎÄ¼þ¼ÐÏÂ ¼´¸ÃÎÄ¼þ¼ÐÏÂµÄ LICENSE ÎÄ¼þ
+   22          * »¶Ó­¸÷Î»Ê¹ÓÃ²¢´«²¥±¾³ÌÐò µ«ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÖð·É¿Æ¼¼µÄ°æÈ¨ÉùÃ÷£¨¼´±¾ÉùÃ÷£©
+   23          *
+   24          * ÎÄ¼þÃû³Æ          
+   25          * ¹«Ë¾Ãû³Æ          ³É¶¼Öð·É¿Æ¼¼ÓÐÏÞ¹«Ë¾
+   26          * °æ±¾ÐÅÏ¢          ²é¿´ libraries/doc ÎÄ¼þ¼ÐÄÚ version ÎÄ¼þ °æ±¾ËµÃ÷
+   27          * ¿ª·¢»·¾³          MDK FOR C251
+   28          * ÊÊÓÃÆ½Ì¨          STC32G
+   29          * µêÆÌÁ´½Ó          https://seekfree.taobao.com/
+   30          *
+   31          * ÐÞ¸Ä¼ÇÂ¼
+   32          * ÈÕÆÚ              ×÷Õß           ±¸×¢
+   33          * 2024-08-01        ´óW            first version
+   34          *********************************************************************************************************
+             -***********/
+   35          #include "zf_common_fifo.h"
+   36          #include "zf_common_debug.h"
+   37          #include "zf_common_clock.h"
+   38          #include "zf_common_interrupt.h"
+   39          #include "zf_common_typedef.h"
+   40          
+   41          #include "zf_driver_uart.h"
+   42          #include "zf_driver_delay.h"
+   43          
+   44          #pragma warning disable = 183
+   45          #pragma warning disable = 177
+   46          
+   47          #if DEBUG_UART_USE_INTERRUPT                                                    // Èç¹ûÆôÓÃ debug uart ½Ó
+             -ÊÕÖÐ¶Ï
+   48          uint8                       debug_uart_buffer[DEBUG_RING_BUFFER_LEN];           // Êý¾Ý´æ·ÅÊý×é
+   49          #endif
+   50          
+   51          fifo_struct                 debug_uart_fifo;
+   52          
+   53          //static debug_output_struct  debug_output_info;
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 2   
+
+   54          static volatile uint8       zf_debug_init_flag = 1;
+   55          static volatile uint8       zf_debug_assert_enable = 1;
+   56          
+   57          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+   58          //// º¯Êý¼ò½é      debug ÈíÑÓÊ±º¯Êý ÔÚ 120MHz ÏÂÊÇÒ»Ãë¶àµÄÊ±¼ä ¸÷µ¥Æ¬»úÐèÒª¸ù¾Ý¸÷×ÔÊ±ÖÓÊÔÑé
+   59          //// ²ÎÊýËµÃ÷     pass        ÅÐ¶ÏÊÇ·ñ´¥·¢¶ÏÑÔ
+   60          //// ²ÎÊýËµÃ÷     *file       ÎÄ¼þÃû
+   61          //// ²ÎÊýËµÃ÷     line        Ä¿±êÐÐÊý
+   62          //// ·µ»Ø²ÎÊý     void
+   63          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+   64          //static void debug_delay (void)
+   65          //{
+   66          //    vuint32 loop_1 = 0, loop_2 = 0;
+   67          //    for(loop_1 = 0; loop_1 <= 0xFF; loop_1 ++)
+   68          //        for(loop_2 = 0; loop_2 <= 0x1FF; loop_2 ++)
+   69          //            _nop_();
+   70          //}
+   71          
+   72          
+   73          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+   74          //// º¯Êý¼ò½é     debug ±£»¤´¦Àí Ö÷ÒªÊÇ·ÀÖ¹¶ÏÑÔºó³öÏÖÐÅºÅÎ¬³Ö¶øµ¼ÖÂÓ²¼þÊ§¿Ø
+   75          //// ²ÎÊýËµÃ÷     void
+   76          //// ·µ»Ø²ÎÊý     void
+   77          //// Ê¹ÓÃÊ¾Àý     debug_protective_handler();
+   78          //// ±¸×¢ÐÅÏ¢     ±¾º¯ÊýÔÚÎÄ¼þÄÚ²¿µ÷ÓÃ ÓÃ»§²»ÓÃ¹Ø×¢ Ò²²»¿ÉÐÞ¸Ä
+   79          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+   80          //static void debug_protective_handler (void)
+   81          //{
+   82          //   // ÔÝÎ´¸üÐÂ
+   83          //}
+   84          
+   85          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+   86          //// º¯Êý¼ò½é      debug ´®¿ÚÊä³ö½Ó¿Ú ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+   87          //// ²ÎÊýËµÃ÷     *str        ÐèÒªÊä³öµÄ×Ö·û´®
+   88          //// ·µ»Ø²ÎÊý     void
+   89          //// Ê¹ÓÃÊ¾Àý     debug_uart_str_output("Log message");
+   90          //// ±¸×¢ÐÅÏ¢     ±¾º¯ÊýÔÚÎÄ¼þÄÚ²¿µ÷ÓÃ ÓÃ»§²»ÓÃ¹Ø×¢ Ò²²»¿ÉÐÞ¸Ä
+   91          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+   92          //static void debug_uart_str_output (const char *str)
+   93          //{
+   94          //    uart_write_string(DEBUG_UART_INDEX, str);
+   95          //}
+   96          
+   97          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+   98          //// º¯Êý¼ò½é     debug Êä³ö½Ó¿Ú
+   99          //// ²ÎÊýËµÃ÷     *type       log ÀàÐÍ
+  100          //// ²ÎÊýËµÃ÷     *file       ÎÄ¼þÃû
+  101          //// ²ÎÊýËµÃ÷     line        Ä¿±êÐÐÊý
+  102          //// ²ÎÊýËµÃ÷     *str        ÐÅÏ¢
+  103          //// ·µ»Ø²ÎÊý     void
+  104          //// Ê¹ÓÃÊ¾Àý     debug_output("Log message", file, line, str);
+  105          //// ±¸×¢ÐÅÏ¢     ±¾º¯ÊýÔÚÎÄ¼þÄÚ²¿µ÷ÓÃ ÓÃ»§²»ÓÃ¹Ø×¢ Ò²²»¿ÉÐÞ¸Ä
+  106          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  107          //static void debug_output (char *type, char *file, int line, char *str)
+  108          //{
+  109          //    char *file_str;
+  110          
+  111          //    vuint16 i = 0, j = 0;
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 3   
+
+  112          //    vint16 len_origin = 0;
+  113          //    vuint16 show_len = 0;
+  114          //    vint16 show_line_index = 0;
+  115          //  
+  116          //  volatile char output_buffer[256] = {0};
+  117          //    volatile char file_path_buffer[64] = {0};
+  118          
+  119          //    len_origin = strlen(file);
+  120          
+  121          
+  122          
+  123          //    if(debug_output_info.type_index)
+  124          //    {
+  125          //        debug_output_info.output_screen_clear();
+  126          //    }
+  127          
+  128          //    if(zf_debug_init_flag)
+  129          //    {
+  130          //        if(debug_output_info.type_index)
+  131          //        {
+  132          //            // ÐèÒª·ÖÐÐ½«ÎÄ¼þµÄÂ·¾¶ºÍÐÐÊýÊä³ö
+  133          //            // <²»Êä³öÍêÕûÂ·¾¶ Ö»Êä³öÒ»¼¶Ä¿Â¼ ÀýÈç src/main.c>
+  134          //            // Êä³ö line : xxxx
+  135          //            debug_output_info.output_screen(0, show_line_index ++, type);
+  136          
+  137          //            file_str = file;
+  138          //            len_origin = strlen(file);
+  139          //            show_len = (debug_output_info.display_x_max / debug_output_info.font_x_size);
+  140          
+  141          //            while(*file_str++ != '\0');
+  142          
+  143          //            // Ö»È¡Ò»¼¶Ä¿Â¼ Èç¹ûÎÄ¼þ·ÅÔÚÅÌ·û¸ùÄ¿Â¼ »òÕß MDK µÄ¹¤³Ì¸ùÄ¿Â¼ ¾Í»áÖ±½ÓÊä³öµ±Ç°Ä¿Â¼
+  144          //            for(j = 0; (j < 2) && (len_origin >= 0); len_origin --)             // ²éÕÒÁ½¸ö '/'
+  145          //            {
+  146          //                file_str --;
+  147          //                if((*file_str == '/') || (*file_str == 0x5C))
+  148          //                {
+  149          //                    j ++;
+  150          //                }
+  151          //            }
+  152          
+  153          //            // ÎÄ¼þÂ·¾¶±£´æµ½Êý×éÖÐ
+  154          //            if(len_origin >= 0)
+  155          //            {
+  156          //                file_str ++;
+  157          //                sprintf(output_buffer, "file: %s", file_str);
+  158          //            }
+  159          //            else
+  160          //            {
+  161          //                if(0 == j)
+  162          //                {
+  163          //                    sprintf(output_buffer, "file: mdk/%s", file_str);
+  164          //                }
+  165          //                else
+  166          //                {
+  167          //                    sprintf(output_buffer, "file: %s", file_str);
+  168          //                }
+  169          //            }
+  170          
+  171          //            // ÆÁÄ»ÏÔÊ¾Â·¾¶
+  172          //            for(i = 0; i < ((strlen(output_buffer) / show_len) + 1); i ++)
+  173          //            {
+  174          //                for(j = 0; j < show_len; j ++)
+  175          //                {
+  176          //                    if(strlen(output_buffer) < (j + i * show_len))
+  177          //                    {
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 4   
+
+  178          //                        break;
+  179          //                    }
+  180          //                    file_path_buffer[j] = output_buffer[j + i * show_len];
+  181          //                }
+  182          
+  183          //                file_path_buffer[j] = '\0';                                     // Ä©Î²Ìí¼Ó\0
+  184          
+  185          //                debug_output_info.output_screen(0, debug_output_info.font_y_size * show_line_index ++, 
+             -file_path_buffer);
+  186          //            }
+  187          
+  188          //            // ÆÁÄ»ÏÔÊ¾ÐÐºÅ
+  189          //            sprintf(output_buffer, "line: %d", line);
+  190          //            debug_output_info.output_screen(0, debug_output_info.font_y_size * show_line_index ++, outp
+             -ut_buffer);
+  191          
+  192          //            // ÆÁÄ»ÏÔÊ¾ Log Èç¹ûÓÐµÄ»°
+  193          //            if(NULL != str)
+  194          //            {
+  195          //                for(i = 0; i < ((strlen(str) / show_len) + 1); i ++)
+  196          //                {
+  197          //                    for(j = 0; j < show_len; j ++)
+  198          //                    {
+  199          //                        if(strlen(str) < (j + i * show_len))
+  200          //                        {
+  201          //                            break;
+  202          //                        }
+  203          //                        file_path_buffer[j] = str[j + i * show_len];
+  204          //                    }
+  205          
+  206          //                    file_path_buffer[j] = '\0';                                 // Ä©Î²Ìí¼Ó\0
+  207          
+  208          //                    debug_output_info.output_screen(0, debug_output_info.font_y_size * show_line_index 
+             -++, file_path_buffer);
+  209          //                }
+  210          //            }
+  211          //        }
+  212          //        else
+  213          //        {
+  214          //      printf("\r\n %s file %s line %d\r\n", type, file, line);
+  215          
+  216          ////            memset(output_buffer, 0, 256);
+  217          ////            debug_output_info.output_uart(type);
+  218          ////            if(NULL != str)
+  219          ////            {
+  220          ////                sprintf(output_buffer, "\r\nfile %s line %d: %s.\r\n", file, line, str);
+  221          ////            }
+  222          ////            else
+  223          ////            {
+  224          ////                sprintf(output_buffer, "\r\nfile %s line %d.\r\n", file, line);
+  225          ////            }
+  226          ////            debug_output_info.output_uart(output_buffer);
+  227          //        }
+  228          //    }
+  229          //}
+  230          
+  231          
+  232          //-------------------------------------------------------------------------------------------------------
+             -------------
+  233          // º¯Êý¼ò½é     µ÷ÊÔ´®¿Ú·¢ËÍ»º³åÇø
+  234          // ²ÎÊýËµÃ÷     *buff       ¶Á³öÊý¾Ý´æ·ÅµÄÊý×éÖ¸Õë
+  235          // ²ÎÊýËµÃ÷     len         ÐèÒª·¢ËÍµÄ³¤¶È
+  236          // ·µ»Ø²ÎÊý     uint32      Ê£ÓàÎ´·¢ËÍµÄ³¤¶È
+  237          // Ê¹ÓÃÊ¾Àý
+  238          // ±¸×¢ÐÅÏ¢     ±¾º¯ÊýÐèÒª¿ªÆô DEBUG_UART_USE_INTERRUPT ºê¶¨Òå²Å¿ÉÊ¹ÓÃ
+  239          //-------------------------------------------------------------------------------------------------------
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 5   
+
+             -------------
+  240          uint32 debug_send_buffer(const uint8 *buff, uint32 len)
+  241          {
+  242   1        if(len > 0xFFFF)
+  243   1        {
+  244   2          uart_write_buffer(DEBUG_UART_INDEX, buff, 0xFFFF);
+  245   2          return  len - 0xFFFF;
+  246   2        }
+  247   1        else
+  248   1        {
+  249   2          uart_write_buffer(DEBUG_UART_INDEX, buff, (uint16)len);
+  250   2        }
+  251   1          
+  252   1          return 0;
+  253   1      }
+  254          
+  255          
+  256          
+  257          //-------------------------------------------------------------------------------------------------------
+             -------------
+  258          // º¯Êý¼ò½é     ¶ÁÈ¡ debug »·ÐÎ»º³åÇøÊý¾Ý
+  259          // ²ÎÊýËµÃ÷     *buff       ¶Á³öÊý¾Ý´æ·ÅµÄÊý×éÖ¸Õë
+  260          // ²ÎÊýËµÃ÷     len         ÐèÒª¶ÁÈ¡µÄ³¤¶È
+  261          // ·µ»Ø²ÎÊý     uint32      ¶Á³öÊý¾ÝµÄÊµ¼Ê³¤¶È
+  262          // Ê¹ÓÃÊ¾Àý
+  263          // ±¸×¢ÐÅÏ¢     ±¾º¯ÊýÐèÒª¿ªÆô DEBUG_UART_USE_INTERRUPT ºê¶¨Òå²Å¿ÉÊ¹ÓÃ
+  264          //-------------------------------------------------------------------------------------------------------
+             -------------
+  265          uint32 debug_read_buffer (uint8 *buff, uint32 len)
+  266          {
+  267   1          fifo_read_buffer(&debug_uart_fifo, buff, &len, FIFO_READ_AND_CLEAN);
+  268   1      
+  269   1          return len;
+  270   1      }
+  271          
+  272          #if DEBUG_UART_USE_INTERRUPT                                                    // Ìõ¼þ±àÒë Ö»ÓÐÔÚÆôÓÃ´®¿
+             -ÚÖÐ¶Ï²Å±àÒë
+  273          //-------------------------------------------------------------------------------------------------------
+             -------------
+  274          // º¯Êý¼ò½é     debug ´®¿ÚÖÐ¶Ï´¦Àíº¯Êý isr.c ÖÐ¶ÔÓ¦´®¿ÚÖÐ¶Ï·þÎñº¯Êýµ÷ÓÃ
+  275          // ²ÎÊýËµÃ÷     void
+  276          // ·µ»Ø²ÎÊý     void
+  277          // Ê¹ÓÃÊ¾Àý     debug_interrupr_handler();
+  278          // ±¸×¢ÐÅÏ¢     ±¾º¯ÊýÐèÒª¿ªÆô DEBUG_UART_USE_INTERRUPT ºê¶¨Òå²Å¿ÉÊ¹ÓÃ
+  279          //              ²¢ÇÒ±¾º¯ÊýÄ¬ÈÏ·ÅÖÃÔÚ UART1 µÄ´®¿Ú½ÓÊÕÖÐ¶Ï´¦Àí´¦
+  280          //-------------------------------------------------------------------------------------------------------
+             -------------
+  281          void debug_interrupr_handler (uint8 dat)
+  282          {
+  283   1        if(zf_debug_init_flag)
+  284   1        {
+  285   2          uart_query_byte(DEBUG_UART_INDEX, &dat);                    // ¶ÁÈ¡´®¿ÚÊý¾Ý
+  286   2          fifo_write_buffer(&debug_uart_fifo, &dat, 1);               // ´æÈë FIFO
+  287   2        }
+  288   1      
+  289   1      }
+  290          
+  291          #endif
+  292          
+  293          //-------------------------------------------------------------------------     // printf ÖØ¶¨Ïò ´Ë²¿·Ö²»
+             -ÔÊÐíÓÃ»§¸ü¸Ä
+  294          //-------------------------------------------------------------------------------------------------------
+             -------------
+  295          // º¯Êý¼ò½é     printfÖØ¶¨Ïò
+  296          // ²ÎÊýËµÃ÷     void
+  297          // ·µ»Ø²ÎÊý     void
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 6   
+
+  298          //  @since      v1.0
+  299          // ±¸×¢ÐÅÏ¢              ÖØ¶¨Ïòprintfµ½DEBUG´®¿ÚÉÏ
+  300          //-------------------------------------------------------------------------------------------------------
+             -------------
+  301          #if(1 == PRINTF_ENABLE)      //³õÊ¼»¯µ÷ÊÔ´®¿Ú
+  302          //ÖØ¶¨Òåprintf Êý×Ö Ö»ÄÜÊä³öuint16
+  303          char putchar(char c)
+  304          {
+  305   1          uart_write_byte(DEBUG_UART_INDEX, c);//°Ñ×Ô¼ºÊµÏÖµÄ´®¿Ú´òÓ¡Ò»×Ö½ÚÊý¾ÝµÄº¯ÊýÌæ»»µ½ÕâÀï
+  306   1      
+  307   1          return c;
+  308   1      }
+  309          #endif
+  310          //-------------------------------------------------------------------------     // printf ÖØ¶¨Ïò ´Ë²¿·Ö²»
+             -ÔÊÐíÓÃ»§¸ü¸Ä
+  311          
+  312          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  313          //// º¯Êý¼ò½é     ÆôÓÃ¶ÏÑÔ
+  314          //// ²ÎÊýËµÃ÷     void
+  315          //// ·µ»Ø²ÎÊý     void
+  316          //// Ê¹ÓÃÊ¾Àý     debug_assert_enable();
+  317          //// ±¸×¢ÐÅÏ¢     ¶ÏÑÔÄ¬ÈÏ¿ªÆô ½¨Òé¿ªÆô¶ÏÑÔ
+  318          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  319          //void debug_assert_enable (void)
+  320          //{
+  321          //    zf_debug_assert_enable = 1;
+  322          //}
+  323          
+  324          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  325          //// º¯Êý¼ò½é      ½ûÓÃ¶ÏÑÔ
+  326          //// ²ÎÊýËµÃ÷     void
+  327          //// ·µ»Ø²ÎÊý     void
+  328          //// Ê¹ÓÃÊ¾Àý     debug_assert_disable();
+  329          //// ±¸×¢ÐÅÏ¢     ¶ÏÑÔÄ¬ÈÏ¿ªÆô ²»½¨Òé½ûÓÃ¶ÏÑÔ
+  330          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  331          //void debug_assert_disable (void)
+  332          //{
+  333          //    zf_debug_assert_enable = 0;
+  334          //}
+  335          
+  336          //-------------------------------------------------------------------------------------------------------
+             -------------
+  337          // º¯Êý¼ò½é      debug ¶ÏÑÔ´¦Àíº¯Êý ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+  338          // ²ÎÊýËµÃ÷     pass        ÅÐ¶ÏÊÇ·ñ´¥·¢¶ÏÑÔ
+  339          // ²ÎÊýËµÃ÷     *file       ÎÄ¼þÃû
+  340          // ²ÎÊýËµÃ÷     line        Ä¿±êÐÐÊý
+  341          // ·µ»Ø²ÎÊý     void
+  342          // Ê¹ÓÃÊ¾Àý     zf_assert(0);
+  343          // ±¸×¢ÐÅÏ¢     Õâ¸öº¯Êý²»ÊÇÖ±½Óµ÷ÓÃµÄ ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+  344          //              Ê¹ÓÃ zf_commmon_debug.h ÖÐµÄ zf_assert(x) ½Ó¿Ú
+  345          //-------------------------------------------------------------------------------------------------------
+             -------------
+  346          void debug_assert_handler (uint8 pass, char *file, int line)
+  347          {
+  348   1        uint8 log_str[] = "Assert error";
+  349   1      
+  350   1        while(!pass)
+  351   1        {
+  352   2          // Èç¹û´úÂëÌø×ªµ½ÕâÀïÍ£×¡ÁË
+  353   2          // Ò»°ãÄãµÄº¯Êý²ÎÊý´«µÝ³ö´íÁË
+  354   2          // »òÕßÄã×Ô¼ºµ÷ÓÃµÄ zf_assert(x) ½Ó¿Ú´¦±¨´íÁË
+  355   2      
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 7   
+
+  356   2          // Èç¹ûµ÷ÓÃÁË debug_init ³õÊ¼»¯ÁË log Êä³ö
+  357   2          // ¾ÍÔÚ¶ÔÓ¦´®¿ÚÊä³öÈ¥²é¿´ÊÇÄÄ¸öÎÄ¼þµÄÄÄÒ»ÐÐ±¨´í
+  358   2      
+  359   2          // Èç¹ûÃ»ÓÐ³õÊ¼»¯ debug
+  360   2          // ÄÇ¾Í¿´¿´Õâ¸ö file µÄ×Ö·û´®ÖµºÍ line µÄÐÐÊý
+  361   2          // ÄÇ´ú±í±¨´íµÄÎÄ¼þÂ·¾¶Ãû³ÆºÍ¶ÔÓ¦±¨´íÐÐÊý
+  362   2      
+  363   2          // ÔÙÈ¥µ÷ÊÔ¿´¿´ÊÇÎªÊ²Ã´²ÎÊý³ö´í
+  364   2      
+  365   2      
+  366   2          printf("\r\n %s file %s line %d\r\n", log_str, file, line);
+  367   2      
+  368   2      
+  369   2          system_delay_ms(500);
+  370   2        }
+  371   1      }
+  372          
+  373          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  374          //// º¯Êý¼ò½é      debug µ÷ÊÔÐÅÏ¢´¦Àíº¯Êý ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+  375          //// ²ÎÊýËµÃ÷     bool        ÅÐ¶ÏÊÇ·ñ´¥·¢¶ÏÑÔ
+  376          //// ²ÎÊýËµÃ÷     *str        ÒªÊä³öµÄµ÷ÊÔÐÅÏ¢
+  377          //// ²ÎÊýËµÃ÷     *file       ÎÄ¼þÃû
+  378          //// ²ÎÊýËµÃ÷     line        Ä¿±êÐÐÊý
+  379          //// ·µ»Ø²ÎÊý     void
+  380          //// Ê¹ÓÃÊ¾Àý     printf( "Log Message");
+  381          //// ±¸×¢ÐÅÏ¢     Õâ¸öº¯Êý²»ÊÇÖ±½Óµ÷ÓÃµÄ ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+  382          ////              Ê¹ÓÃ zf_commmon_debug.h ÖÐµÄ zf_log(x, str) ½Ó¿Ú
+  383          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  384          //void debug_log_handler (uint8 pass, char *str, char *file, int line)
+  385          //{
+  386          //  uint8 log_str[] = "Log message";
+  387          //    do
+  388          //    {
+  389          //        if(pass)
+  390          //        {
+  391          //            break;
+  392          //        }
+  393          //        if(zf_debug_init_flag)
+  394          //        {
+  395          //            debug_output(log_str, file, line, str);
+  396          ////            printf("Log message from %s line %d :\"%s\".\r\n", file, line, str);
+  397          //        }
+  398          //    }while(0);
+  399          //}
+  400          
+  401          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  402          //// º¯Êý¼ò½é      debug Êä³ö°ó¶¨ÐÅÏ¢³õÊ¼»¯ ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+  403          //// ²ÎÊýËµÃ÷     *info       debug Êä³öµÄÐÅÏ¢½á¹¹Ìå
+  404          //// ·µ»Ø²ÎÊý     void
+  405          //// Ê¹ÓÃÊ¾Àý            debug_output_struct_init(info);
+  406          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  407          //void debug_output_struct_init (debug_output_struct *info)
+  408          //{
+  409          //    info->type_index            = 0;
+  410          
+  411          //    info->display_x_max         = 0xFFFF;
+  412          //    info->display_y_max         = 0xFFFF;
+  413          
+  414          //    info->font_x_size           = 0xFF;
+  415          //    info->font_y_size           = 0xFF;
+  416          
+  417          //    info->output_uart           = NULL;
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 8   
+
+  418          //    info->output_screen         = NULL;
+  419          //    info->output_screen_clear   = NULL;
+  420          //}
+  421          
+  422          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  423          //// º¯Êý¼ò½é      debug Êä³ö°ó¶¨³õÊ¼»¯ ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+  424          //// ²ÎÊýËµÃ÷     *info       debug Êä³öµÄÐÅÏ¢½á¹¹Ìå
+  425          //// ·µ»Ø²ÎÊý     void
+  426          //// Ê¹ÓÃÊ¾Àý     debug_output_init(info);
+  427          //// ±¸×¢ÐÅÏ¢     Õâ¸öº¯ÊýÒ»°ã²»ÓÉÓÃ»§µ÷ÓÃ
+  428          ////-----------------------------------------------------------------------------------------------------
+             ---------------
+  429          //void debug_output_init (debug_output_struct *info)
+  430          //{
+  431          //    debug_output_info.type_index            = info->type_index;
+  432          
+  433          //    debug_output_info.display_x_max         = info->display_x_max;
+  434          //    debug_output_info.display_y_max         = info->display_y_max;
+  435          
+  436          //    debug_output_info.font_x_size           = info->font_x_size;
+  437          //    debug_output_info.font_y_size           = info->font_y_size;
+  438          
+  439          //    debug_output_info.output_uart           = info->output_uart;
+  440          //    debug_output_info.output_screen         = info->output_screen;
+  441          //    debug_output_info.output_screen_clear   = info->output_screen_clear;
+  442          
+  443          //    zf_debug_init_flag = 1;
+  444          //}
+  445          
+  446          //-------------------------------------------------------------------------------------------------------
+             -------------
+  447          // º¯Êý¼ò½é      debug ´®¿Ú³õÊ¼»¯ ´Ë²¿·Ö²»ÔÊÐíÓÃ»§¸ü¸Ä
+  448          // ²ÎÊýËµÃ÷     void
+  449          // ·µ»Ø²ÎÊý     void
+  450          // Ê¹ÓÃÊ¾Àý     debug_init();
+  451          // ±¸×¢ÐÅÏ¢     ¿ªÔ´¿âÊ¾ÀýÄ¬ÈÏµ÷ÓÃ µ«Ä¬ÈÏ½ûÓÃÖÐ¶Ï½ÓÊÕ
+  452          //-------------------------------------------------------------------------------------------------------
+             -------------
+  453          void debug_init (void)
+  454          {
+  455   1        uint8 uartx = DEBUG_UART_INDEX;
+  456   1      //    debug_output_struct info;
+  457   1      //    debug_output_struct_init(&info);
+  458   1      //    info.output_uart = debug_uart_str_output;
+  459   1      //    debug_output_init(&info);
+  460   1      
+  461   1          uart_init(
+  462   1              DEBUG_UART_INDEX,                                                       // ÔÚ zf_common_debug.h Ö
+             -Ð²é¿´¶ÔÓ¦Öµ
+  463   1              DEBUG_UART_BAUDRATE,                                                    // ÔÚ zf_common_debug.h Ö
+             -Ð²é¿´¶ÔÓ¦Öµ
+  464   1              DEBUG_UART_TX_PIN,                                                      // ÔÚ zf_common_debug.h Ö
+             -Ð²é¿´¶ÔÓ¦Öµ
+  465   1              DEBUG_UART_RX_PIN);                                                     // ÔÚ zf_common_debug.h Ö
+             -Ð²é¿´¶ÔÓ¦Öµ
+  466   1      
+  467   1      #if DEBUG_UART_USE_INTERRUPT                                                    // Ìõ¼þ±àÒë Ö»ÓÐÔÚÆôÓÃ´®¿
+             -ÚÖÐ¶Ï²Å±àÒë
+  468   1          fifo_init(&debug_uart_fifo, FIFO_DATA_8BIT, debug_uart_buffer, DEBUG_RING_BUFFER_LEN);
+  469   1          uart_rx_interrupt(DEBUG_UART_INDEX, 1);                                     // Ê¹ÄÜ¶ÔÓ¦´®¿Ú½ÓÊÕÖÐ¶Ï
+  470   1      
+  471   1        // ÉèÖÃ´®¿Ú»Øµ÷º¯Êý
+  472   1        if(uartx == UART_1)       
+  473   1          {
+  474   2              uart1_irq_handler = debug_interrupr_handler;
+C251 COMPILER V5.60.0,  zf_common_debug                                                    17/01/26  21:14:50  PAGE 9   
+
+  475   2          }
+  476   1          else if(uartx == UART_2)
+  477   1          {
+  478   2              uart2_irq_handler = debug_interrupr_handler;
+  479   2          }
+  480   1          else if(uartx == UART_3)
+  481   1          {
+  482   2              uart3_irq_handler = debug_interrupr_handler;
+  483   2          }
+  484   1          else if(uartx == UART_4)
+  485   1          {
+  486   2              uart4_irq_handler = debug_interrupr_handler;
+  487   2          }
+  488   1      
+  489   1      #endif
+  490   1      
+  491   1      }
+  492          
+  493          
+  494          
+  495          
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       547     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =       128     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =        49     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

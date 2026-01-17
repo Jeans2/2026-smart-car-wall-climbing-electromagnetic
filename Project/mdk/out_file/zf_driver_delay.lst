@@ -1,0 +1,138 @@
+C251 COMPILER V5.60.0,  zf_driver_delay                                                    17/01/26  21:14:54  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_driver_delay
+OBJECT MODULE PLACED IN .\out_file\zf_driver_delay.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\..\libraries\zf_driver\zf_driver_delay.c LARGE NOALIAS WARNINGLEVE
+                    -L(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..
+                    -\..\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_driver_delay.lst) TABS(2) OBJECT(.\out_file\zf_driver
+                    -_delay.obj) 
+
+stmt  level    source
+
+    1          /********************************************************************************************************
+             -*************
+    2          * STC32G Opensourec Library 即（STC32G 开源库）是一个基于官方 SDK 接口的第三方开源库
+    3          * Copyright (c) 2022 SEEKFREE 逐飞科技
+    4          *
+    5          * 本文件是STC 开源库的一部分
+    6          *
+    7          * STC32G 开源库 是免费软件
+    8          * 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许可证）的条款
+    9          * 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修改它
+   10          *
+   11          * 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
+   12          * 甚至没有隐含的适销性或适合特定用途的保证
+   13          * 更多细节请参见 GPL
+   14          *
+   15          * 您应该在收到本开源库的同时收到一份 GPL 的副本
+   16          * 如果没有，请参阅<https://www.gnu.org/licenses/>
+   17          *
+   18          * 额外注明：
+   19          * 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版本
+   20          * 许可申明英文版在 libraries/doc 文件夹下的 GPL3_permission_statement.txt 文件中
+   21          * 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
+   22          * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
+   23          *
+   24          * 文件名称          
+   25          * 公司名称          成都逐飞科技有限公司
+   26          * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
+   27          * 开发环境          MDK FOR C251
+   28          * 适用平台          STC32G
+   29          * 店铺链接          https://seekfree.taobao.com/
+   30          *
+   31          * 修改记录
+   32          * 日期              作者           备注
+   33          * 2024-08-01        大W            first version
+   34          *********************************************************************************************************
+             -***********/
+   35          
+   36          #include "zf_common_clock.h"
+   37          #include "zf_driver_delay.h"
+   38          
+   39          
+   40          static vuint16 zf_delay_1ms = 0;
+   41          static vuint16 zf_delay_1us = 0;
+   42          
+   43          // 内部使用的高精度延时函数
+   44          static void delay_cycles(uint16 cycles)
+   45          {
+   46   1          // 循环体执行一次需要3个时钟周期（DEC、JNZ、NOP）
+   47   1          while(cycles-- > 0)
+   48   1          {
+   49   2              ;
+   50   2          }
+   51   1      }
+   52          
+   53          //-------------------------------------------------------------------------------------------------------
+             -------------
+C251 COMPILER V5.60.0,  zf_driver_delay                                                    17/01/26  21:14:54  PAGE 2   
+
+   54          //  @brief      软件延时函数初始化
+   55          //  @param      NULL
+   56          //  @return     void
+   57          //  Sample usage:               无需用户调用，用户请使用h文件中的宏定义
+   58          //-------------------------------------------------------------------------------------------------------
+             -------------
+   59          void system_delay_init(void)
+   60          {
+   61   1        zf_delay_1ms = system_clock / 6000;
+   62   1        zf_delay_1us = system_clock / 7000000;
+   63   1        if(system_clock <= 12000000) zf_delay_1us++;
+   64   1      }
+   65          
+   66          //-------------------------------------------------------------------------------------------------------
+             -------------
+   67          //  @brief      延时函数
+   68          //  @param      ms              需要延时的时间（ms）
+   69          //  @return     void
+   70          //  Sample usage:               无需用户调用，用户请使用h文件中的宏定义
+   71          //-------------------------------------------------------------------------------------------------------
+             -------------
+   72          void system_delay_ms(uint16 ms)
+   73          {
+   74   1        do 
+   75   1        {
+   76   2          delay_cycles(zf_delay_1ms);
+   77   2        }while(--ms);
+   78   1      }
+   79          
+   80          //-------------------------------------------------------------------------------------------------------
+             -------------
+   81          //  @brief      延时函数
+   82          //  @param      us              需要延时的时间（us）
+   83          //  @return     void
+   84          //  Sample usage:               这是一个不太准的函数
+   85          //-------------------------------------------------------------------------------------------------------
+             -------------
+   86          void system_delay_us(uint16 us)
+   87          {
+   88   1        do 
+   89   1        {
+   90   2          delay_cycles(zf_delay_1us);
+   91   2        }while(--us);
+   92   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       192     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =        10     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =        14     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

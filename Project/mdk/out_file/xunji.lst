@@ -1,0 +1,37 @@
+C251 COMPILER V5.60.0,  xunji                                                              17/01/26  21:15:06  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
+OBJECT MODULE PLACED IN .\out_file\xunji.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE xunji.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(
+                    -..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\c
+                    -ode) DEBUG PRINT(.\out_file\xunji.lst) TABS(2) OBJECT(.\out_file\xunji.obj) 
+
+stmt  level    source
+
+    1          #include "xunji.h"
+*** WARNING C38 IN LINE 1 OF xunji.c: empty translation unit
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =    ------     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

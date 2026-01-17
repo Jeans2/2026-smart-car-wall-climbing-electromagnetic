@@ -1,0 +1,97 @@
+C251 COMPILER V5.60.0,  aoi_function                                                       17/01/26  21:15:08  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE aoi_function
+OBJECT MODULE PLACED IN .\out_file\aoi_function.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE aoi_function.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE 
+                    -INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\us
+                    -er;..\code) DEBUG PRINT(.\out_file\aoi_function.lst) TABS(2) OBJECT(.\out_file\aoi_function.obj) 
+
+stmt  level    source
+
+    1          #include "aoi_function.h"
+    2          
+    3          
+    4          int32 abs_int32(int32 num)
+    5          {
+    6   1        if(num<0)
+    7   1        {
+    8   2          num = -num;
+    9   2        }
+   10   1      
+   11   1        return num;
+   12   1      }
+   13          
+   14          
+   15          
+   16          
+   17          // 交换两个整数（如果需要）
+   18          void compare_swap(uint16 *a, uint16 *b) {
+   19   1        uint16 t;
+   20   1          if (*a > *b) {
+   21   2               t = *a;
+   22   2              *a = *b;
+   23   2              *b = t;
+   24   2          }
+   25   1      }
+   26          
+   27          // 高效排序7个数的函数（手动展开比较网络）
+   28          uint16 sort_seven(uint16 arr[7]) {
+   29   1          compare_swap(&arr[0], &arr[1]);
+   30   1          compare_swap(&arr[2], &arr[3]);
+   31   1          compare_swap(&arr[4], &arr[5]);
+   32   1          compare_swap(&arr[0], &arr[2]);
+   33   1          compare_swap(&arr[1], &arr[3]);
+   34   1          compare_swap(&arr[2], &arr[4]);
+   35   1          compare_swap(&arr[3], &arr[5]);
+   36   1          compare_swap(&arr[5], &arr[6]);
+   37   1          compare_swap(&arr[3], &arr[5]);
+   38   1          compare_swap(&arr[1], &arr[3]);
+   39   1          compare_swap(&arr[0], &arr[1]);
+   40   1          compare_swap(&arr[2], &arr[3]);
+   41   1          compare_swap(&arr[4], &arr[5]);
+   42   1          compare_swap(&arr[1], &arr[2]);
+   43   1          compare_swap(&arr[3], &arr[4]);
+   44   1          compare_swap(&arr[2], &arr[3]);
+   45   1          compare_swap(&arr[6], &arr[5]);
+   46   1          compare_swap(&arr[5], &arr[4]);
+   47   1          compare_swap(&arr[4], &arr[3]);
+   48   1          compare_swap(&arr[3], &arr[2]);
+   49   1          compare_swap(&arr[2], &arr[1]);
+   50   1          compare_swap(&arr[1], &arr[0]);
+   51   1          compare_swap(&arr[0], &arr[1]);
+   52   1          compare_swap(&arr[1], &arr[2]);
+   53   1          compare_swap(&arr[2], &arr[3]);
+   54   1          compare_swap(&arr[3], &arr[4]);
+   55   1          compare_swap(&arr[4], &arr[5]);
+   56   1          compare_swap(&arr[5], &arr[6]);
+   57   1          
+C251 COMPILER V5.60.0,  aoi_function                                                       17/01/26  21:15:08  PAGE 2   
+
+   58   1          
+   59   1          return arr[3];
+   60   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =      1020     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =        18     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
