@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 1   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_device_imu963ra
@@ -66,7 +66,7 @@ stmt  level    source
    47          *
    48          *                   // 软件 IIC 引脚
    49          *                   SCL/SPC             查看 zf_device_imu963ra.h 中 IMU963RA_SCL_PIN 宏定义
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 2   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 2   
 
    50          *                   SDA/DSI             查看 zf_device_imu963ra.h 中 IMU963RA_SDA_PIN 宏定义
    51          *                   VCC                 3.3V电源
@@ -134,7 +134,7 @@ stmt  level    source
              --------------
                  // 函数简介     IMU963RA 读数据 内部调用
                  // 参数说明     reg             寄存器地址
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 3   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 3   
 
                  // 参数说明     dat            数据缓冲区
                  // 参数说明     len             数据长度
@@ -202,7 +202,7 @@ stmt  level    source
   168          
   169            //------------------------------------------------------------------------------------------------------
              --------------
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 4   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 4   
 
   170            //  @brief      读取cmd所对应的寄存器地址
   171            //  @param      cmd         命令字
@@ -270,7 +270,7 @@ stmt  level    source
   226            {
   227   1          uint8 dat = 0;
   228   1          IMU963RA_CS(0);
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 5   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 5   
 
   229   1          imu963ra_simspi_r_reg_byte(reg | IMU963RA_SPI_R, &dat);
   230   1          IMU963RA_CS(1);
@@ -338,7 +338,7 @@ stmt  level    source
              -ct,reg,dat,len))
                #endif
   283          
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 6   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 6   
 
   284          //-------------------------------------------------------------------------------------------------------
              -------------
@@ -406,7 +406,7 @@ stmt  level    source
   337   1          
   338   1          // 等待通讯成功
   339   1          while(0 == (0x01 & imu963ra_read_acc_gyro_register(IMU963RA_STATUS_MASTER)))
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 7   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 7   
 
   340   1          {
   341   2              if(IMU963RA_TIMEOUT_COUNT < timeout_count ++)
@@ -474,7 +474,7 @@ stmt  level    source
   395   2          }
   396   1          
   397   1          return return_state;
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 8   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 8   
 
   398   1      }
   399          
@@ -542,7 +542,7 @@ stmt  level    source
   455   1          uint8 dat[6];
   456   1          
   457   1          imu963ra_read_acc_gyro_registers(IMU963RA_OUTX_L_G, dat, 6);
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 9   
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 9   
 
   458   1          imu963ra_gyro_x = (int16)(((uint16)dat[1] << 8 | dat[0]));
   459   1          imu963ra_gyro_y = (int16)(((uint16)dat[3] << 8 | dat[2]));
@@ -610,7 +610,7 @@ stmt  level    source
              -RA_SDA_PIN);
                  
                #endif
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 10  
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 10  
 
   517   1        
   518   1          do
@@ -678,7 +678,7 @@ stmt  level    source
   573   4                  }
   574   3                  break;
   575   3              }
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 11  
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 11  
 
   576   2              
   577   2              if(1 == return_state)
@@ -746,7 +746,7 @@ stmt  level    source
   633   3                  case IMU963RA_GYRO_SAMPLE_SGN_4000DPS:
   634   3                  {
   635   4                      imu963ra_write_acc_gyro_register(IMU963RA_CTRL2_G, 0x51);
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 12  
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 12  
 
   636   4                      imu963ra_transition_factor[1] = 7.1;
   637   4                  }
@@ -814,7 +814,7 @@ stmt  level    source
   690   3                  case IMU963RA_MAG_SAMPLE_8G:
   691   3                  {
   692   4                      imu963ra_write_mag_register(IMU963RA_MAG_ADDR, IMU963RA_MAG_CONTROL1, 0x19);
-C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 17/01/26  21:15:02  PAGE 13  
+C251 COMPILER V5.60.0,  zf_device_imu963ra                                                 19/01/26  01:07:39  PAGE 13  
 
   693   4                      imu963ra_transition_factor[2] = 3000;
   694   4                  }
