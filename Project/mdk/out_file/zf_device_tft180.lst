@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 1   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_device_tft180
@@ -66,7 +66,7 @@ stmt  level    source
    47          *                   最大分辨率160*128
    48          *                   ------------------------------------
    49          *********************************************************************************************************
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 2   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 2   
 
              -***********/
    50          
@@ -134,7 +134,7 @@ stmt  level    source
   108   1          {
   109   2              tft180_write_index(0x2a);
   110   2              tft180_write_16bit_data(x1+2);
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 3   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 3   
 
   111   2              tft180_write_16bit_data(x2+2);
   112   2      
@@ -202,7 +202,7 @@ stmt  level    source
   168   1      }
   169          
   170          //-------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 4   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 4   
 
              -------------
   171          // 函数简介       设置显示颜色
@@ -270,7 +270,7 @@ stmt  level    source
   223   3                      tft180_write_16bit_data(tft180_pencolor);
   224   3                  else
   225   3                      tft180_write_16bit_data(tft180_bgcolor);
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 5   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 5   
 
   226   3                  temp>>=1;
   227   3              }
@@ -338,7 +338,7 @@ stmt  level    source
   285   2              tft180_show_char(x+(8*(i+1)),y,(uint8)('0' + a[i]));
   286   2              i++;
   287   2          }
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 6   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 6   
 
   288   1      }
   289          
@@ -406,7 +406,7 @@ stmt  level    source
   347   1          i = 0;
   348   1          while(i<5)
   349   1          {
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 7   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 7   
 
   350   2              tft180_show_char(x+(8*(i+1)),y,(uint8)('0' + a[i]));
   351   2              i++;
@@ -474,7 +474,7 @@ stmt  level    source
   408   1          {
   409   2              buff[0] = ' ';
   410   2              length = zf_sprintf( &buff[1],(const int8 *)"%d",dat);
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 8   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 8   
 
   411   2              length++;
   412   2          }
@@ -542,7 +542,7 @@ stmt  level    source
   467   1          
   468   1          buff[end] = '\0';
   469   1      
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 9   
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 9   
 
   470   1          tft180_show_string(x, y, (const char *)buff);                               // 显示数字
   471   1      }
@@ -610,7 +610,7 @@ stmt  level    source
   525   1      //    gpio_init(TFT180_CS_PIN, GPO, GPIO_LOW, GPO_PUSH_PULL);
   526   1      //    gpio_init(TFT180_BL_PIN, GPO, GPIO_HIGH, GPO_PUSH_PULL);
   527   1      
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 10  
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 10  
 
   528   1          tft180_set_dir(tft180_display_dir);
   529   1          tft180_set_color(tft180_pencolor, tft180_bgcolor);
@@ -678,7 +678,7 @@ stmt  level    source
   588   2              case 3: tft180_write_8bit_data(0<<7 | 1<<6 | 1<<5);  break;                          // 横屏模
              -式  旋转180
   589   2          }
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 11  
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 11  
 
   590   1      
   591   1          tft180_write_index(0xe0);
@@ -747,7 +747,7 @@ Module Information          Static   Overlayable
   code size            =      4668     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
-C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  01:07:47  PAGE 12  
+C251 COMPILER V5.60.0,  zf_device_tft180                                                   19/01/26  15:20:39  PAGE 12  
 
   idata size           =    ------     ------
   pdata size           =    ------     ------

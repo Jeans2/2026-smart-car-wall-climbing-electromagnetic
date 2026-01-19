@@ -58,3 +58,43 @@ uint16 sort_seven(uint16 arr[7]) {
 		
 		return arr[3];
 }
+//滑动平均滤波 初始化
+void initSlidingAverage(SlidingAverageFilter* filter, int N) {
+	 uint8 Win_i=0;
+    if (N > MAX_WINDOW_SIZE) {
+        N = MAX_WINDOW_SIZE; // 限制窗口大小不能超过最大值
+    }
+
+    for (Win_i = 0; Win_i < MAX_WINDOW_SIZE; Win_i++) {
+        filter->buffer[Win_i] = 0.0f;
+    }
+    filter->sum = 0.0f;
+    filter->index = 0;
+    filter->count = 0;
+    filter->window_size = N;
+	}		
+//滑动平均滤波
+void slidingAverage(float now_speed, float* avg_speed, SlidingAverageFilter* filter) {
+    // 从和中减去即将被替换的旧值
+    filter->sum -= filter->buffer[filter->index];
+
+    // 将新的值插入缓冲区
+    filter->buffer[filter->index] = now_speed;
+
+    // 更新和
+    filter->sum += now_speed;
+
+    // 更新索引，使其循环回到起始位置
+    filter->index = (filter->index + 1) % filter->window_size;
+
+    // 如果窗口没有满，增加计数
+    if (filter->count < filter->window_size) {
+        filter->count++;
+    }
+
+    // 计算并返回当前窗口的平均值
+    *avg_speed = filter->sum / filter->count;
+}
+	
+		
+		

@@ -1,0 +1,77 @@
+C251 COMPILER V5.60.0,  encoder                                                            19/01/26  15:20:40  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
+OBJECT MODULE PLACED IN .\out_file\encoder.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE encoder.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDI
+                    -R(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..
+                    -\code) DEBUG PRINT(.\out_file\encoder.lst) TABS(2) OBJECT(.\out_file\encoder.obj) 
+
+stmt  level    source
+
+    1          #include "encoder.h"
+    2          
+    3          SlidingAverageFilter filter_Left;
+    4          SlidingAverageFilter filter_Right;
+    5          float speed_L=0,speed_R=0,speed_avl=0;
+    6          float speed_L_next=0,speed_R_next=0,speed_avl_next;
+    7          int16 lastspeed_L=0,lastspeed_R=0;
+    8          int32 distance_text=0;
+    9          
+   10          
+   11          void encoder_unit(void)
+   12          {
+   13   1          encoder_dir_init(ENCODER_DIR_1, ENCODER_DIR_DIR_1, ENCODER_DIR_PULSE_1);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å ´
+             -ø·½ÏòÔöÁ¿±àÂëÆ÷Ä£Ê½
+   14   1          encoder_dir_init(ENCODER_DIR_2, ENCODER_DIR_DIR_2, ENCODER_DIR_PULSE_2);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å
+             - ´ø·½ÏòÔöÁ¿±àÂëÆ÷Ä£Ê½
+   15   1          
+   16   1          initSlidingAverage(&filter_Left,6);  // ³õÊ¼»¯ÂË²¨Æ÷
+   17   1          initSlidingAverage(&filter_Right,6);
+   18   1      }
+   19          
+   20          
+   21          void encoder_update(void)
+   22          {
+   23   1        //0-»ñÈ¡ËÙ¶È&ÇåÁã
+   24   1        speed_R = (0.85f*encoder_get_count(ENCODER_DIR_1));
+   25   1        speed_L = (0.85f*encoder_get_count(ENCODER_DIR_2));
+   26   1        
+   27   1        encoder_clear_count(ENCODER_DIR_2);
+   28   1        encoder_clear_count(ENCODER_DIR_1);
+   29   1        //1-Ò»½×µÍÍ¨ÂË²¨
+   30   1        speed_L=(0.9*speed_L + 0.1*lastspeed_L);
+   31   1        speed_R=(0.9*speed_R + 0.1*lastspeed_R);
+   32   1        lastspeed_L = speed_L;
+   33   1        lastspeed_R = speed_R;
+   34   1         
+   35   1        speed_avl = (speed_L + speed_R)/2;
+   36   1        
+   37   1        distance_text += (int32)speed_avl;
+   38   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       382     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =        76     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+C251 COMPILER V5.60.0,  encoder                                                            19/01/26  15:20:40  PAGE 2   
+
+  const size           =    ------     ------
+  hconst size          =        68     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
