@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 1   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_common_debug
@@ -66,7 +66,7 @@ stmt  level    source
    51          fifo_struct                 debug_uart_fifo;
    52          
    53          //static debug_output_struct  debug_output_info;
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 2   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 2   
 
    54          static volatile uint8       zf_debug_init_flag = 1;
    55          static volatile uint8       zf_debug_assert_enable = 1;
@@ -134,7 +134,7 @@ stmt  level    source
   109          //    char *file_str;
   110          
   111          //    vuint16 i = 0, j = 0;
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 3   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 3   
 
   112          //    vint16 len_origin = 0;
   113          //    vuint16 show_len = 0;
@@ -202,7 +202,7 @@ stmt  level    source
   175          //                {
   176          //                    if(strlen(output_buffer) < (j + i * show_len))
   177          //                    {
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 4   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 4   
 
   178          //                        break;
   179          //                    }
@@ -270,7 +270,7 @@ stmt  level    source
   237          // 使用示例
   238          // 备注信息     本函数需要开启 DEBUG_UART_USE_INTERRUPT 宏定义才可使用
   239          //-------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 5   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 5   
 
              -------------
   240          uint32 debug_send_buffer(const uint8 *buff, uint32 len)
@@ -338,7 +338,7 @@ stmt  level    source
   295          // 函数简介     printf重定向
   296          // 参数说明     void
   297          // 返回参数     void
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 6   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 6   
 
   298          //  @since      v1.0
   299          // 备注信息              重定向printf到DEBUG串口上
@@ -406,7 +406,7 @@ stmt  level    source
   353   2          // 一般你的函数参数传递出错了
   354   2          // 或者你自己调用的 zf_assert(x) 接口处报错了
   355   2      
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 7   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 7   
 
   356   2          // 如果调用了 debug_init 初始化了 log 输出
   357   2          // 就在对应串口输出去查看是哪个文件的哪一行报错
@@ -474,7 +474,7 @@ stmt  level    source
   415          //    info->font_y_size           = 0xFF;
   416          
   417          //    info->output_uart           = NULL;
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 8   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 8   
 
   418          //    info->output_screen         = NULL;
   419          //    info->output_screen_clear   = NULL;
@@ -542,7 +542,7 @@ stmt  level    source
   472   1        if(uartx == UART_1)       
   473   1          {
   474   2              uart1_irq_handler = debug_interrupr_handler;
-C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  15:20:36  PAGE 9   
+C251 COMPILER V5.60.0,  zf_common_debug                                                    19/01/26  22:48:11  PAGE 9   
 
   475   2          }
   476   1          else if(uartx == UART_2)

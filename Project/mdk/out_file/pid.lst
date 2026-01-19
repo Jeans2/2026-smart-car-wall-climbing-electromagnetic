@@ -1,0 +1,118 @@
+C251 COMPILER V5.60.0,  pid                                                                19/01/26  22:48:15  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
+OBJECT MODULE PLACED IN .\out_file\pid.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE pid.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
+                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
+                    -e) DEBUG PRINT(.\out_file\pid.lst) TABS(2) OBJECT(.\out_file\pid.obj) 
+
+stmt  level    source
+
+    1          #include "pid.h" 
+    2          
+    3          //速度环
+    4          int16 err_speed=0;
+    5          float out_L=0,out_R=0;
+    6          
+    7          
+    8          //直行速度环
+    9          void speed_loop(void)
+   10          {
+   11   1          static int16 last_err_speed=0;
+   12   1          static float speed_output=0;//总输出
+   13   1        //1-误差计算
+   14   1         last_err_speed = err_speed;
+   15   1         err_speed = speed_target - speed_avl;
+*** ERROR C67 IN LINE 15 OF pid.c: 'speed_target': undefined identifier
+*** ERROR C67 IN LINE 15 OF pid.c: 'speed_avl': undefined identifier
+   16   1        
+   17   1      //2—增量式PI控制
+   18   1          speed_output =  pid_loop_speed.Kp * (err_speed - err_speed_last)
+*** ERROR C67 IN LINE 18 OF pid.c: 'pid_loop_speed': undefined identifier
+*** ERROR C67 IN LINE 18 OF pid.c: 'err_speed_last': undefined identifier
+   19   1                        + pid_loop_speed.Ki *  err_speed;
+*** ERROR C67 IN LINE 19 OF pid.c: 'pid_loop_speed': undefined identifier
+   20   1        
+   21   1        //增量
+   22   1        if(speed_output>2000 ){speed_output=2000; }
+   23   1        if(speed_output<-2000){speed_output=-2000;}
+   24   1        
+   25   1        //输出
+   26   1        out_L += speed_output;
+   27   1        out_R = out_L;
+   28   1        
+   29   1        if(out_L>9900 ){out_L=9900; }
+   30   1        if(out_L<-9900){out_L=-9900;}
+   31   1        if(out_R>9900 ){out_R=9900; }
+   32   1        if(out_R<-9900){out_R=-9900;}
+   33   1        
+   34   1      }
+   35          
+   36          
+   37          //左右轮独立速度环测试
+   38          void speed_loop_LR(void)
+   39          {
+   40   1        //0-编码器输入更新
+   41   1        static int16 err_speed_L_last=0,err_speed_L=0;
+   42   1        static float speed_output_L=0;
+   43   1        static int16 err_speed_R_last=0,err_speed_R=0;
+   44   1        static float speed_output_R=0;
+   45   1        
+   46   1        //1-误差计算
+   47   1        err_speed_L_last = err_speed_L;
+   48   1        err_speed_L = speed_L_t - speed_L;
+*** ERROR C67 IN LINE 48 OF pid.c: 'speed_L_t': undefined identifier
+*** ERROR C67 IN LINE 48 OF pid.c: 'speed_L': undefined identifier
+   49   1        
+   50   1        //2-控制
+C251 COMPILER V5.60.0,  pid                                                                19/01/26  22:48:15  PAGE 2   
+
+   51   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
+*** ERROR C67 IN LINE 51 OF pid.c: 'pid_loop_speed': undefined identifier
+   52   1                          + pid_loop_speed.Ki * err_speed_L;
+*** ERROR C67 IN LINE 52 OF pid.c: 'pid_loop_speed': undefined identifier
+   53   1      
+   54   1        //增量
+   55   1        if(speed_output_L>3000 ){speed_output_L=3000; }
+   56   1        if(speed_output_L<-3000){speed_output_L=-3000;}
+   57   1        
+   58   1        //输出
+   59   1        out_L += speed_output_L;
+   60   1        
+   61   1        
+   62   1        
+   63   1        //0-编码器输入更新
+   64   1        
+   65   1        //1-误差计算
+   66   1        err_speed_R_last = err_speed_R;
+   67   1        err_speed_R = speed_R_t - speed_R;
+*** ERROR C67 IN LINE 67 OF pid.c: 'speed_R_t': undefined identifier
+*** ERROR C67 IN LINE 67 OF pid.c: 'speed_R': undefined identifier
+   68   1        
+   69   1        //2-控制
+   70   1        speed_output_R =  pid_loop_speed.Kp * (err_speed_R - err_speed_R_last)
+*** ERROR C67 IN LINE 70 OF pid.c: 'pid_loop_speed': undefined identifier
+   71   1                          + pid_loop_speed.Ki *  err_speed_R;
+*** ERROR C67 IN LINE 71 OF pid.c: 'pid_loop_speed': undefined identifier
+   72   1      
+   73   1        //增量
+   74   1        if(speed_output_R>3000 ){speed_output_R=3000; }
+   75   1        if(speed_output_R<-3000){speed_output_R=-3000;}
+   76   1        
+   77   1        //输出
+   78   1        out_R += speed_output_R;
+   79   1        
+   80   1        if(out_L>9900 ){out_L=9900; }
+   81   1        if(out_L<-9900){out_L=-9900;}
+   82   1        if(out_R>9900 ){out_R=9900; }
+   83   1        if(out_R<-9900){out_R=-9900;}
+   84   1      }
+   85          
+   86          
+   87          
+   88          
+   89          
+   90          
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  13 ERROR(S)

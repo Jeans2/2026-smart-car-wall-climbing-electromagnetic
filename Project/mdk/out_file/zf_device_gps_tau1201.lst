@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 1   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_device_gps_tau1201
@@ -66,7 +66,7 @@ stmt  level    source
    50          #include "zf_driver_delay.h"
    51          #include "zf_driver_uart.h"
    52          
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 2   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 2   
 
    53          #include "zf_device_type.h"
    54          #include "zf_device_gps_tau1201.h"
@@ -134,7 +134,7 @@ stmt  level    source
   112          // Ê¹ÓÃÊ¾Àý     get_int_number(&buf[get_parameter_index(7, buf)]);
   113          // ±¸×¢ÐÅÏ¢     ÄÚ²¿Ê¹ÓÃ
   114          //-------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 3   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 3   
 
              -------------
   115          static int get_int_number (char *s)
@@ -202,7 +202,7 @@ stmt  level    source
   172          // ²ÎÊýËµÃ÷     *time           ±£´æµÄÊ±¼ä
   173          // ·µ»Ø²ÎÊý     void
   174          // Ê¹ÓÃÊ¾Àý     utc_to_btc(&gps->time);
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 4   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 4   
 
   175          // ±¸×¢ÐÅÏ¢     ÄÚ²¿Ê¹ÓÃ
   176          //-------------------------------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ stmt  level    source
   234   1          float speed_tmp = 0;
   235   1          char *buf = line;
   236   1          uint8 return_state = 0;
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 5   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 5   
 
   237   1      
   238   1          state = buf[get_parameter_index(2, buf)];
@@ -338,7 +338,7 @@ stmt  level    source
   297   1          uint8 return_state = 0;
   298   1      
   299   1          state = buf[get_parameter_index(2, buf)];
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 6   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 6   
 
   300   1      
   301   1          if(',' != state)
@@ -406,7 +406,7 @@ stmt  level    source
   357          {
   358   1        double x = 0;
   359   1        double y = 0;
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 7   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 7   
 
   360   1        double angle = 0;
   361   1        
@@ -474,7 +474,7 @@ stmt  level    source
   421   1          {
   422   2              if(GPS_STATE_RECEIVED == gps_rmc_state)
   423   2              {
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 8   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 8   
 
   424   3                  gps_rmc_state = GPS_STATE_PARSING;
   425   3                  strncpy((char *)&check_buffer[2], strchr((const char *)gps_rmc_buffer, '*') + 1, 2);
@@ -542,7 +542,7 @@ stmt  level    source
   483   2              if('\n' == uart_dat)
   484   2              {
   485   3                  // ¶ÁÈ¡Ç°6¸öÊý¾Ý ÓÃÓÚÅÐ¶ÏÓï¾äÀàÐÍ
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 9   
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 9   
 
   486   3                  temp_length = 6;
   487   3                  fifo_read_buffer(&gps_tau1201_receiver_fifo, temp_gps, &temp_length, FIFO_READ_ONLY);
@@ -610,7 +610,7 @@ stmt  level    source
   543   1          system_delay_ms(500);                                                           // µÈ´ýGPSÆô¶¯ºó¿ªÊ¼³
              -õÊ¼»¯
   544   1          
-C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  15:20:38  PAGE 10  
+C251 COMPILER V5.60.0,  zf_device_gps_tau1201                                              19/01/26  22:48:13  PAGE 10  
 
   545   1        uart_init(GPS_TAU1201_UART, 115200, GPS_TAU1201_RX, GPS_TAU1201_TX);
   546   1          uart_rx_interrupt(GPS_TAU1201_UART, 0);

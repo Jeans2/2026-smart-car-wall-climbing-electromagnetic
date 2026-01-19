@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_device_type                                                     19/01/26  15:20:39  PAGE 1   
+C251 COMPILER V5.60.0,  zf_device_type                                                     19/01/26  22:48:14  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_device_type
@@ -66,7 +66,7 @@ stmt  level    source
    51          //-------------------------------------------------------------------------------------------------------
              -------------
    52          void set_wireless_type (wireless_type_enum type_set, uart_index_enum uartx, void *uart_callback)
-C251 COMPILER V5.60.0,  zf_device_type                                                     19/01/26  15:20:39  PAGE 2   
+C251 COMPILER V5.60.0,  zf_device_type                                                     19/01/26  22:48:14  PAGE 2   
 
    53          {
    54   1          wireless_type = type_set;
@@ -134,7 +134,7 @@ stmt  level    source
   112   1          else if(uartx == UART_4)
   113   1          {
   114   2              uart4_irq_handler = uart_callback;
-C251 COMPILER V5.60.0,  zf_device_type                                                     19/01/26  15:20:39  PAGE 3   
+C251 COMPILER V5.60.0,  zf_device_type                                                     19/01/26  22:48:14  PAGE 3   
 
   115   2          }
   116   1      }

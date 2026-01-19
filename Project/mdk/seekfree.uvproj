@@ -787,6 +787,16 @@
               <FileType>5</FileType>
               <FilePath>.\xunji.h</FilePath>
             </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pid.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
