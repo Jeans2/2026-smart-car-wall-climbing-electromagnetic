@@ -12,7 +12,7 @@ void motor_init(void)
 	
 }
 
-void set_pwm_motor_L(int16 duty)
+void set_pwm_motor_R(int16 duty)
 {
 	  if(duty>9900){duty=9900;}
 	  if(duty<-9900){duty=-9900;}
@@ -30,7 +30,7 @@ void set_pwm_motor_L(int16 duty)
 }
 
 
-void set_pwm_motor_R(int16 duty)
+void set_pwm_motor_L(int16 duty)
 {
 	  if(duty>9900){duty=9900;}
 	  if(duty<-9900){duty=-9900;}

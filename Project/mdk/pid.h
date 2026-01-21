@@ -14,6 +14,26 @@ extern struct PID
 	float Ki_gyro;
 	float Kd_gyro;
 };
+/*********PID*********/
+
+extern struct PID pid_motor_straight;
+extern struct PID pid_motor_turn;
+
+extern struct PID pid_loop_speed_start;	
+extern struct PID pid_loop_speed_run;					
+extern int16 speed_target;
+extern int16 speed_straight,speed_turn,speed_ringR;
+
+extern struct PID pid_loop_speed;
+//extern struct PID pid_motor_ringR;
+//extern struct PID pid_loop_angle;
+//extern struct PID pid_loop_gyro;
+
+//extern float limit_gyro;
+
+//extern float angle_start;
+//extern struct PID pid_loop_angle_start;				//角度环
+//extern struct PID pid_loop_angle_ring;				//角度环
 
 /*************变量*************/
 //速度环
@@ -35,4 +55,15 @@ extern float out_L,out_R;			//输出
 
 //void speed_loop(void);
 //void speed_loop_LR(void);
+
+
+/*************函数*************/
+
+
+
+
+
+
+void speed_loop(void);//速度环
+void speed_loop_LR(int16 speed_L_t,int16 speed_R_t);
 #endif

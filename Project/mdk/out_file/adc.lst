@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                19/01/26  22:48:16  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                21/01/26  15:03:29  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        temp = adc_convert(ch);
    56   1        max = temp;
    57   1        min = temp;
-C251 COMPILER V5.60.0,  adc                                                                19/01/26  22:48:16  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                21/01/26  15:03:29  PAGE 2   
 
    58   1        sum += temp;
    59   1        
@@ -134,7 +134,7 @@ stmt  level    source
   121          void adc_normalizing(void)
   122          {
   123   1        
-C251 COMPILER V5.60.0,  adc                                                                19/01/26  22:48:16  PAGE 3   
+C251 COMPILER V5.60.0,  adc                                                                21/01/26  15:03:29  PAGE 3   
 
   124   1       
   125   1        L  = 100*(ADC_temp[0]-0)/(600-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
@@ -164,7 +164,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =       153     ------
+  xdata size           =       157     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------

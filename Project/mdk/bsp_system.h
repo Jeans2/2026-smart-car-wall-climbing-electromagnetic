@@ -2,10 +2,11 @@
 #define __BSP_SYSTEM_H
 
 #include "zf_common_headfile.h"
-
-
-
-
+/******logic*******/
+#include "xunji.h"
+#include "pid.h"
+#include "pid.h"
+#include "task.h"
 /******system*******/
 
 #include "aoi_function.h"
@@ -18,8 +19,8 @@
 
 
 #include "adc.h"
-
-
+#include "motor.h"
+#include "encoder.h"
 /*******other*********/
 #include "stdio.h"
 #include "math.h"

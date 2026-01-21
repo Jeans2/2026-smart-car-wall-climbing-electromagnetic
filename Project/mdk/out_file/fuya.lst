@@ -1,0 +1,46 @@
+C251 COMPILER V5.60.0,  fuya                                                               21/01/26  15:03:28  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE fuya
+OBJECT MODULE PLACED IN .\out_file\fuya.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE fuya.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\fuya.lst) TABS(2) OBJECT(.\out_file\fuya.obj) 
+
+stmt  level    source
+
+    1          #include "fuya.h"
+    2          
+    3          void fuya_init()
+    4          {
+    5   1        pwm_init(FUYA_CHL , 17000, 9000);
+    6   1      }
+    7          
+    8          void fuya_set_duty(uint32 duty)
+    9          {
+   10   1        pwm_set_duty(FUYA_CHL, duty);
+   11   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =        54     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =         4     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

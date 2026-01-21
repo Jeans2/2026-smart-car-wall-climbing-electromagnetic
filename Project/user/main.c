@@ -34,18 +34,32 @@
 ********************************************************************************************************************/
 
 #include "zf_common_headfile.h"
-
+#include "main.h"
+#define PIT_CH                          (TIM1_PIT ) 
+#include "fuya.h"
 void main()
 {
     clock_init(SYSTEM_CLOCK_30M);
 	debug_init();
 	
 	// 此处编写用户代码 例如外设初始化代码等
+	  System_Init();
+			 pit_ms_init(PIT_CH, 2); 
+	tim1_irq_handler = encoder_update;
 	
+			speed_target = 100;
     while(1)
-    {
-		
+    {				
         // 此处编写需要循环执行的代码
 		
+//				encoder_update();
+		speed_loop();
+    set_pwm_motor_R(out_R);
+		set_pwm_motor_L(out_R);
+//    system_delay_ms(100);	
+			printf("%d,%d\n",speed_target, speed_avl);
+			
+			
+			
     }
 }

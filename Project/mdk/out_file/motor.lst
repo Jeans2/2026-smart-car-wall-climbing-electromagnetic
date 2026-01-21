@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  motor                                                              19/01/26  22:48:16  PAGE 1   
+C251 COMPILER V5.60.0,  motor                                                              21/01/26  15:03:29  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE motor
@@ -26,7 +26,7 @@ stmt  level    source
    12   1        
    13   1      }
    14          
-   15          void set_pwm_motor_L(int16 duty)
+   15          void set_pwm_motor_R(int16 duty)
    16          {
    17   1          if(duty>9900){duty=9900;}
    18   1          if(duty<-9900){duty=-9900;}
@@ -44,7 +44,7 @@ stmt  level    source
    30   1      }
    31          
    32          
-   33          void set_pwm_motor_R(int16 duty)
+   33          void set_pwm_motor_L(int16 duty)
    34          {
    35   1          if(duty>9900){duty=9900;}
    36   1          if(duty<-9900){duty=-9900;}
@@ -67,12 +67,12 @@ Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =       329     ------
   ecode size           =    ------     ------
-C251 COMPILER V5.60.0,  motor                                                              19/01/26  22:48:16  PAGE 2   
+C251 COMPILER V5.60.0,  motor                                                              21/01/26  15:03:29  PAGE 2   
 
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         4     ------
+  xdata size           =         8     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               19/01/26  22:48:15  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               21/01/26  15:03:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -51,33 +51,47 @@ stmt  level    source
              -***********/
    35          
    36          #include "zf_common_headfile.h"
-   37          
-   38          void main()
-   39          {
-   40   1          clock_init(SYSTEM_CLOCK_30M);
-   41   1        debug_init();
-   42   1        
-   43   1        // 此处编写用户代码 例如外设初始化代码等
+   37          #include "main.h"
+   38          #define PIT_CH                          (TIM1_PIT ) 
+   39          #include "fuya.h"
+   40          void main()
+   41          {
+   42   1          clock_init(SYSTEM_CLOCK_30M);
+   43   1        debug_init();
    44   1        
-   45   1          while(1)
-   46   1          {
-   47   2          
-   48   2              // 此处编写需要循环执行的代码
-   49   2          
-   50   2          }
-   51   1      }
-C251 COMPILER V5.60.0,  main                                                               19/01/26  22:48:15  PAGE 2   
+   45   1        // 此处编写用户代码 例如外设初始化代码等
+   46   1          System_Init();
+   47   1             pit_ms_init(PIT_CH, 2); 
+   48   1        tim1_irq_handler = encoder_update;
+   49   1        
+   50   1            speed_target = 100;
+   51   1          while(1)
+C251 COMPILER V5.60.0,  main                                                               21/01/26  15:03:28  PAGE 2   
 
+   52   1          {       
+   53   2              // 此处编写需要循环执行的代码
+   54   2          
+   55   2      //        encoder_update();
+   56   2          speed_loop();
+   57   2          set_pwm_motor_R(out_R);
+   58   2          set_pwm_motor_L(out_R);
+   59   2      //    system_delay_ms(100); 
+   60   2            printf("%d,%d\n",speed_target, speed_avl);
+   61   2            
+   62   2            
+   63   2            
+   64   2          }
+   65   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        61     ------
+  code size            =       186     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =    ------     ------
+  xdata size           =         4     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -87,7 +101,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         2     ------
+  hconst size          =         9     ------
 End of Module Information.
 
 

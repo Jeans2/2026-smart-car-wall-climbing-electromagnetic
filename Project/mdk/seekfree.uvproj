@@ -772,6 +772,21 @@
               <FileType>1</FileType>
               <FilePath>..\user\main.c</FilePath>
             </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\main.h</FilePath>
+            </File>
+            <File>
+              <FileName>fuya.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\fuya.c</FilePath>
+            </File>
+            <File>
+              <FileName>fuya.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\fuya.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -796,6 +811,16 @@
               <FileName>pid.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\pid.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\task.c</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\task.h</FilePath>
             </File>
           </Files>
         </Group>

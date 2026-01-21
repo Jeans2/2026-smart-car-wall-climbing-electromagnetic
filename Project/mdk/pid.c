@@ -2,7 +2,14 @@
 
 //速度环
 int16 err_speed=0;
+int16 speed_target = 0;
 float out_L=0,out_R=0;
+struct PID pid_loop_speed = {10,0.005};			
+
+
+
+
+
 
 
 //直行速度环
@@ -15,7 +22,7 @@ void speed_loop(void)
 	 err_speed = speed_target - speed_avl;
 	
 //2—增量式PI控制
-		speed_output =  pid_loop_speed.Kp * (err_speed - err_speed_last)
+		speed_output =  pid_loop_speed.Kp * (err_speed - last_err_speed)
 									+ pid_loop_speed.Ki *  err_speed;
 	
 	//增量
@@ -29,13 +36,12 @@ void speed_loop(void)
 	if(out_L>9900 ){out_L=9900; }
 	if(out_L<-9900){out_L=-9900;}
 	if(out_R>9900 ){out_R=9900; }
-	if(out_R<-9900){out_R=-9900;}
-	
+	if(out_R<-9900){out_R=-9900;}	
 }
 
 
 //左右轮独立速度环测试
-void speed_loop_LR(void)
+void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
 {
 	//0-编码器输入更新
 	static int16 err_speed_L_last=0,err_speed_L=0;
