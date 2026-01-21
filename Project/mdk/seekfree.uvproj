@@ -787,6 +787,16 @@
               <FileType>5</FileType>
               <FilePath>.\fuya.h</FilePath>
             </File>
+            <File>
+              <FileName>ips114.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ips114.c</FilePath>
+            </File>
+            <File>
+              <FileName>ips114.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ips114.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

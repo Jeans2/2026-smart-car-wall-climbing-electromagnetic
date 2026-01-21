@@ -158,10 +158,15 @@ void TM1_IRQHandler() interrupt 3
 
     if (tim1_irq_handler != NULL)
     {
-        tim1_irq_handler();
+        //tim1_irq_handler();
+			encoder_update();
+			speed_loop();
+			set_pwm_motor_R(out_R);
+			set_pwm_motor_L(out_R);
 
     }
 }
+
 
 void TM2_IRQHandler() interrupt 12
 {

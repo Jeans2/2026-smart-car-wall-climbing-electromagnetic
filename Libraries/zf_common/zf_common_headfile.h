@@ -98,6 +98,6 @@
 #include "seekfree_assistant.h"
 
 #include "seekfree_assistant_interface.h"
-
+#include "main.h"
 
 #endif

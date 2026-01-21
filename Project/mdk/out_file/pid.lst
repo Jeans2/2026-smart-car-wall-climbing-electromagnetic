@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                21/01/26  15:36:05  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                22/01/26  02:43:31  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -15,7 +15,7 @@ stmt  level    source
     4          int16 err_speed=0;
     5          int16 speed_target = 0;
     6          float out_L=0,out_R=0;
-    7          struct PID pid_loop_speed = {10,0.005};     
+    7          struct PID pid_loop_speed = {40,0.125,0};     
     8          
     9          
    10          
@@ -27,96 +27,99 @@ stmt  level    source
    16          void speed_loop(void)
    17          {
    18   1          static int16 last_err_speed=0;
-   19   1          static float speed_output=0;//总输出
-   20   1        //1-误差计算
-   21   1         last_err_speed = err_speed;
-   22   1         err_speed = speed_target - speed_avl;
-   23   1        
-   24   1      //2—增量式PI控制
-   25   1          speed_output =  pid_loop_speed.Kp * (err_speed - last_err_speed)
-   26   1                        + pid_loop_speed.Ki *  err_speed;
-   27   1        
-   28   1        //增量
-   29   1        if(speed_output>2000 ){speed_output=2000; }
-   30   1        if(speed_output<-2000){speed_output=-2000;}
-   31   1        
-   32   1        //输出
-   33   1        out_L += speed_output;
-   34   1        out_R = out_L;
-   35   1        
-   36   1        if(out_L>9900 ){out_L=9900; }
-   37   1        if(out_L<-9900){out_L=-9900;}
-   38   1        if(out_R>9900 ){out_R=9900; }
-   39   1        if(out_R<-9900){out_R=-9900;} 
-   40   1      }
-   41          
-   42          
-   43          //左右轮独立速度环测试
-   44          void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
-   45          {
-   46   1        //0-编码器输入更新
-   47   1        static int16 err_speed_L_last=0,err_speed_L=0;
-   48   1        static float speed_output_L=0;
-   49   1        static int16 err_speed_R_last=0,err_speed_R=0;
-   50   1        static float speed_output_R=0;
-   51   1        
-   52   1        //1-误差计算
-   53   1        err_speed_L_last = err_speed_L;
-   54   1        err_speed_L = speed_L_t - speed_L;
-   55   1        
-   56   1        //2-控制
-   57   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
-C251 COMPILER V5.60.0,  pid                                                                21/01/26  15:36:05  PAGE 2   
+   19   1          static int16 last_last_err_speed=0;
+   20   1          static float speed_output=0;//总输出
+   21   1        //1-误差计算
+   22   1         last_last_err_speed = last_err_speed;
+   23   1         last_err_speed = err_speed; 
+   24   1         err_speed = speed_target - speed_avl;
+   25   1        
+   26   1      //2—增量式PI控制
+   27   1          speed_output =  pid_loop_speed.Kp * (err_speed - last_err_speed)
+   28   1                        + pid_loop_speed.Ki *  err_speed 
+   29   1                        + pid_loop_speed.Kd * (err_speed - 2*last_err_speed + last_last_err_speed);
+   30   1        
+   31   1        //增量
+   32   1        if(speed_output>2000 ){speed_output=2000; }
+   33   1        if(speed_output<-2000){speed_output=-2000;}
+   34   1        
+   35   1        //输出
+   36   1        out_L+= speed_output;
+   37   1        out_R = out_L;
+   38   1        
+   39   1        if(out_L>5000 ){out_L=5000; }
+   40   1        if(out_L<-5000){out_L=-5000;}
+   41   1        if(out_R>5000 ){out_R=5000; }
+   42   1        if(out_R<-5000){out_R=-5000;} 
+   43   1      }
+   44          
+   45          
+   46          //左右轮独立速度环测试
+   47          void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
+   48          {
+   49   1        //0-编码器输入更新
+   50   1        static int16 err_speed_L_last=0,err_speed_L=0;
+   51   1        static float speed_output_L=0;
+   52   1        static int16 err_speed_R_last=0,err_speed_R=0;
+   53   1        static float speed_output_R=0;
+   54   1        
+   55   1        //1-误差计算
+   56   1        err_speed_L_last = err_speed_L;
+   57   1        err_speed_L = speed_L_t - speed_L;
+C251 COMPILER V5.60.0,  pid                                                                22/01/26  02:43:31  PAGE 2   
 
-   58   1                          + pid_loop_speed.Ki * err_speed_L;
-   59   1      
-   60   1        //增量
-   61   1        if(speed_output_L>3000 ){speed_output_L=3000; }
-   62   1        if(speed_output_L<-3000){speed_output_L=-3000;}
-   63   1        
-   64   1        //输出
-   65   1        out_L += speed_output_L;
+   58   1        
+   59   1        //2-控制
+   60   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
+   61   1                          + pid_loop_speed.Ki * err_speed_L;
+   62   1      
+   63   1        //增量
+   64   1        if(speed_output_L>3000 ){speed_output_L=3000; }
+   65   1        if(speed_output_L<-3000){speed_output_L=-3000;}
    66   1        
-   67   1        
-   68   1        
-   69   1        //0-编码器输入更新
+   67   1        //输出
+   68   1        out_L += speed_output_L;
+   69   1        
    70   1        
-   71   1        //1-误差计算
-   72   1        err_speed_R_last = err_speed_R;
-   73   1        err_speed_R = speed_R_t - speed_R;
-   74   1        
-   75   1        //2-控制
-   76   1        speed_output_R =  pid_loop_speed.Kp * (err_speed_R - err_speed_R_last)
-   77   1                          + pid_loop_speed.Ki *  err_speed_R;
-   78   1      
-   79   1        //增量
-   80   1        if(speed_output_R>3000 ){speed_output_R=3000; }
-   81   1        if(speed_output_R<-3000){speed_output_R=-3000;}
-   82   1        
-   83   1        //输出
-   84   1        out_R += speed_output_R;
+   71   1        
+   72   1        //0-编码器输入更新
+   73   1        
+   74   1        //1-误差计算
+   75   1        err_speed_R_last = err_speed_R;
+   76   1        err_speed_R = speed_R_t - speed_R;
+   77   1        
+   78   1        //2-控制
+   79   1        speed_output_R =  pid_loop_speed.Kp * (err_speed_R - err_speed_R_last)
+   80   1                          + pid_loop_speed.Ki *  err_speed_R;
+   81   1      
+   82   1        //增量
+   83   1        if(speed_output_R>3000 ){speed_output_R=3000; }
+   84   1        if(speed_output_R<-3000){speed_output_R=-3000;}
    85   1        
-   86   1        if(out_L>9900 ){out_L=9900; }
-   87   1        if(out_L<-9900){out_L=-9900;}
-   88   1        if(out_R>9900 ){out_R=9900; }
-   89   1        if(out_R<-9900){out_R=-9900;}
-   90   1      }
-   91          
-   92          
-   93          
+   86   1        //输出
+   87   1        out_R += speed_output_R;
+   88   1        
+   89   1        if(out_L>9900 ){out_L=9900; }
+   90   1        if(out_L<-9900){out_L=-9900;}
+   91   1        if(out_R>9900 ){out_R=9900; }
+   92   1        if(out_R<-9900){out_R=-9900;}
+   93   1      }
    94          
    95          
    96          
+   97          
+   98          
+   99          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1023     ------
+  code size            =      1088     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        66     ------
+  xdata size           =        68     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -126,7 +129,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =       123     ------
+  hconst size          =       130     ------
 End of Module Information.
 
 

@@ -1,0 +1,51 @@
+C251 COMPILER V5.60.0,  ips114                                                             22/01/26  02:43:31  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE ips114
+OBJECT MODULE PLACED IN .\out_file\ips114.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ips114.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR
+                    -(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\
+                    -code) DEBUG PRINT(.\out_file\ips114.lst) TABS(2) OBJECT(.\out_file\ips114.obj) 
+
+stmt  level    source
+
+    1          #include "ips114.h"
+    2          
+    3          void ips114_show()
+    4          {
+    5   1        ips114_show_string(0,16*0,"L:");
+    6   1        ips114_show_string(0,16*1,"LM:");
+    7   1        ips114_show_string(0,16*2,"R");
+    8   1        ips114_show_string(0,16*3,"RM:");
+    9   1        
+   10   1        ips114_show_float(22,16*0,L,3,1);
+   11   1        ips114_show_float(22,16*1,LM,3,1);
+   12   1        ips114_show_float(22,16*2,R,3,1);
+   13   1        ips114_show_float(22,16*3,RM,3,1);
+   14   1        
+   15   1      
+   16   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       181     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =         4     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =        13     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

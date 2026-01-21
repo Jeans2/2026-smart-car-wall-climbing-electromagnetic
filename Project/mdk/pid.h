@@ -14,6 +14,7 @@ extern struct PID
 	float Ki_gyro;
 	float Kd_gyro;
 };
+
 /*********PID*********/
 
 extern struct PID pid_motor_straight;
@@ -67,3 +68,4 @@ extern float out_L,out_R;			//输出
 void speed_loop(void);//速度环
 void speed_loop_LR(int16 speed_L_t,int16 speed_R_t);
 #endif
+

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 1   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_driver_gpio
@@ -66,7 +66,7 @@ stmt  level    source
    52   1      //    else if(GPI_PULL_DOWN == mode)
    53   1      //    {
    54   1      //        PXPD(pin) |= (1 << (pin & 0x0F));
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 2   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 2   
 
    55   1      //    }
    56   1          else if(GPI_PULL_UP == mode || GPO_PUSH_PULL == mode)
@@ -134,7 +134,7 @@ stmt  level    source
   118   2                  // 快速模式：清除位；低速模式：置位
   119   2                  (GPIO_SPEED_FAST == speed) ? (P0SR &= ~(1 << pin_bit)) : (P0SR |= (1 << pin_bit));
   120   2                  break;
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 3   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 3   
 
   121   2              case IO_P10:
   122   2                  (GPIO_SPEED_FAST == speed) ? (P1SR &= ~(1 << pin_bit)) : (P1SR |= (1 << pin_bit));
@@ -202,7 +202,7 @@ stmt  level    source
   184   3      //                P1M0 |= (1 << (pin & 0xF));
   185   3      //            }
   186   3                  else if(GPO == dir)
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 4   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 4   
 
   187   3                  {
   188   4                      P1M1 &= ~(1 << (pin & 0xF));
@@ -270,7 +270,7 @@ stmt  level    source
   250   4                  }
   251   3              }
   252   2              break;
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 5   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 5   
 
   253   2              
   254   2              case IO_P50:
@@ -338,7 +338,7 @@ stmt  level    source
   316   2              {
   317   3            zf_assert(0);
   318   3            // 没有这个引脚
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 6   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 6   
 
   319   3              } break;
   320   2          }
@@ -406,7 +406,7 @@ stmt  level    source
   378          
   379          //-------------------------------------------------------------------------------------------------------
              -------------
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 7   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 7   
 
   380          // 函数简介     GPIO电平翻转
   381          // 参数说明     pin         引脚号选择的引脚
@@ -474,7 +474,7 @@ stmt  level    source
   438   2          {
   439   3            gpio_set_impedance(pin);
   440   3          }
-C251 COMPILER V5.60.0,  zf_driver_gpio                                                     21/01/26  15:03:22  PAGE 8   
+C251 COMPILER V5.60.0,  zf_driver_gpio                                                     22/01/26  02:43:28  PAGE 8   
 
   441   2          else
   442   2          {

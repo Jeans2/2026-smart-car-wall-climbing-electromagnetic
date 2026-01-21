@@ -41,6 +41,7 @@
 ".\out_file\isr.obj",
 ".\out_file\main.obj",
 ".\out_file\fuya.obj",
+".\out_file\ips114.obj",
 ".\out_file\xunji.obj",
 ".\out_file\pid.obj",
 ".\out_file\task.obj",

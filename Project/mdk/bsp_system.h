@@ -17,7 +17,7 @@
 /******hardware*******/
 
 
-
+#include "ips114.h"
 #include "adc.h"
 #include "motor.h"
 #include "encoder.h"

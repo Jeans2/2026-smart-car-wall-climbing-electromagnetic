@@ -4,7 +4,7 @@
 int16 err_speed=0;
 int16 speed_target = 0;
 float out_L=0,out_R=0;
-struct PID pid_loop_speed = {10,0.005};			
+struct PID pid_loop_speed = {40,0.125,0};			
 
 
 
@@ -16,27 +16,30 @@ struct PID pid_loop_speed = {10,0.005};
 void speed_loop(void)
 {
 		static int16 last_err_speed=0;
+	  static int16 last_last_err_speed=0;
 		static float speed_output=0;//总输出
 	//1-误差计算
-   last_err_speed = err_speed;
+   last_last_err_speed = last_err_speed;
+	 last_err_speed = err_speed; 
 	 err_speed = speed_target - speed_avl;
 	
 //2—增量式PI控制
 		speed_output =  pid_loop_speed.Kp * (err_speed - last_err_speed)
-									+ pid_loop_speed.Ki *  err_speed;
+									+ pid_loop_speed.Ki *  err_speed 
+									+ pid_loop_speed.Kd * (err_speed - 2*last_err_speed + last_last_err_speed);
 	
 	//增量
 	if(speed_output>2000 ){speed_output=2000; }
 	if(speed_output<-2000){speed_output=-2000;}
 	
 	//输出
-	out_L += speed_output;
+	out_L+= speed_output;
 	out_R = out_L;
 	
-	if(out_L>9900 ){out_L=9900; }
-	if(out_L<-9900){out_L=-9900;}
-	if(out_R>9900 ){out_R=9900; }
-	if(out_R<-9900){out_R=-9900;}	
+	if(out_L>5000 ){out_L=5000; }
+	if(out_L<-5000){out_L=-5000;}
+	if(out_R>5000 ){out_R=5000; }
+	if(out_R<-5000){out_R=-5000;}	
 }
 
 

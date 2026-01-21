@@ -46,19 +46,22 @@ void main()
 	  System_Init();
 			 pit_ms_init(PIT_CH, 2); 
 	tim1_irq_handler = encoder_update;
-	
+	ips114_init();
 			speed_target = 100;
-    while(1)
+    				
+	while(1)
     {				
         // 此处编写需要循环执行的代码
-		
-//				encoder_update();
-		speed_loop();
-    set_pwm_motor_R(out_R);
-		set_pwm_motor_L(out_R);
-//    system_delay_ms(100);	
-			printf("%d,%d\n",speed_target, speed_avl);
+				//ips114_show();
 			
+//				encoder_update();
+//			speed_loop();
+//			set_pwm_motor_R(out_R);
+//			set_pwm_motor_L(out_R);
+
+			printf("%d,%d\n",speed_target, speed_avl);
+			//    system_delay_ms(100);	
+	
 			
 			
     }

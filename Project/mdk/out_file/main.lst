@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               21/01/26  15:03:28  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               22/01/26  02:49:27  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -63,30 +63,33 @@ stmt  level    source
    46   1          System_Init();
    47   1             pit_ms_init(PIT_CH, 2); 
    48   1        tim1_irq_handler = encoder_update;
-   49   1        
+   49   1        ips114_init();
    50   1            speed_target = 100;
-   51   1          while(1)
-C251 COMPILER V5.60.0,  main                                                               21/01/26  15:03:28  PAGE 2   
+   51   1                  
+C251 COMPILER V5.60.0,  main                                                               22/01/26  02:49:27  PAGE 2   
 
-   52   1          {       
-   53   2              // 此处编写需要循环执行的代码
-   54   2          
-   55   2      //        encoder_update();
-   56   2          speed_loop();
-   57   2          set_pwm_motor_R(out_R);
-   58   2          set_pwm_motor_L(out_R);
-   59   2      //    system_delay_ms(100); 
-   60   2            printf("%d,%d\n",speed_target, speed_avl);
-   61   2            
-   62   2            
-   63   2            
-   64   2          }
-   65   1      }
+   52   1        while(1)
+   53   1          {       
+   54   2              // 此处编写需要循环执行的代码
+   55   2              //ips114_show();
+   56   2            
+   57   2      //        encoder_update();
+   58   2      //      speed_loop();
+   59   2      //      set_pwm_motor_R(out_R);
+   60   2      //      set_pwm_motor_L(out_R);
+   61   2      
+   62   2            printf("%d,%d\n",speed_target, speed_avl);
+   63   2            //    system_delay_ms(100); 
+   64   2        
+   65   2            
+   66   2            
+   67   2          }
+   68   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       186     ------
+  code size            =       154     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

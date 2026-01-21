@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  fuya                                                               21/01/26  15:03:28  PAGE 1   
+C251 COMPILER V5.60.0,  fuya                                                               22/01/26  02:43:30  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE fuya
@@ -29,7 +29,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         4     ------
+  xdata size           =         8     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
