@@ -14,3 +14,15 @@ void System_Init(void)
       motor_init();       // 电机初始化
     
 }
+
+void caiyang(void)
+{
+
+	  siai_adc_all_sample();
+	  adc_normalizing();
+	
+
+
+
+
+}

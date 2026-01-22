@@ -5,6 +5,6 @@
 
 void System_Init(void);
 
-
+void caiyang(void);
 
 #endif

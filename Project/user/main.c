@@ -45,14 +45,15 @@ void main()
 	// 此处编写用户代码 例如外设初始化代码等
 	  System_Init();
 			 pit_ms_init(PIT_CH, 2); 
-	tim1_irq_handler = encoder_update;
+
 	ips114_init();
-			speed_target = 100;
+			speed_target = 150;
     				
 	while(1)
     {				
+			caiyang();
         // 此处编写需要循环执行的代码
-				//ips114_show();
+				ips114_show();
 			
 //				encoder_update();
 //			speed_loop();
