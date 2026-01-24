@@ -4,7 +4,7 @@ float null_drift_z=0;	//零漂
 float avl_gyro_z=0;   //测量
 float gyro_z[2]={0}, next_gyro_z=0;			//(被测)Z轴角速度
 float angle_ringR=0;
-float z=0;
+
 
 
 void gyro_get()				//角速度,角度获取
@@ -29,7 +29,7 @@ void angle_clear()
 	angle_ringR=0;
 }
 
-int8 null_drift_calculate()
+int8 null_drift_calculate()     //零漂采集
 {
 	static int16 cnt_null=0;
 	static float temp=0;

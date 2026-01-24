@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  imu660rb                                                           24/01/26  15:16:12  PAGE 1   
+C251 COMPILER V5.60.0,  imu660rb                                                           25/01/26  00:05:37  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE imu660rb
@@ -15,7 +15,7 @@ stmt  level    source
     4          float avl_gyro_z=0;   //测量
     5          float gyro_z[2]={0}, next_gyro_z=0;     //(被测)Z轴角速度
     6          float angle_ringR=0;
-    7          float z=0;
+    7          
     8          
     9          
    10          void gyro_get()       //角速度,角度获取
@@ -40,7 +40,7 @@ stmt  level    source
    29   1        angle_ringR=0;
    30   1      }
    31          
-   32          int8 null_drift_calculate()
+   32          int8 null_drift_calculate()     //零漂采集
    33          {
    34   1        static int16 cnt_null=0;
    35   1        static float temp=0;
@@ -67,12 +67,12 @@ Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =       320     ------
   ecode size           =    ------     ------
-C251 COMPILER V5.60.0,  imu660rb                                                           24/01/26  15:16:12  PAGE 2   
+C251 COMPILER V5.60.0,  imu660rb                                                           25/01/26  00:05:37  PAGE 2   
 
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        39     ------
+  xdata size           =        35     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -82,7 +82,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        80     ------
+  hconst size          =        71     ------
 End of Module Information.
 
 

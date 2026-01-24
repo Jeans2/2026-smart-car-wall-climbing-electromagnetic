@@ -27,10 +27,11 @@ extern int16 speed_straight,speed_turn,speed_ringR;
 
 extern struct PID pid_loop_speed;
 //extern struct PID pid_motor_ringR;
-//extern struct PID pid_loop_angle;
+extern struct PID pid_loop_angle;
 //extern struct PID pid_loop_gyro;
 
-//extern float limit_gyro;
+extern float limit_gyro  ;
+extern int16 speed_turn ;
 
 //extern float angle_start;
 //extern struct PID pid_loop_angle_start;				//角度环
@@ -43,13 +44,13 @@ extern float out_L,out_R;			//输出
 
 
 //方向环
-//extern float expect_gyro;			//误差
-//extern float correct_L;				//输出
+extern float expect_gyro;			//误差
+extern float correct_L;				//输出
 
 
 //角度环
-//extern float expect_gyro_angles;
-//extern float out_angle;
+extern float expect_gyro_angles;
+extern float out_angle;
 
 //角速度环
 //extern int16 out_gyro;
@@ -63,8 +64,8 @@ extern float out_L,out_R;			//输出
 
 
 
-
-
+void direction_return(float err_position);
+void loop_angle(float next_angle,float target_angle);
 void speed_loop(void);//速度环
 void speed_loop_LR(int16 speed_L_t,int16 speed_R_t);
 #endif
