@@ -7,8 +7,8 @@
 
 #define ADC_L_CH    ADC_CH8_P00//L1
 #define ADC_LM_CH   ADC_CH9_P01//L2
-#define ADC_R_CH    ADC_CH13_P05//L3
-#define ADC_RM_CH   ADC_CH14_P06//L4
+#define ADC_RM_CH    ADC_CH13_P05//L3
+#define ADC_R_CH   ADC_CH14_P06//L4
 
 #define ADC_V       ADC_CH2_P12
 

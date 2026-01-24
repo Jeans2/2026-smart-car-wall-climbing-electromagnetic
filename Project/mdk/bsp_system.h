@@ -16,7 +16,7 @@
 
 /******hardware*******/
 
-
+#include "imu660rb.h"
 #include "ips114.h"
 #include "adc.h"
 #include "motor.h"

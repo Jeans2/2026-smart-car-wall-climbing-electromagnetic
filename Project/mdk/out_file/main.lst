@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  main                                                               22/01/26  15:00:09  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               24/01/26  15:16:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
 OBJECT MODULE PLACED IN .\out_file\main.obj
-COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE 
-                    -INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\us
-                    -er;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
+COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE I
+                    -NCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\use
+                    -r;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
 
 stmt  level    source
 
@@ -63,34 +63,35 @@ stmt  level    source
    46   1          System_Init();
    47   1             pit_ms_init(PIT_CH, 2); 
    48   1      
-   49   1        ips114_init();
+   49   1        
    50   1            speed_target = 150;
    51   1                  
-C251 COMPILER V5.60.0,  main                                                               22/01/26  15:00:09  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               24/01/26  15:16:11  PAGE 2   
 
    52   1        while(1)
    53   1          {       
    54   2            caiyang();
    55   2              // 此处编写需要循环执行的代码
    56   2              ips114_show();
-   57   2            
-   58   2      //        encoder_update();
+   57   2          
+   58   2      //      encoder_update();
    59   2      //      speed_loop();
    60   2      //      set_pwm_motor_R(out_R);
    61   2      //      set_pwm_motor_L(out_R);
    62   2      
-   63   2            printf("%d,%d\n",speed_target, speed_avl);
-   64   2            //    system_delay_ms(100); 
-   65   2        
-   66   2            
+   63   2            //printf("%d,%d\n",speed_target, speed_avl);
+   64   2            printf("%f,%f,$f,%f\n",L,LM,R,RM);
+   65   2            //    system_delay_ms(100); 
+   66   2        
    67   2            
-   68   2          }
-   69   1      }
+   68   2            
+   69   2          }
+   70   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       150     ------
+  code size            =       203     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -105,7 +106,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         9     ------
+  hconst size          =        15     ------
 End of Module Information.
 
 

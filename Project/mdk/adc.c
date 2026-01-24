@@ -27,7 +27,7 @@ uint16 adc_sample(adc_channel_enum ch)//共采样11次，去掉2个极值，剩余9个求平均
 	uint16 temp,sum=0;
 	uint16 max,min;
 	uint8 i;
-	
+//	
 	temp = adc_convert(ch);
 	max = temp;
 	min = temp;
@@ -122,10 +122,10 @@ void adc_normalizing(void)
 {
 	
  
-	L  = 100*(ADC_temp[0]-0)/(600-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
-  LM = 100*(ADC_temp[1]-0)/(600-0);
-	RM = 100*(ADC_temp[3]-0)/(600-0);
-	R  = 100*(ADC_temp[4]-0)/(600-0);
+	L  = 100*(ADC_temp[0]-0)/(3500-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
+  LM = 100*(ADC_temp[1]-0)/(3500-0);
+	RM = 100*(ADC_temp[3]-0)/(3500-0);
+	R  = 100*(ADC_temp[2]-0)/(3500-0);
 	
 	//输入限幅
 	if(L >100){L =100;}
@@ -133,10 +133,3 @@ void adc_normalizing(void)
 	if(RM>100){RM=100;}
 	if(R >100){R =100;}
 }
-
-
-
-
-
-
-

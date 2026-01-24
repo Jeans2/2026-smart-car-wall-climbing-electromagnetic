@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  task                                                               22/01/26  15:01:25  PAGE 1   
+C251 COMPILER V5.60.0,  task                                                               24/01/26  15:16:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE task
 OBJECT MODULE PLACED IN .\out_file\task.obj
-COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE task.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
-                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
-                    -de) DEBUG PRINT(.\out_file\task.lst) TABS(2) OBJECT(.\out_file\task.obj) 
+COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE task.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
+                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
+                    -e) DEBUG PRINT(.\out_file\task.lst) TABS(2) OBJECT(.\out_file\task.obj) 
 
 stmt  level    source
 
@@ -20,28 +20,29 @@ stmt  level    source
     9          void System_Init(void)
    10          {
    11   1           
-   12   1           my_adc_init();
-   13   1           encoder_init();       // 编码器初始化
-   14   1            motor_init();       // 电机初始化
-   15   1          
-   16   1      }
-   17          
-   18          void caiyang(void)
-   19          {
-   20   1      
-   21   1          siai_adc_all_sample();
-   22   1          adc_normalizing();
-   23   1        
-   24   1      
+   12   1          my_adc_init();
+   13   1          encoder_init();       // 编码器初始化
+   14   1          motor_init();       // 电机初始化
+   15   1          ips114_init();
+   16   1          imu660rb_init();
+   17   1      }
+   18          
+   19          void caiyang(void)
+   20          {
+   21   1      
+   22   1          siai_adc_all_sample();
+   23   1          adc_normalizing();
+   24   1        
    25   1      
    26   1      
    27   1      
-   28   1      }
+   28   1      
+   29   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        17     ------
+  code size            =        23     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

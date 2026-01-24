@@ -48,6 +48,7 @@
 ".\out_file\adc.obj",
 ".\out_file\motor.obj",
 ".\out_file\encoder.obj",
+".\out_file\imu660rb.obj",
 ".\out_file\aoi_function.obj" 
 TO ".\out_file\SEEKFREE" 
 PRINT(".\out_file\SEEKFREE.map") CASE DISABLEWARNING (57,16) 

@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  xunji                                                              22/01/26  02:43:31  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              23/01/26  21:36:46  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
 OBJECT MODULE PLACED IN .\out_file\xunji.obj
-COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE xunji.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(
-                    -..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\c
-                    -ode) DEBUG PRINT(.\out_file\xunji.lst) TABS(2) OBJECT(.\out_file\xunji.obj) 
+COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE xunji.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\xunji.lst) TABS(2) OBJECT(.\out_file\xunji.obj) 
 
 stmt  level    source
 

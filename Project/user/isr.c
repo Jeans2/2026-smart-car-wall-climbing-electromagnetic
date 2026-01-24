@@ -159,6 +159,7 @@ void TM1_IRQHandler() interrupt 3
     if (tim1_irq_handler != NULL)
     {
         //tim1_irq_handler();
+			imu660rb_get_gyro();
 			encoder_update();
 			speed_loop();
 			set_pwm_motor_R(out_R);

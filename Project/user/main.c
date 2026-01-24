@@ -46,7 +46,7 @@ void main()
 	  System_Init();
 			 pit_ms_init(PIT_CH, 2); 
 
-	ips114_init();
+	
 			speed_target = 150;
     				
 	while(1)
@@ -54,13 +54,14 @@ void main()
 			caiyang();
         // 此处编写需要循环执行的代码
 				ips114_show();
-			
-//				encoder_update();
+		
+//			encoder_update();
 //			speed_loop();
 //			set_pwm_motor_R(out_R);
 //			set_pwm_motor_L(out_R);
 
-			printf("%d,%d\n",speed_target, speed_avl);
+			//printf("%d,%d\n",speed_target, speed_avl);
+			printf("%f,%f,$f,%f\n",L,LM,R,RM);
 			//    system_delay_ms(100);	
 	
 			

@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 1   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_driver_soft_spi
 OBJECT MODULE PLACED IN .\out_file\zf_driver_soft_spi.obj
-COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\..\libraries\zf_driver\zf_driver_soft_spi.c LARGE NOALIAS WARNINGL
-                    -EVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device
-                    -;..\..\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_driver_soft_spi.lst) TABS(2) OBJECT(.\out_file\zf_
-                    -driver_soft_spi.obj) 
+COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE ..\..\libraries\zf_driver\zf_driver_soft_spi.c LARGE NOALIAS WARNINGLE
+                    -VEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;
+                    -..\..\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_driver_soft_spi.lst) TABS(2) OBJECT(.\out_file\zf_d
+                    -river_soft_spi.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
              -------------
    47          void soft_spi_delay(uint32 x)  
    48          {
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 2   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 2   
 
    49   1        vuint32 i = x;
    50   1        while(i--);
@@ -134,7 +134,7 @@ stmt  level    source
   106   1          {
   107   2              for(temp = 8; 0 < temp; temp --)
   108   2              {
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 3   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 3   
 
   109   3                  gpio_toggle_level(soft_spi_obj->sck_pin);
   110   3                  if(0x80 & write_data)
@@ -202,7 +202,7 @@ stmt  level    source
   167   2              for(temp = 16; 0 < temp; temp --)
   168   2              {
   169   3                  if(0x8000 & write_data)
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 4   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 4   
 
   170   3                  {
   171   4                      gpio_high(soft_spi_obj->mosi_pin);
@@ -270,7 +270,7 @@ stmt  level    source
   230          {
   231   1        zf_assert(soft_spi_obj != NULL);
   232   1        if(soft_spi_obj->config.use_cs)
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 5   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 5   
 
   233   1          {
   234   2              gpio_low(soft_spi_obj->cs_pin);
@@ -338,7 +338,7 @@ stmt  level    source
   292   1        if(soft_spi_obj->config.use_cs)
   293   1          {
   294   2              gpio_high(soft_spi_obj->cs_pin);
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 6   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 6   
 
   295   2          }
   296   1      }
@@ -406,7 +406,7 @@ stmt  level    source
   353          //-------------------------------------------------------------------------------------------------------
              -------------
   354          // 函数简介     软件 SPI 接口向传感器的寄存器写 8bit 数组
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 7   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 7   
 
   355          // 参数说明     *soft_spi_obj   软件 SPI 指定信息存放结构体的指针
   356          // 参数说明     register_name   寄存器地址
@@ -474,7 +474,7 @@ stmt  level    source
   412          // 参数说明     register_name   寄存器地址
   413          // 参数说明     *dat           数据存放缓冲区
   414          // 参数说明     len             缓冲区长度
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 8   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 8   
 
   415          // 返回参数     void
   416          // 使用示例     soft_spi_write_16bit_registers(&soft_spi_obj, 1, buf, 16);
@@ -542,7 +542,7 @@ stmt  level    source
   473          // 备注信息     
   474          //-------------------------------------------------------------------------------------------------------
              -------------
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 9   
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 9   
 
   475          void soft_spi_read_8bit_array (soft_spi_info_struct *soft_spi_obj, uint8 *dat, uint32 len)
   476          {
@@ -610,7 +610,7 @@ stmt  level    source
   534          {
   535   1          zf_assert(soft_spi_obj != NULL);
   536   1          zf_assert(dat != NULL);
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 10  
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 10  
 
   537   1        if(soft_spi_obj->config.use_cs)
   538   1          {
@@ -678,7 +678,7 @@ stmt  level    source
   595   1        if(soft_spi_obj->config.use_cs)
   596   1          {
   597   2              gpio_low(soft_spi_obj->cs_pin);
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 11  
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 11  
 
   598   2          }
   599   1        
@@ -746,7 +746,7 @@ stmt  level    source
   656   1          {
   657   2              gpio_low(soft_spi_obj->cs_pin);
   658   2          }
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 12  
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 12  
 
   659   1          soft_spi_16bit_data_handler(soft_spi_obj, register_name);
   660   1          while(len --)
@@ -814,7 +814,7 @@ stmt  level    source
   716          // 参数说明     len             发送的字节数
   717          // 返回参数     void
   718          // 使用示例     soft_spi_transfer_16bit(&soft_spi_obj, buf, buf, 1);
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 13  
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 13  
 
   719          // 备注信息     
   720          //-------------------------------------------------------------------------------------------------------
@@ -882,7 +882,7 @@ stmt  level    source
              -怎么能填同一个引脚？
   771   1          zf_assert(mosi_pin != cs_pin);                                              // mosi_pin 与 cs_pin   
              -怎么能填同一个引脚？
-C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  02:43:28  PAGE 14  
+C251 COMPILER V5.60.0,  zf_driver_soft_spi                                                 22/01/26  15:13:20  PAGE 14  
 
   772   1          zf_assert((miso_pin != cs_pin) || (cs_pin == SOFT_SPI_PIN_NULL));           // miso_pin 与 cs_pin   
              -怎么能填同一个引脚？
