@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                25/01/26  00:05:37  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                25/01/26  19:41:40  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        temp = adc_convert(ch);
    56   1        max = temp;
    57   1        min = temp;
-C251 COMPILER V5.60.0,  adc                                                                25/01/26  00:05:37  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                25/01/26  19:41:40  PAGE 2   
 
    58   1        sum += temp;
    59   1        
@@ -134,13 +134,13 @@ stmt  level    source
   121          void adc_normalizing(void)
   122          {
   123   1        
-C251 COMPILER V5.60.0,  adc                                                                25/01/26  00:05:37  PAGE 3   
+C251 COMPILER V5.60.0,  adc                                                                25/01/26  19:41:40  PAGE 3   
 
   124   1       
-  125   1        L  = 100*(ADC_temp[0]-0)/(3500-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
-  126   1        LM = 100*(ADC_temp[1]-0)/(3500-0);
-  127   1        RM = 100*(ADC_temp[3]-0)/(3500-0);
-  128   1        R  = 100*(ADC_temp[2]-0)/(3500-0);
+  125   1        L  = 100*(ADC_temp[0]-0)/(1000-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
+  126   1        LM = 100*(ADC_temp[1]-0)/(1000-0);
+  127   1        RM = 100*(ADC_temp[3]-0)/(1000-0);
+  128   1        R  = 100*(ADC_temp[2]-0)/(1000-0);
   129   1        
   130   1        //输入限幅
   131   1        if(L >100){L =100;}
@@ -148,16 +148,27 @@ stmt  level    source
   133   1        if(RM>100){RM=100;}
   134   1        if(R >100){R =100;}
   135   1      }
+  136          
+  137          //差比和差
+  138          float deviation;
+  139          struct ADC adc_set_differ = {1,1,1};
+  140          float add = 0,sub = 0;
+  141          void adc_differ()
+  142          {
+  143   1        sub = (adc_set_differ.A*(L - R)+adc_set_differ.B*(LM - RM))*100;
+  144   1        add = adc_set_differ.A*(L + R)+adc_set_differ.C * abs(LM - RM)+1;
+  145   1        deviation = sub / add;
+  146   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1194     ------
+  code size            =      1437     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =       157     ------
+  xdata size           =       181     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -167,7 +178,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =       144     ------
+  hconst size          =       179     ------
 End of Module Information.
 
 

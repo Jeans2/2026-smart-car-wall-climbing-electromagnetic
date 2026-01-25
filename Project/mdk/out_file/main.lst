@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               25/01/26  00:05:36  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               25/01/26  19:40:42  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -62,25 +62,25 @@ stmt  level    source
    45   1        // 此处编写用户代码 例如外设初始化代码等
    46   1          System_Init();
    47   1             pit_ms_init(PIT_CH, 2); 
-   48   1      
-   49   1        
-   50   1            speed_target = 150;
+   48   1           tim1_irq_handler = encoder_update;
+   49   1                                                                    
+   50   1            speed_target = 80;
    51   1                  
-C251 COMPILER V5.60.0,  main                                                               25/01/26  00:05:36  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               25/01/26  19:40:42  PAGE 2   
 
    52   1        while(1)
    53   1          {       
    54   2            caiyang();
    55   2              // 此处编写需要循环执行的代码
-   56   2              ips114_show();
+   56   2          //    ips114_show();
    57   2          
    58   2      //      encoder_update();
    59   2      //      speed_loop();
    60   2      //      set_pwm_motor_R(out_R);
    61   2      //      set_pwm_motor_L(out_R);
    62   2      
-   63   2            //printf("%d,%d\n",speed_target, speed_avl);
-   64   2            printf("%f,%f,$f,%f\n",L,LM,R,RM);
+   63   2            printf("%d,%d\n",speed_target, speed_avl);
+   64   2          //  printf("%f,%f,$f,%f\n",L,LM,R,RM);
    65   2            //    system_delay_ms(100); 
    66   2        
    67   2            
@@ -91,7 +91,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       203     ------
+  code size            =       154     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -106,7 +106,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        15     ------
+  hconst size          =         9     ------
 End of Module Information.
 
 

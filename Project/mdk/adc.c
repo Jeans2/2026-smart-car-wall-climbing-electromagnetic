@@ -122,14 +122,25 @@ void adc_normalizing(void)
 {
 	
  
-	L  = 100*(ADC_temp[0]-0)/(3500-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
-  LM = 100*(ADC_temp[1]-0)/(3500-0);
-	RM = 100*(ADC_temp[3]-0)/(3500-0);
-	R  = 100*(ADC_temp[2]-0)/(3500-0);
+	L  = 100*(ADC_temp[0]-0)/(1000-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
+  LM = 100*(ADC_temp[1]-0)/(1000-0);
+	RM = 100*(ADC_temp[3]-0)/(1000-0);
+	R  = 100*(ADC_temp[2]-0)/(1000-0);
 	
 	//输入限幅
 	if(L >100){L =100;}
 	if(LM>100){LM=100;}
 	if(RM>100){RM=100;}
 	if(R >100){R =100;}
+}
+
+//差比和差
+float deviation;
+struct ADC adc_set_differ = {1,1,1};
+float add = 0,sub = 0;
+void adc_differ()
+{
+	sub = (adc_set_differ.A*(L - R)+adc_set_differ.B*(LM - RM))*100;
+	add = adc_set_differ.A*(L + R)+adc_set_differ.C * abs(LM - RM)+1;
+	deviation = sub / add;
 }

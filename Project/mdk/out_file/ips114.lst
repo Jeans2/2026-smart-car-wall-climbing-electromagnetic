@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  ips114                                                             25/01/26  00:05:36  PAGE 1   
+C251 COMPILER V5.60.0,  ips114                                                             25/01/26  19:40:43  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE ips114
@@ -17,20 +17,23 @@ stmt  level    source
     6   1        ips114_show_string(0,16*1,"LM:");
     7   1        ips114_show_string(0,16*2,"RM");
     8   1        ips114_show_string(0,16*3,"R:");
-    9   1        ips114_show_string(0,16*3,"gyro_z:");
+    9   1      
    10   1        
-   11   1        ips114_show_float(22,16*0,L,3,1);
-   12   1        ips114_show_float(22,16*1,LM,3,1);
-   13   1        ips114_show_float(22,16*2,RM,3,1);
-   14   1        ips114_show_float(22,16*3,R,3,1);
-   15   1        
-   16   1      
-   17   1      }
+   11   1      //  ips114_show_float(30,16*0,ADC_temp[0],3,1);
+   12   1      //  ips114_show_float(30,16*1,ADC_temp[1],3,1);
+   13   1      //  ips114_show_float(30,16*2,ADC_temp[3],3,1);
+   14   1      //  ips114_show_float(30,16*3,ADC_temp[2],3,1);
+   15   1      //  
+   16   1        ips114_show_float(30,16*0,L,3,1);
+   17   1        ips114_show_float(30,16*1,LM,3,1);
+   18   1        ips114_show_float(30,16*2,RM,3,1);
+   19   1        ips114_show_float(30,16*3,R,3,1);
+   20   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       198     ------
+  code size            =       181     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -45,7 +48,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        21     ------
+  hconst size          =        13     ------
 End of Module Information.
 
 
