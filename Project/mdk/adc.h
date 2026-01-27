@@ -22,7 +22,7 @@ extern struct ADC{
 };
 
 extern struct ADC adc_set_differ;
-
+extern float deviation;
 extern float ADC_temp[4];//存储4个adc值
 extern float L,LM,RM,R;//归一化后传感器值
 

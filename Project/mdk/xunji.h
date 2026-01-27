@@ -5,5 +5,11 @@
 //2.传感器数据分析
 //3.反馈环
 //4.输出数据驱动小车           
+#include "bsp_system.h"
+
+extern int16 correct_speed_L,correct_speed_R;
+
+
+void xunji(void);
 
 #endif

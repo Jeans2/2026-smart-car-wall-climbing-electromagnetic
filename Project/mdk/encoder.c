@@ -35,7 +35,10 @@ void encoder_update(void)
 		{
 		   tempL_pluse = -tempL_pluse;
 		}
-		speed_avl = ( tempL_pluse + tempR_pluse ) / 2;
+		speed_L = tempL_pluse;
+		speed_R= tempR_pluse;
+//	speed_avl = ( tempL_pluse + tempR_pluse ) / 2;
+		//speed_avl=tempL_pluse;
 //		printf("%d,%d,%d\n",tempL_pluse, tempR_pluse,speed_avl);
 		
 //		if(0 == ENCODER_DIR_DIR_2)    

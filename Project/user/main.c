@@ -47,24 +47,24 @@ void main()
 			 pit_ms_init(PIT_CH, 2); 
      tim1_irq_handler = encoder_update;
 	                                                            
-			speed_target = 80;
+			speed_target = 20;
     				
 	while(1)
     {				
 			caiyang();
         // 此处编写需要循环执行的代码
-		//		ips114_show();
+			adc_differ();	
+			ips114_show();
 		
 //			encoder_update();
+//		//	speed_loop_LR(speed_target,speed_target);	
 //			speed_loop();
 //			set_pwm_motor_R(out_R);
 //			set_pwm_motor_L(out_R);
-
-			printf("%d,%d\n",speed_target, speed_avl);
+			//xunji();
+		//	printf("%d,%d,%d\n",speed_target, speed_L,speed_R);
 		//	printf("%f,%f,$f,%f\n",L,LM,R,RM);
 			//    system_delay_ms(100);	
-	
-			
-			
+//			adc_differ();						
     }
 }

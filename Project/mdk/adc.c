@@ -134,13 +134,15 @@ void adc_normalizing(void)
 	if(R >100){R =100;}
 }
 
-//差比和差
+
 float deviation;
 struct ADC adc_set_differ = {1,1,1};
 float add = 0,sub = 0;
-void adc_differ()
+void adc_differ()     //差比和差
 {
 	sub = (adc_set_differ.A*(L - R)+adc_set_differ.B*(LM - RM))*100;
 	add = adc_set_differ.A*(L + R)+adc_set_differ.C * abs(LM - RM)+1;
 	deviation = sub / add;
 }
+
+

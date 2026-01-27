@@ -161,10 +161,14 @@ void TM1_IRQHandler() interrupt 3
 //        tim1_irq_handler();
 		//	imu660rb_get_gyro();
 			encoder_update();
-			speed_loop();
-			set_pwm_motor_R(out_R);
-			set_pwm_motor_L(out_R);
-
+//			//speed_loop();
+//			speed_loop_LR(speed_target,speed_target);
+//			set_pwm_motor_R(out_R);
+//			set_pwm_motor_L(out_L);
+			gyro_get();
+			angle_get();
+			xunji();			
+			
     }
 }
 
