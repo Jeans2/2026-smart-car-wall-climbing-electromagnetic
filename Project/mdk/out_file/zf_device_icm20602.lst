@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 1   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_device_icm20602
@@ -66,7 +66,7 @@ stmt  level    source
    47          *                   SDA/DSI             查看 zf_device_icm20602.h 中 ICM20602_SDA_PIN 宏定义
    48          *                   //------------------软件 IIC 引脚------------------//
    49          *                   电源引脚
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 2   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 2   
 
    50          *                   VCC                 3.3V电源
    51          *                   GND                 电源地
@@ -134,7 +134,7 @@ stmt  level    source
              --------------
                  // 函数简介     ICM20602 读数据
                  // 参数说明     reg             寄存器地址
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 3   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 3   
 
                  // 参数说明     data            数据缓冲区
                  // 参数说明     len             数据长度
@@ -202,7 +202,7 @@ stmt  level    source
   164            //  @since      v1.0
   165            //  Sample usage:
   166            //------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 4   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 4   
 
              --------------
   167            static void icm20602_simspi_r_reg_byte(uint8 cmd, uint8 *val)
@@ -270,7 +270,7 @@ stmt  level    source
   222   1        }
   223          
   224            //------------------------------------------------------------------------------------------------------
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 5   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 5   
 
              --------------
   225            // 函数简介     IMU660RA 读数据
@@ -338,7 +338,7 @@ stmt  level    source
   277          //-------------------------------------------------------------------------------------------------------
              -------------
   278          // 函数简介     ICM20602 自检
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 6   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 6   
 
   279          // 参数说明     void
   280          // 返回参数     uint8           1-自检失败 0-自检成功
@@ -406,7 +406,7 @@ stmt  level    source
   335   1          icm20602_gyro_z = (int16)(((uint16)dat[4] << 8 | dat[5]));
   336   1      }
   337          
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 7   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 7   
 
   338          //-------------------------------------------------------------------------------------------------------
              -------------
@@ -474,7 +474,7 @@ stmt  level    source
   396   4                      break;
   397   4                  }
   398   3              }
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 8   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 8   
 
   399   2              while(0x41 != val);
   400   2              
@@ -542,7 +542,7 @@ stmt  level    source
   456   3                  break;
   457   3              }
   458   2              
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 9   
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 9   
 
   459   2              // ICM20602_GYRO_CONFIG 寄存器
   460   2              // 设置为 0x00 陀螺仪量程为 ±250  dps    获取到的陀螺仪数据除以 131     可�
@@ -611,7 +611,7 @@ Module Information          Static   Overlayable
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
-C251 COMPILER V5.60.0,  zf_device_icm20602                                                 26/01/26  14:40:20  PAGE 10  
+C251 COMPILER V5.60.0,  zf_device_icm20602                                                 03/03/26  20:03:41  PAGE 10  
 
   pdata size           =    ------     ------
   xdata size           =        71     ------

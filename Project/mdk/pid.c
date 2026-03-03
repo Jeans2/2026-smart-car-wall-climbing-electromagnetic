@@ -4,8 +4,8 @@
 int16 err_speed=0;
 int16 speed_target = 0;
 float out_L=0,out_R=0;
-struct PID pid_loop_speed = {40,0.125,0};			
-
+struct PID pid_loop_speed = {40,0.125,0};			//40,0.125,0   左轮
+//struct PID pid_loop_speed = {60,0.37,0};          //右轮
 
 
 
@@ -20,7 +20,7 @@ void speed_loop(void)
 	//1-误差计算
    last_last_err_speed = last_err_speed;
 	 last_err_speed = err_speed; 
-	 err_speed = speed_target - speed_avl;
+	 err_speed = speed_target - speed_L;
 	
 //2—增量式PI控制
 		speed_output =  pid_loop_speed.Kp * (err_speed - last_err_speed)
@@ -91,21 +91,21 @@ void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
 	if(out_R<-5000){out_R=-5000;}
 }
 
-/******转向PD控制*****/
+/******转向PD控制*****/ 
 float error;
 static float lasterror,pidout;
-float kp1 =0.3;
-float kp2 =0;    
-float kd = -0.53;
+float kp1 =1.875;      //0.3   1.875
+float kp2 =0;     
+float kd =-0.58;      //-0.53  -0.58
 float GKD = 0.4;
 
-float out()
+float out()       //方案一
 {
 	lasterror=error;
 	error = deviation;
 	pidout= kp1 * error + kp2 * error * abs(error)+kd * (error-lasterror)+avl_gyro_z * GKD;	
 
-	if(pidout > 1500)    //限幅
+	if(pidout > 1500)    //限幅  1500
 	{
 		pidout =1500;
 	}
@@ -118,6 +118,30 @@ float out()
 
 }
 
+//float error;
+//static float lasterror,pidout;
+//float kp_a =0.3;      
+//float kp_b =0.002;     
+//float GKD = 0.4  ;
+
+//float out()                         //方案二
+//{
+//	
+//	error = deviation;
+//	pidout= kp_a * error + kp_b * error * error * error + avl_gyro_z * GKD;	
+//	lasterror=error;
+//	if(pidout > 1500)    //限幅
+//	{
+//		pidout =1500;
+//	}
+//	else if(pidout < -1500)
+//	{
+//		pidout = -1500;
+//	}
+
+//	return pidout;
+
+//}
 
 
 

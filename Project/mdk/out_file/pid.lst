@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                27/01/26  18:53:37  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                03/03/26  20:53:07  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -15,8 +15,8 @@ stmt  level    source
     4          int16 err_speed=0;
     5          int16 speed_target = 0;
     6          float out_L=0,out_R=0;
-    7          struct PID pid_loop_speed = {40,0.125,0};     
-    8          
+    7          struct PID pid_loop_speed = {40,0.125,0};     //40,0.125,0   左轮
+    8          //struct PID pid_loop_speed = {60,0.37,0};          //右轮
     9          
    10          
    11          
@@ -31,7 +31,7 @@ stmt  level    source
    20   1        //1-误差计算
    21   1         last_last_err_speed = last_err_speed;
    22   1         last_err_speed = err_speed; 
-   23   1         err_speed = speed_target - speed_avl;
+   23   1         err_speed = speed_target - speed_L;
    24   1        
    25   1      //2—增量式PI控制
    26   1          speed_output =  pid_loop_speed.Kp * (err_speed - last_err_speed)
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        err_speed_L_last = err_speed_L;
    56   1        err_speed_L = speed_L_t - speed_L;
    57   1        
-C251 COMPILER V5.60.0,  pid                                                                27/01/26  18:53:37  PAGE 2   
+C251 COMPILER V5.60.0,  pid                                                                03/03/26  20:53:07  PAGE 2   
 
    58   1        //2-控制
    59   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
@@ -104,21 +104,21 @@ stmt  level    source
    91   1        if(out_R<-5000){out_R=-5000;}
    92   1      }
    93          
-   94          /******转向PD控制*****/
+   94          /******转向PD控制*****/ 
    95          float error;
    96          static float lasterror,pidout;
-   97          float kp1 =0.3;
-   98          float kp2 =0;    
-   99          float kd = -0.53;
+   97          float kp1 =1.875;      //0.3   1.875
+   98          float kp2 =0;     
+   99          float kd =-0.58;      //-0.53  -0.58
   100          float GKD = 0.4;
   101          
-  102          float out()
+  102          float out()       //方案一
   103          {
   104   1        lasterror=error;
   105   1        error = deviation;
   106   1        pidout= kp1 * error + kp2 * error * abs(error)+kd * (error-lasterror)+avl_gyro_z * GKD; 
   107   1      
-  108   1        if(pidout > 1500)    //限幅
+  108   1        if(pidout > 1500)    //限幅  1500
   109   1        {
   110   2          pidout =1500;
   111   2        }
@@ -131,14 +131,38 @@ stmt  level    source
   118   1      
   119   1      }
   120          
-  121          
-  122          
-  123          
-C251 COMPILER V5.60.0,  pid                                                                27/01/26  18:53:37  PAGE 3   
+  121          //float error;
+  122          //static float lasterror,pidout;
+  123          //float kp_a =0.3;      
+C251 COMPILER V5.60.0,  pid                                                                03/03/26  20:53:07  PAGE 3   
 
-  124          
-  125          
+  124          //float kp_b =0.002;     
+  125          //float GKD = 0.4  ;
   126          
+  127          //float out()                         //方案二
+  128          //{
+  129          //  
+  130          //  error = deviation;
+  131          //  pidout= kp_a * error + kp_b * error * error * error + avl_gyro_z * GKD; 
+  132          //  lasterror=error;
+  133          //  if(pidout > 1500)    //限幅
+  134          //  {
+  135          //    pidout =1500;
+  136          //  }
+  137          //  else if(pidout < -1500)
+  138          //  {
+  139          //    pidout = -1500;
+  140          //  }
+  141          
+  142          //  return pidout;
+  143          
+  144          //}
+  145          
+  146          
+  147          
+  148          
+  149          
+  150          
 
 
 Module Information          Static   Overlayable
