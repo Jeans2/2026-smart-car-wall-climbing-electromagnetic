@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                03/03/26  20:53:07  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                03/03/26  21:32:32  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        err_speed_L_last = err_speed_L;
    56   1        err_speed_L = speed_L_t - speed_L;
    57   1        
-C251 COMPILER V5.60.0,  pid                                                                03/03/26  20:53:07  PAGE 2   
+C251 COMPILER V5.60.0,  pid                                                                03/03/26  21:32:32  PAGE 2   
 
    58   1        //2-控制
    59   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
@@ -105,58 +105,58 @@ stmt  level    source
    92   1      }
    93          
    94          /******转向PD控制*****/ 
-   95          float error;
-   96          static float lasterror,pidout;
-   97          float kp1 =1.875;      //0.3   1.875
-   98          float kp2 =0;     
-   99          float kd =-0.58;      //-0.53  -0.58
-  100          float GKD = 0.4;
+   95          //float error;
+   96          //static float lasterror,pidout;
+   97          //float kp1 =1.875;      //0.3   1.875
+   98          //float kp2 =0;     
+   99          //float kd =-0.58;      //-0.53  -0.58
+  100          //float GKD = 0.4;
   101          
-  102          float out()       //方案一
-  103          {
-  104   1        lasterror=error;
-  105   1        error = deviation;
-  106   1        pidout= kp1 * error + kp2 * error * abs(error)+kd * (error-lasterror)+avl_gyro_z * GKD; 
-  107   1      
-  108   1        if(pidout > 1500)    //限幅  1500
-  109   1        {
-  110   2          pidout =1500;
-  111   2        }
-  112   1        else if(pidout < -1500)
-  113   1        {
-  114   2          pidout = -1500;
-  115   2        }
-  116   1      
-  117   1        return pidout;
-  118   1      
-  119   1      }
+  102          //float out()       //方案一
+  103          //{
+  104          //  lasterror=error;
+  105          //  error = deviation;
+  106          //  pidout= kp1 * error + kp2 * error * abs(error)+kd * (error-lasterror)+avl_gyro_z * GKD; 
+  107          
+  108          //  if(pidout > 1500)    //限幅  1500
+  109          //  {
+  110          //    pidout =1500;
+  111          //  }
+  112          //  else if(pidout < -1500)
+  113          //  {
+  114          //    pidout = -1500;
+  115          //  }
+  116          
+  117          //  return pidout;
+  118          
+  119          //}
   120          
-  121          //float error;
-  122          //static float lasterror,pidout;
-  123          //float kp_a =0.3;      
-C251 COMPILER V5.60.0,  pid                                                                03/03/26  20:53:07  PAGE 3   
+  121          float error;
+  122          static float lasterror,pidout;
+  123          float kp_a =0.3;      
+C251 COMPILER V5.60.0,  pid                                                                03/03/26  21:32:32  PAGE 3   
 
-  124          //float kp_b =0.002;     
-  125          //float GKD = 0.4  ;
+  124          float kp_b =0.000012;     
+  125          float GKD = 0.003 ;
   126          
-  127          //float out()                         //方案二
-  128          //{
-  129          //  
-  130          //  error = deviation;
-  131          //  pidout= kp_a * error + kp_b * error * error * error + avl_gyro_z * GKD; 
-  132          //  lasterror=error;
-  133          //  if(pidout > 1500)    //限幅
-  134          //  {
-  135          //    pidout =1500;
-  136          //  }
-  137          //  else if(pidout < -1500)
-  138          //  {
-  139          //    pidout = -1500;
-  140          //  }
-  141          
-  142          //  return pidout;
-  143          
-  144          //}
+  127          float out()                         //方案二
+  128          {
+  129   1        
+  130   1        error = deviation;
+  131   1        pidout= kp_a * error + kp_b * error * error * error + avl_gyro_z * GKD; 
+  132   1        lasterror=error;
+  133   1        if(pidout > 1500)    //限幅
+  134   1        {
+  135   2          pidout =1500;
+  136   2        }
+  137   1        else if(pidout < -1500)
+  138   1        {
+  139   2          pidout = -1500;
+  140   2        }
+  141   1      
+  142   1        return pidout;
+  143   1      
+  144   1      }
   145          
   146          
   147          
@@ -167,12 +167,12 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1359     ------
+  code size            =      1308     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        96     ------
+  xdata size           =        92     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -182,7 +182,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =       166     ------
+  hconst size          =       157     ------
 End of Module Information.
 
 

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               03/03/26  20:42:42  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               03/03/26  21:13:47  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -64,9 +64,9 @@ stmt  level    source
    47   1             pit_ms_init(PIT_CH, 2); 
    48   1           tim1_irq_handler = encoder_update;
    49   1                                                                    
-   50   1            speed_target = 30;
+   50   1            speed_target = 40;
    51   1                  
-C251 COMPILER V5.60.0,  main                                                               03/03/26  20:42:42  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               03/03/26  21:13:47  PAGE 2   
 
    52   1        while(1)
    53   1          {       

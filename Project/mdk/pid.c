@@ -92,45 +92,20 @@ void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
 }
 
 /******转向PD控制*****/ 
-float error;
-static float lasterror,pidout;
-float kp1 =1.875;      //0.3   1.875
-float kp2 =0;     
-float kd =-0.58;      //-0.53  -0.58
-float GKD = 0.4;
-
-float out()       //方案一
-{
-	lasterror=error;
-	error = deviation;
-	pidout= kp1 * error + kp2 * error * abs(error)+kd * (error-lasterror)+avl_gyro_z * GKD;	
-
-	if(pidout > 1500)    //限幅  1500
-	{
-		pidout =1500;
-	}
-	else if(pidout < -1500)
-	{
-		pidout = -1500;
-	}
-
-	return pidout;
-
-}
-
 //float error;
 //static float lasterror,pidout;
-//float kp_a =0.3;      
-//float kp_b =0.002;     
-//float GKD = 0.4  ;
+//float kp1 =1.875;      //0.3   1.875
+//float kp2 =0;     
+//float kd =-0.58;      //-0.53  -0.58
+//float GKD = 0.4;
 
-//float out()                         //方案二
+//float out()       //方案一
 //{
-//	
-//	error = deviation;
-//	pidout= kp_a * error + kp_b * error * error * error + avl_gyro_z * GKD;	
 //	lasterror=error;
-//	if(pidout > 1500)    //限幅
+//	error = deviation;
+//	pidout= kp1 * error + kp2 * error * abs(error)+kd * (error-lasterror)+avl_gyro_z * GKD;	
+
+//	if(pidout > 1500)    //限幅  1500
 //	{
 //		pidout =1500;
 //	}
@@ -142,6 +117,31 @@ float out()       //方案一
 //	return pidout;
 
 //}
+
+float error;
+static float lasterror,pidout;
+float kp_a =0.3;      
+float kp_b =0.000012;     
+float GKD = 0.003 ;
+
+float out()                         //方案二
+{
+	
+	error = deviation;
+	pidout= kp_a * error + kp_b * error * error * error + avl_gyro_z * GKD;	
+	lasterror=error;
+	if(pidout > 1500)    //限幅
+	{
+		pidout =1500;
+	}
+	else if(pidout < -1500)
+	{
+		pidout = -1500;
+	}
+
+	return pidout;
+
+}
 
 
 

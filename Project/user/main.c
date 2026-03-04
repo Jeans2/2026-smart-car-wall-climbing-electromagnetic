@@ -47,7 +47,7 @@ void main()
 			 pit_ms_init(PIT_CH, 2); 
      tim1_irq_handler = encoder_update;
 	                                                            
-			speed_target = 30;
+			speed_target = 40;
      				
 	while(1)
     {				
