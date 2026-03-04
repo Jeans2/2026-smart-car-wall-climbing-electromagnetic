@@ -61,8 +61,17 @@ void main()
 //			speed_loop();
 //			set_pwm_motor_R(out_R);
 //		  set_pwm_motor_L(out_L);
-//      xunji();
-		  printf("%d,%d,%d\n",speed_target, speed_L , speed_R);
+			
+			
+			  // 3. 环岛检测（必须在循迹之前）
+        huan_check();
+			
+				// 4. 环岛状态更新
+        benhuan();
+			
+				xunji();
+		
+		    printf("%d,%d,%d\n",speed_target, speed_L , speed_R);
 						
     }
 }

@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  adc                                                                03/03/26  20:03:46  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                03/03/26  23:26:22  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
 OBJECT MODULE PLACED IN .\out_file\adc.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE adc.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\
-                    -..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\code
-                    -) DEBUG PRINT(.\out_file\adc.lst) TABS(2) OBJECT(.\out_file\adc.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE adc.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
+                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
+                    -e) DEBUG PRINT(.\out_file\adc.lst) TABS(2) OBJECT(.\out_file\adc.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        temp = adc_convert(ch);
    56   1        max = temp;
    57   1        min = temp;
-C251 COMPILER V5.60.0,  adc                                                                03/03/26  20:03:46  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                03/03/26  23:26:22  PAGE 2   
 
    58   1        sum += temp;
    59   1        
@@ -134,7 +134,7 @@ stmt  level    source
   121          void adc_normalizing(void)
   122          {
   123   1        
-C251 COMPILER V5.60.0,  adc                                                                03/03/26  20:03:46  PAGE 3   
+C251 COMPILER V5.60.0,  adc                                                                03/03/26  23:26:22  PAGE 3   
 
   124   1       
   125   1        L  = 100*(ADC_temp[0]-0)/(1000-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值

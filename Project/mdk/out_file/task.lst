@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  task                                                               03/03/26  20:03:46  PAGE 1   
+C251 COMPILER V5.60.0,  task                                                               03/03/26  23:26:21  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE task
 OBJECT MODULE PLACED IN .\out_file\task.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE task.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
-                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
-                    -e) DEBUG PRINT(.\out_file\task.lst) TABS(2) OBJECT(.\out_file\task.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE task.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\task.lst) TABS(2) OBJECT(.\out_file\task.obj) 
 
 stmt  level    source
 

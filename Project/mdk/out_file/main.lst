@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  main                                                               03/03/26  20:42:42  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               03/03/26  23:31:38  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
 OBJECT MODULE PLACED IN .\out_file\main.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE I
-                    -NCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\use
-                    -r;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE 
+                    -INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\us
+                    -er;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    49   1                                                                    
    50   1            speed_target = 30;
    51   1                  
-C251 COMPILER V5.60.0,  main                                                               03/03/26  20:42:42  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               03/03/26  23:31:38  PAGE 2   
 
    52   1        while(1)
    53   1          {       
@@ -80,16 +80,25 @@ stmt  level    source
    61   2      //      speed_loop();
    62   2      //      set_pwm_motor_R(out_R);
    63   2      //      set_pwm_motor_L(out_L);
-   64   2      //      xunji();
-   65   2            printf("%d,%d,%d\n",speed_target, speed_L , speed_R);
-   66   2                  
-   67   2          }
-   68   1      }
+   64   2            
+   65   2            
+   66   2              // 3. 环岛检测（必须在循迹之前）
+   67   2              huan_check();
+   68   2            
+   69   2              // 4. 环岛状态更新
+   70   2              benhuan();
+   71   2            
+   72   2              xunji();
+   73   2          
+   74   2              printf("%d,%d,%d\n",speed_target, speed_L , speed_R);
+   75   2                  
+   76   2          }
+   77   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       172     ------
+  code size            =       181     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
