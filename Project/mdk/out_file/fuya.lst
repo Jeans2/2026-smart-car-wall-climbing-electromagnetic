@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  fuya                                                               05/03/26  13:52:12  PAGE 1   
+C251 COMPILER V5.60.0,  fuya                                                               07/03/26  17:19:09  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE fuya
 OBJECT MODULE PLACED IN .\out_file\fuya.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE fuya.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
-                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
-                    -e) DEBUG PRINT(.\out_file\fuya.lst) TABS(2) OBJECT(.\out_file\fuya.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE fuya.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\fuya.lst) TABS(2) OBJECT(.\out_file\fuya.obj) 
 
 stmt  level    source
 

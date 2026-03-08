@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  main                                                               05/03/26  14:10:08  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               07/03/26  20:05:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
 OBJECT MODULE PLACED IN .\out_file\main.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE I
-                    -NCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\use
-                    -r;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE 
+                    -INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\us
+                    -er;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
 
 stmt  level    source
 
@@ -64,9 +64,9 @@ stmt  level    source
    47   1             pit_ms_init(PIT_CH, 2); 
    48   1           tim1_irq_handler = encoder_update;
    49   1                                                                    
-   50   1            speed_target = 25;
-   51   1                  
-C251 COMPILER V5.60.0,  main                                                               05/03/26  14:10:08  PAGE 2   
+   50   1            speed_target = 40;
+   51   1              gpio_init(IO_P67, GPO, 1, GPO_PUSH_PULL);   
+C251 COMPILER V5.60.0,  main                                                               07/03/26  20:05:11  PAGE 2   
 
    52   1        while(1)
    53   1          {       
@@ -91,14 +91,22 @@ stmt  level    source
    72   2              xunji();
    73   2          
    74   2              printf("%d,%d,%d\n",speed_target, speed_L , speed_R);
-   75   2                  
-   76   2          }
-   77   1      }
+   75   2              if(direct_l == 1)
+   76   2              {
+   77   3                  gpio_set_level(IO_P67, 1);  // 响
+   78   3              }
+   79   2              else
+   80   2              {
+   81   3                  gpio_set_level(IO_P67, 0);  // 不响
+   82   3              }
+   83   2                  
+   84   2          }
+   85   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       181     ------
+  code size            =       226     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

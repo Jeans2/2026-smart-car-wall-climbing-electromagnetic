@@ -165,7 +165,7 @@ void TM1_IRQHandler() interrupt 3
 //			set_pwm_motor_R(out_R);
 //			set_pwm_motor_L(out_L);
 			gyro_get();
-//			angle_get();
+			angle_get();
 			xunji();			
 			
     }

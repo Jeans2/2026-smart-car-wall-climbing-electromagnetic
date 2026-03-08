@@ -15,7 +15,12 @@ void gyro_get()      //角速度
 
 void angle_get()     //角度获取
 {
-	angle +=0.002*avl_gyro_z;
+	
+	if(huan_flag==1)
+	{
+		angle+=0.002*avl_gyro_z;
+	}
+	 
 }
 
 void angle_clear()   //角度清零

@@ -47,8 +47,8 @@ void main()
 			 pit_ms_init(PIT_CH, 2); 
      tim1_irq_handler = encoder_update;
 	                                                            
-			speed_target = 25;
-     				
+			speed_target = 40;
+     		gpio_init(IO_P67, GPO, 1, GPO_PUSH_PULL);		
 	while(1)
     {				
 			caiyang();
@@ -72,6 +72,14 @@ void main()
 				xunji();
 		
 		    printf("%d,%d,%d\n",speed_target, speed_L , speed_R);
+				if(direct_l == 1)
+        {
+            gpio_set_level(IO_P67, 1);  // 响
+        }
+        else
+        {
+            gpio_set_level(IO_P67, 0);  // 不响
+        }
 						
     }
 }

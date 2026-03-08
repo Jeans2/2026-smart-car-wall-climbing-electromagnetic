@@ -15,7 +15,6 @@ void xunji(void);
 extern int8 huan_flag;              // 环岛触发标志
 extern int8 direct_l;                // 左环方向标志
 extern int8 direct_r;                // 右环方向标志
-extern float Angle_huan;             // 环岛角度积分
 extern int8 Angle_huan_flag1;        // 入环打角标志
 extern int8 Angle_huan_flag2;        // 环内循迹标志
 extern int8 Angle_huanout_flag2;     // 出环直行标志
@@ -23,9 +22,9 @@ extern float straght;                 // 出环直行位移
 
 
 // 环岛参数（可根据实际调整）
-#define HUAN_TRIGGER_LM    50   // 左内侧触发阈值
-#define HUAN_TRIGGER_RM    50   // 右内侧触发阈值
-#define HUAN_RATIO         6.0f  // 内侧比值系数
+#define HUAN_TRIGGER_L    90   // 左内侧触发阈值
+#define HUAN_TRIGGER_R    90   // 右内侧触发阈值
+#define HUAN_RATIO         1.5f  // 内侧比值系数
 
 
 // 环岛角度参数
