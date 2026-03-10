@@ -48,7 +48,7 @@ void main()
      tim1_irq_handler = encoder_update;
 	                                                            
 			speed_target = 40;
-     		gpio_init(IO_P67, GPO, 1, GPO_PUSH_PULL);		
+		
 	while(1)
     {				
 			caiyang();
@@ -56,30 +56,10 @@ void main()
 			adc_differ();	
 			ips114_show();
 		
-//		  encoder_update();
-//			speed_loop_LR(speed_target,speed_target);	
-//			speed_loop();
-//			set_pwm_motor_R(out_R);
-//		  set_pwm_motor_L(out_L);
-			
-			
-			  // 3. 环岛检测（必须在循迹之前）
-        huan_check();
-			
-				// 4. 环岛状态更新
-        benhuan();
-			
-				xunji();
-		
-		    printf("%d,%d,%d\n",speed_target, speed_L , speed_R);
-				if(direct_l == 1)
-        {
-            gpio_set_level(IO_P67, 1);  // 响
-        }
-        else
-        {
-            gpio_set_level(IO_P67, 0);  // 不响
-        }
+
+		 display_huan_state();
+		    printf("%f\n",angle);
+
 						
     }
 }

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                07/03/26  17:19:13  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                10/03/26  20:31:03  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        err_speed_L_last = err_speed_L;
    56   1        err_speed_L = speed_L_t - speed_L;
    57   1        
-C251 COMPILER V5.60.0,  pid                                                                07/03/26  17:19:13  PAGE 2   
+C251 COMPILER V5.60.0,  pid                                                                10/03/26  20:31:03  PAGE 2   
 
    58   1        //2-¿ØÖÆ
    59   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
@@ -134,7 +134,7 @@ stmt  level    source
   121          float error;
   122          static float lasterror,pidout;
   123          float kp_a =0.3;      
-C251 COMPILER V5.60.0,  pid                                                                07/03/26  17:19:13  PAGE 3   
+C251 COMPILER V5.60.0,  pid                                                                10/03/26  20:31:03  PAGE 3   
 
   124          float kp_b =0.000012;     
   125          float GKD = 0.003 ;

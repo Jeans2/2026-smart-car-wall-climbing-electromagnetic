@@ -166,7 +166,10 @@ void TM1_IRQHandler() interrupt 3
 //			set_pwm_motor_L(out_L);
 			gyro_get();
 			angle_get();
-			xunji();			
+			huan_check(); // 1. 先看进没进环
+			benhuan();    // 2. 根据角度切换状态
+			xunji();      // 3. 计算速度并跑车
+
 			
     }
 }
