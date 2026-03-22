@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  task                                                               10/03/26  20:31:04  PAGE 1   
+C251 COMPILER V5.60.0,  task                                                               21/03/26  20:14:59  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE task
@@ -19,31 +19,29 @@ stmt  level    source
     8          
     9          void System_Init(void)
    10          {
-   11   1           
+   11   1           key_init();
    12   1          my_adc_init();
    13   1          encoder_init();       // 编码器初始化
    14   1          motor_init();       // 电机初始化
    15   1          ips114_init();
    16   1          imu660rb_init();
-   17   1          huan_init();
-   18   1      }
-   19          
-   20          void caiyang(void)
-   21          {
-   22   1      
-   23   1          siai_adc_all_sample();
-   24   1          adc_normalizing();
-   25   1        
-   26   1      
-   27   1      
-   28   1      
-   29   1      
-   30   1      }
+   17   1      //    huan_init();
+   18   1          fuya_init();
+   19   1        wireless_uart_init();
+   20   1      }
+   21          
+   22          void caiyang(void)
+   23          {
+   24   1      
+   25   1          siai_adc_all_sample();
+   26   1          adc_normalizing();
+   27   1        
+   28   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        26     ------
+  code size            =        32     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

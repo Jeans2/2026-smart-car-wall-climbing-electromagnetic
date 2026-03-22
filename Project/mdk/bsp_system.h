@@ -21,12 +21,13 @@
 #include "adc.h"
 #include "motor.h"
 #include "encoder.h"
+#include "fuya.h"
 /*******other*********/
 #include "stdio.h"
 #include "math.h"
 #include "string.h"
 #include "intrins.h"
-
-
+#include "menu.h"
+#include "key.h"
 
 #endif

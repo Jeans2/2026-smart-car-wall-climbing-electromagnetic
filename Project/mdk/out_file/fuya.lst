@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  fuya                                                               10/03/26  20:31:03  PAGE 1   
+C251 COMPILER V5.60.0,  fuya                                                               21/03/26  20:14:58  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE fuya
@@ -13,7 +13,7 @@ stmt  level    source
     2          
     3          void fuya_init()
     4          {
-    5   1        pwm_init(FUYA_CHL , 17000, 9000);
+    5   1        pwm_init(FUYA_CHL ,17000,0 );
     6   1      }
     7          
     8          void fuya_set_duty(uint32 duty)
@@ -24,7 +24,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        54     ------
+  code size            =        52     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

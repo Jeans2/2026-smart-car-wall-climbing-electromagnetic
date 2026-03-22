@@ -3,7 +3,7 @@
 
 #include "zf_common_headfile.h"
 
-#define FUYA_CHL   (PWMA_CH3N_P33)
+#define FUYA_CHL   (PWMB_CH3_P33)
 
 void fuya_init(void);
 void fuya_set_duty(uint32 duty);

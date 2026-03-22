@@ -5,7 +5,7 @@
 extern float null_drift_z;	//¡„∆Ø
 extern float angle;
 extern float avl_gyro_z;
-
+extern float gyro_z_filtered;
 void gyro_get(void);
 void angle_get(void);
 void angle_clear(void);

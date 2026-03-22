@@ -34,7 +34,9 @@
  ********************************************************************************************************************/
 
 #include "zf_common_headfile.h"
-
+//#define large_t (0.02*1)
+//#define small_t (0.02*0.5)
+unsigned char timer_10ms_count = 0;  // 10ms计数器
 void DMA_UART1_IRQHandler(void) interrupt 4
 {
     static vuint8 dwon_count = 0;
@@ -157,19 +159,29 @@ void TM1_IRQHandler() interrupt 3
     TIM1_CLEAR_FLAG;
 
     if (tim1_irq_handler != NULL)
-    {
-//        tim1_irq_handler();
-			encoder_update();
-//			speed_loop();
-//			  speed_loop_LR(speed_target,speed_target);	
-//			set_pwm_motor_R(out_R);
-//			set_pwm_motor_L(out_L);
+    {									
+				encoder_update();
 			gyro_get();
 			angle_get();
-			huan_check(); // 1. 先看进没进环
-			benhuan();    // 2. 根据角度切换状态
-			xunji();      // 3. 计算速度并跑车
+				
 
+				
+			  gyro_loop(expect_gyro,0);//获取correctL 
+        timer_10ms_count++;// 计数器累加										
+//		  	speed_loop_LR(speed_target + correct_L,speed_target - correct_L);	  		
+//				set_pwm_motor_R(out_R);
+//				set_pwm_motor_L(out_L);
+			if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
+        {
+            timer_10ms_count = 0;  // 计数器清零
+					  caiyang();      
+					adc_differ();	
+          direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度                           // 10ms执行一次的函数
+         
+        }
+					
+			xunji();      
+		
 			
     }
 }

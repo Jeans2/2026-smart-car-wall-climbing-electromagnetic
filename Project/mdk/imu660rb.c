@@ -4,6 +4,8 @@ float null_drift_z;	//零漂
 float gyro_z;
 float angle;
 float avl_gyro_z;
+float gyro_z_filtered;
+float alpha = 0.9 ;
 
 void gyro_get()      //角速度
 {
@@ -11,15 +13,15 @@ void gyro_get()      //角速度
 	gyro_z = imu660rb_gyro_z;
 	gyro_z = imu660rb_gyro_transition(imu660rb_gyro_z);	
 	avl_gyro_z = gyro_z - null_drift_z;
+	gyro_z_filtered = alpha *gyro_z_filtered +(1-alpha)*avl_gyro_z;
 }
 
 void angle_get()     //角度获取
 {
 	
-	if(huan_flag==1)
-	{
+
 		angle+=0.002*avl_gyro_z;
-	}
+
 	 
 }
 

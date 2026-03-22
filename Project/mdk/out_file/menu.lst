@@ -1,0 +1,169 @@
+C251 COMPILER V5.60.0,  menu                                                               21/03/26  20:14:58  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE menu
+OBJECT MODULE PLACED IN .\out_file\menu.obj
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE menu.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\menu.lst) TABS(2) OBJECT(.\out_file\menu.obj) 
+
+stmt  level    source
+
+    1          #include "menu.h"
+    2          
+    3          // 光标菜单变量
+    4          #define MENU_ITEMS 5             // 菜单总项数
+    5          uint8 cursor_index = 0;          // 当前光标位置 (0:Kp, 1:Kd, 2:A, 3:B, 4:C)
+    6          char disp_buf[32];               // 屏幕显示缓存区
+    7          
+    8          
+    9          // =========================================================================
+   10          // 函数名：Key_Menu_Adjust
+   11          // 功  能：光标切换与对应参数的修改 (已彻底清理宏定义)
+   12          // =========================================================================
+   13          void Key_Menu_Adjust(void)
+   14          {
+   15   1          static uint8 key1_last = 1, key2_last = 1, key3_last = 1, key4_last = 1;
+   16   1          uint8 key1_now, key2_now, key3_now, key4_now;
+   17   1      
+   18   1          // 1. 统一使用官方库函数读取引脚状态，干净利落
+   19   1          key1_now = gpio_get_level(KEY1_PIN);
+   20   1          key2_now = gpio_get_level(KEY2_PIN);
+   21   1          key3_now = gpio_get_level(KEY3_PIN);
+   22   1          key4_now = gpio_get_level(KEY4_PIN); // 预留读取 KEY4
+   23   1      
+   24   1          // ----------------- 功能 1：切换调参光标 (KEY1) -----------------
+   25   1          if(key1_now == 0 && key1_last == 1)    
+   26   1          {
+   27   2              system_delay_ms(15);
+   28   2              if(gpio_get_level(KEY1_PIN) == 0)
+   29   2              {
+   30   3                  cursor_index++; 
+   31   3                  if(cursor_index >= MENU_ITEMS) cursor_index = 0; // 循环光标
+   32   3              }
+   33   2          }
+   34   1          
+   35   1          // ----------------- 功能 2：增加当前参数 (KEY2) -----------------
+   36   1          if(key2_now == 0 && key2_last == 1)    
+   37   1          {
+   38   2              system_delay_ms(15);
+   39   2              if(gpio_get_level(KEY2_PIN) == 0)
+   40   2              {
+   41   3                  switch(cursor_index)
+   42   3                  {
+   43   4                      case 0: pid_motor_run.Kp += 0.1f;         break;
+   44   4                      case 1: pid_motor_run.Kd += 0.1f;         break; 
+   45   4                      case 2: adc_set_differ.A += 0.1f;         break; 
+   46   4                      case 3: adc_set_differ.B += 0.1f;         break;
+   47   4                      case 4: adc_set_differ.C += 0.1f;         break;
+   48   4                  }
+   49   3              }
+   50   2          }
+   51   1          
+   52   1          // ----------------- 功能 3：减小当前参数 (KEY3) -----------------
+   53   1          if(key3_now == 0 && key3_last == 1)    
+   54   1          {
+   55   2              system_delay_ms(15);
+   56   2              if(gpio_get_level(KEY3_PIN) == 0)
+   57   2              {
+C251 COMPILER V5.60.0,  menu                                                               21/03/26  20:14:58  PAGE 2   
+
+   58   3                  switch(cursor_index)
+   59   3                  {
+   60   4                      case 0: pid_motor_run.Kp -= 0.1f;         if(pid_motor_run.Kp < 0) pid_motor_run.Kp = 0; 
+             -break;
+   61   4                      case 1: pid_motor_run.Kd -= 0.1f;         if(pid_motor_run.Kd < 0) pid_motor_run.Kd = 0; 
+             -break;
+   62   4                      case 2: adc_set_differ.A -= 0.1f;         if(adc_set_differ.A < 0) adc_set_differ.A = 0; 
+             -break;
+   63   4                      case 3: adc_set_differ.B -= 0.1f;         if(adc_set_differ.B < 0) adc_set_differ.B = 0; 
+             -break;
+   64   4                      case 4: adc_set_differ.C -= 0.1f;         if(adc_set_differ.C < 0) adc_set_differ.C = 0; 
+             -break;
+   65   4                  }
+   66   3              }
+   67   2          }
+   68   1      
+   69   1          // ----------------- 功能 4：预留位 (KEY4) -----------------
+   70   1          if(key4_now == 0 && key4_last == 1)    
+   71   1          {
+   72   2              system_delay_ms(15);
+   73   2              if(gpio_get_level(KEY4_PIN) == 0)
+   74   2              {
+   75   3                  // 这里留空，一会儿可以把“一键保存到Flash”的功能写进来
+   76   3              }
+   77   2          }
+   78   1      
+   79   1          // 更新历史状态
+   80   1          key1_last = key1_now;
+   81   1          key2_last = key2_now;
+   82   1          key3_last = key3_now;
+   83   1          key4_last = key4_now;
+   84   1      }
+   85          
+   86          
+   87          // =========================================================================
+   88          // 函数名：UI_Display_Update
+   89          // 功  能：动态显示光标和参数列表
+   90          // =========================================================================
+   91          void UI_Display_Update(void)
+   92          {
+   93   1          char prefix;
+   94   1      
+   95   1          prefix = (cursor_index == 0) ? '>' : ' '; 
+   96   1          sprintf(disp_buf, "%c Turn Kp: %.2f  ", prefix, pid_motor_run.Kp);
+   97   1          ips114_show_string(0, 0*16, disp_buf);
+   98   1          
+   99   1          prefix = (cursor_index == 1) ? '>' : ' ';
+  100   1          sprintf(disp_buf, "%c Turn Kd: %.2f  ", prefix, pid_motor_run.Kd);
+  101   1          ips114_show_string(0, 1*16, disp_buf);
+  102   1          
+  103   1          prefix = (cursor_index == 2) ? '>' : ' ';
+  104   1          sprintf(disp_buf, "%c Form A : %.1f  ", prefix, adc_set_differ.A);
+  105   1          ips114_show_string(0, 2*16, disp_buf);
+  106   1          
+  107   1          prefix = (cursor_index == 3) ? '>' : ' ';
+  108   1          sprintf(disp_buf, "%c Form B : %.1f  ", prefix, adc_set_differ.B);
+  109   1          ips114_show_string(0, 3*16, disp_buf);
+  110   1          
+  111   1          prefix = (cursor_index == 4) ? '>' : ' ';
+  112   1          sprintf(disp_buf, "%c Form C : %.2f  ", prefix, adc_set_differ.C);
+  113   1          ips114_show_string(0, 4*16, disp_buf);
+  114   1      }
+  115          
+  116          
+  117          
+  118          
+C251 COMPILER V5.60.0,  menu                                                               21/03/26  20:14:58  PAGE 3   
+
+  119          
+  120          
+  121          
+  122          
+  123          
+  124          
+  125          
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =      1210     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =        46     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =       125     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               10/03/26  21:04:10  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               22/03/26  15:10:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -54,44 +54,69 @@ stmt  level    source
    37          #include "main.h"
    38          #define PIT_CH                          (TIM1_PIT ) 
    39          #include "fuya.h"
-   40          void main()
-   41          {
-   42   1          clock_init(SYSTEM_CLOCK_30M);
-   43   1        debug_init();
-   44   1        
-   45   1        // 此处编写用户代码 例如外设初始化代码等
-   46   1          System_Init();
-   47   1             pit_ms_init(PIT_CH, 2); 
-   48   1           tim1_irq_handler = encoder_update;
-   49   1                                                                    
-   50   1            speed_target = 40;
-   51   1          
-C251 COMPILER V5.60.0,  main                                                               10/03/26  21:04:10  PAGE 2   
+   40          
+   41          char buf[50];
+   42          
+   43          
+   44          
+   45          
+   46          void main()
+   47          {
+   48   1          clock_init(SYSTEM_CLOCK_30M);
+   49   1        debug_init();
+   50   1        
+   51   1        // 此处编写用户代码 例如外设初始化代码等
+C251 COMPILER V5.60.0,  main                                                               22/03/26  15:10:11  PAGE 2   
 
-   52   1        while(1)
-   53   1          {       
-   54   2            caiyang();
-   55   2              // 此处编写需要循环执行的代码
-   56   2            adc_differ(); 
-   57   2            ips114_show();
-   58   2          
-   59   2      
-   60   2           display_huan_state();
-   61   2              printf("%f\n",angle);
-   62   2      
-   63   2                  
-   64   2          }
-   65   1      }
+   52   1          System_Init();
+   53   1             pit_ms_init(PIT_CH, 2); 
+   54   1           tim1_irq_handler = encoder_update;
+   55   1            
+   56   1              gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);                                                     
+   57   1      //      expect_gyro = ;
+   58   1      
+   59   1        while(1)
+   60   1          {       
+   61   2            if(element ==2||element ==1)
+   62   2            {
+   63   3             gpio_set_level(IO_P52, 0);
+   64   3            }
+   65   2            else
+   66   2            {
+   67   3          
+   68   3              gpio_set_level(IO_P52, 1);
+   69   3          
+   70   3            }
+   71   2          
+   72   2          
+   73   2          
+   74   2          
+   75   2          
+   76   2          
+   77   2          
+   78   2      //      ips114_show();
+   79   2      //      fuya_set_duty(4000);
+   80   2            Key_Menu_Adjust();    // 扫描按键并修改参数
+   81   2              UI_Display_Update();  // 刷新屏幕菜单
+   82   2          
+   83   2      
+   84   2      
+   85   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
+   86   2            sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+   87   2      //      sprintf(buf,"%d,%d,%d,%f\n",speed_L,speed_R,speed_avl,distance_ringR);//十字250
+   88   2              wireless_uart_send_string(buf);
+   89   2          }
+   90   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       159     ------
+  code size            =       336     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         4     ------
+  xdata size           =        54     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -101,7 +126,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         6     ------
+  hconst size          =        18     ------
 End of Module Information.
 
 

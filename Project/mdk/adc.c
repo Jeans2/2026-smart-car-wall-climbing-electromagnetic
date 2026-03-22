@@ -136,13 +136,15 @@ void adc_normalizing(void)
 
 
 float deviation;
-struct ADC adc_set_differ = {1.3,1,0.8};  // 1.3 1 0.8
+struct ADC adc_set_differ = {1,1,2};  // 1.3 1 0.8
 float add = 0,sub = 0;
 void adc_differ()     //²î±ÈºÍ²î
 {
-	sub = (adc_set_differ.A*(L - R)+adc_set_differ.B*(LM - RM))*100;
-	add = adc_set_differ.A*(L + R)+adc_set_differ.C * abs(LM - RM)+1;
-	deviation = sub / add;
+	sub = adc_set_differ.A*(L - R)+adc_set_differ.B*(LM - RM);
+	add = adc_set_differ.A*(L + R)+adc_set_differ.C * abs(LM - RM);
+	deviation = (sub*100) / (add+1);
+	deviation = -deviation;
+	
 }
 
 

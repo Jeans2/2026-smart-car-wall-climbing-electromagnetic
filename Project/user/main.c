@@ -37,6 +37,12 @@
 #include "main.h"
 #define PIT_CH                          (TIM1_PIT ) 
 #include "fuya.h"
+
+char buf[50];
+
+
+
+
 void main()
 {
     clock_init(SYSTEM_CLOCK_30M);
@@ -46,20 +52,39 @@ void main()
 	  System_Init();
 			 pit_ms_init(PIT_CH, 2); 
      tim1_irq_handler = encoder_update;
-	                                                            
-			speed_target = 40;
-		
+			
+				gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);																											
+//			expect_gyro = ;
+
 	while(1)
     {				
-			caiyang();
-        // 此处编写需要循环执行的代码
-			adc_differ();	
-			ips114_show();
+		  if(element ==2||element ==1)
+		  {
+		   gpio_set_level(IO_P52, 0);
+			}
+		  else
+		  {
+		
+				gpio_set_level(IO_P52, 1);
+		
+		  }
+		
+		
+		
+		
+		
+		
+		
+//			ips114_show();
+//			fuya_set_duty(4000);
+			Key_Menu_Adjust();    // 扫描按键并修改参数
+        UI_Display_Update();  // 刷新屏幕菜单
 		
 
-		 display_huan_state();
-		    printf("%f\n",angle);
 
-						
-    }
+//			sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
+			sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+//			sprintf(buf,"%d,%d,%d,%f\n",speed_L,speed_R,speed_avl,distance_ringR);//十字250
+				wireless_uart_send_string(buf);
+		}
 }

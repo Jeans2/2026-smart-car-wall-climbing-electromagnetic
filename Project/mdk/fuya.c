@@ -2,7 +2,7 @@
 
 void fuya_init()
 {
-	pwm_init(FUYA_CHL , 17000, 9000);
+	pwm_init(FUYA_CHL ,17000,0 );
 }
 
 void fuya_set_duty(uint32 duty)

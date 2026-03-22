@@ -26,7 +26,7 @@ extern float deviation;
 extern float ADC_temp[4];//存储4个adc值
 extern float L,LM,RM,R;//归一化后传感器值
 
-extern float adc_v_1,adc_v_2,adc_v_3,adc_v_4;
+
 extern float adc_start;
 //算法
 extern uint16 ADC_original[4][ADC_Sample_Num];//原始采样数据

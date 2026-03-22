@@ -31,13 +31,13 @@ void encoder_update(void)
 
 				
 		//采集编码器方向信息
-		if(tempL_pluse<0)    
-		{
-		   tempL_pluse = -tempL_pluse;
-		}
-		speed_L = tempL_pluse;
+		
+		
+		  
+		
+		speed_L = -tempL_pluse;
 		speed_R= tempR_pluse;
-//	speed_avl = ( tempL_pluse + tempR_pluse ) / 2;
+	speed_avl = (speed_L + speed_R)/2;
 		//speed_avl=tempL_pluse;
 //		printf("%d,%d,%d\n",tempL_pluse, tempR_pluse,speed_avl);
 		
