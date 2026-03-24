@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                21/03/26  20:14:58  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                22/03/26  19:17:50  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -66,7 +66,7 @@ stmt  level    source
    55          // 方向环（位置环）相关变量
    56          static float direction_err1[4] = {0};
    57          static float D_err = 0;
-C251 COMPILER V5.60.0,  pid                                                                21/03/26  20:14:58  PAGE 2   
+C251 COMPILER V5.60.0,  pid                                                                22/03/26  19:17:50  PAGE 2   
 
    58          static int flag = 0;
    59          
@@ -134,7 +134,7 @@ stmt  level    source
   121          //  else if(pidout < -1500)
   122          //  {
   123          //    pidout = -1500;
-C251 COMPILER V5.60.0,  pid                                                                21/03/26  20:14:58  PAGE 3   
+C251 COMPILER V5.60.0,  pid                                                                22/03/26  19:17:50  PAGE 3   
 
   124          //  }
   125          
@@ -202,7 +202,7 @@ stmt  level    source
   187   1        err_speed_R_last = err_speed_R;
   188   1        err_speed_R = speed_R_t - speed_R;
   189   1        
-C251 COMPILER V5.60.0,  pid                                                                21/03/26  20:14:58  PAGE 4   
+C251 COMPILER V5.60.0,  pid                                                                22/03/26  19:17:50  PAGE 4   
 
   190   1        //2-控制
   191   1        speed_output_R =  pid_loop_speed.Kp * (err_speed_R - err_speed_R_last)
@@ -270,7 +270,7 @@ stmt  level    source
   253   1      //    if(flag == 0 && (D_err > 5.3 || D_err < -5.3))
   254   1      //    {
   255   1      //        direction_err1[0] = direction_err1[1];
-C251 COMPILER V5.60.0,  pid                                                                21/03/26  20:14:58  PAGE 5   
+C251 COMPILER V5.60.0,  pid                                                                22/03/26  19:17:50  PAGE 5   
 
   256   1      //        flag = 1;
   257   1      //    }
@@ -338,7 +338,7 @@ stmt  level    source
   318          
   319          
   320          
-C251 COMPILER V5.60.0,  pid                                                                21/03/26  20:14:58  PAGE 6   
+C251 COMPILER V5.60.0,  pid                                                                22/03/26  19:17:50  PAGE 6   
 
   321          
   322          
@@ -406,7 +406,7 @@ stmt  level    source
   384          //  //P D
   385          //  expect_gyro =  pid_motor_run.Kp *  direction_err1[0]    
   386          //               + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]);    //之后再测direction_err1[3]) 
-C251 COMPILER V5.60.0,  pid                                                                21/03/26  20:14:58  PAGE 7   
+C251 COMPILER V5.60.0,  pid                                                                22/03/26  19:17:50  PAGE 7   
 
   387          
   388          //  

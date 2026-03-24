@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  menu                                                               21/03/26  20:14:58  PAGE 1   
+C251 COMPILER V5.60.0,  menu                                                               22/03/26  19:17:50  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE menu
@@ -66,7 +66,7 @@ stmt  level    source
    55   2              system_delay_ms(15);
    56   2              if(gpio_get_level(KEY3_PIN) == 0)
    57   2              {
-C251 COMPILER V5.60.0,  menu                                                               21/03/26  20:14:58  PAGE 2   
+C251 COMPILER V5.60.0,  menu                                                               22/03/26  19:17:50  PAGE 2   
 
    58   3                  switch(cursor_index)
    59   3                  {
@@ -134,7 +134,7 @@ stmt  level    source
   116          
   117          
   118          
-C251 COMPILER V5.60.0,  menu                                                               21/03/26  20:14:58  PAGE 3   
+C251 COMPILER V5.60.0,  menu                                                               22/03/26  19:17:50  PAGE 3   
 
   119          
   120          
