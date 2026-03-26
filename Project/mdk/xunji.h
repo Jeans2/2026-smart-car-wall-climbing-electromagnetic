@@ -5,7 +5,7 @@
 #include "bsp_system.h"
 extern int8 element;
 extern float distance_ringR;
-
+extern int16 ringR_flag_task;
 
 
 

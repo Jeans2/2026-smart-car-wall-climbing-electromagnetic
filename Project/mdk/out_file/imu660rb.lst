@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  imu660rb                                                           22/03/26  19:17:51  PAGE 1   
+C251 COMPILER V5.60.0,  imu660rb                                                           26/03/26  16:29:43  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE imu660rb
@@ -11,7 +11,7 @@ stmt  level    source
 
     1          #include "imu660rb.h"
     2          
-    3          float null_drift_z; //零漂
+    3          //float null_drift_z; //零漂
     4          float gyro_z;
     5          float angle;
     6          float avl_gyro_z;
@@ -23,7 +23,7 @@ stmt  level    source
    12   1        imu660rb_get_gyro();      //获取陀螺仪数据
    13   1        gyro_z = imu660rb_gyro_z;
    14   1        gyro_z = imu660rb_gyro_transition(imu660rb_gyro_z); 
-   15   1        avl_gyro_z = gyro_z - null_drift_z;
+   15   1        avl_gyro_z = gyro_z ;
    16   1        gyro_z_filtered = alpha *gyro_z_filtered +(1-alpha)*avl_gyro_z;
    17   1      }
    18          
@@ -31,7 +31,7 @@ stmt  level    source
    20          {
    21   1        
    22   1      
-   23   1          angle+=0.002*avl_gyro_z;
+   23   1          angle+=0.002*gyro_z_filtered;
    24   1      
    25   1         
    26   1      }
@@ -41,37 +41,37 @@ stmt  level    source
    30   1        angle = 0;
    31   1      }
    32          
-   33          void null_drift_calculate()     //零漂采集
-   34          {
-   35   1        static int16 cnt_null=0;
-   36   1        static float temp=0;
-   37   1        static int8 ret=0;
-   38   1        
-   39   1        //采集数据
-   40   1      //  
-   41   1        
-   42   1        temp += gyro_z;
-   43   1          
-   44   1        cnt_null++;
-   45   1        if(ret=0 && cnt_null>=200)
-   46   1        {
-   47   2          null_drift_z = temp/200;
-   48   2          ret = 1;
-   49   2        }
-   50   1        
-   51   1      }
+   33          //void null_drift_calculate()     //零漂采集
+   34          //{
+   35          //  static int16 cnt_null=0;
+   36          //  static float temp=0;
+   37          //  static int8 ret=0;
+   38          //  
+   39          //  //采集数据
+   40          ////  
+   41          //  
+   42          //  temp += gyro_z;
+   43          //    
+   44          //  cnt_null++;
+   45          //  if(ret=0 && cnt_null>=200)
+   46          //  {
+   47          //    null_drift_z = temp/200;
+   48          //    ret = 1;
+   49          //  }
+   50          //  
+   51          //}
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       317     ------
+  code size            =       193     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
-C251 COMPILER V5.60.0,  imu660rb                                                           22/03/26  19:17:51  PAGE 2   
+C251 COMPILER V5.60.0,  imu660rb                                                           26/03/26  16:29:43  PAGE 2   
 
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        35     ------
+  xdata size           =        24     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -81,7 +81,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        31     ------
+  hconst size          =         9     ------
 End of Module Information.
 
 

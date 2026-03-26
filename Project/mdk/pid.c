@@ -47,7 +47,7 @@ float expect_gyro = 0;  // 角速度期望值
 float correct_L = 0;    // 电机差速修正值
 //float avl_gyro_z = 0;    实际角速度（需要从传感器获取）已定义
 static float direction_err2[2] = {0};
-struct PID pid_motor_run = {2.8,0,0,  0.55,0,0.04};// 2.8转弯良好                0.55 0.04
+struct PID pid_motor_run = {1.54,0,1.5,  0,0,0};// 1.5 4.0               0.55 0.04             95速度---3.6
 
 
 
@@ -66,91 +66,7 @@ static int flag = 0;
 
 
 
-////直行速度环
-//void speed_loop(void)
-//{
-//		static int16 last_err_speed=0;
-//	  static int16 last_last_err_speed=0;
-//		static float speed_output=0;//总输出
-//	//1-误差计算
-//   last_last_err_speed = last_err_speed;
-//	 last_err_speed = err_speed; 
-//	 err_speed = speed_target - speed_L;
-//	
-////2—增量式PI控制
-//		speed_output =  pid_loop_speed.Kp * (err_speed - last_err_speed)
-//									+ pid_loop_speed.Ki *  err_speed 
-//									+ pid_loop_speed.Kd * (err_speed - 2*last_err_speed + last_last_err_speed);
-//	
-//	//增量
-//	if(speed_output>2000 ){speed_output=2000; }
-//	if(speed_output<-2000){speed_output=-2000;}
-//	
-//	//输出
-//	out_L+= speed_output;
-//	//out_R = out_L;
-//	
-//	if(out_L>5000 ){out_L=5000; }
-//	if(out_L<-5000){out_L=-5000;}
-//	if(out_R>5000 ){out_R=5000; }
-//	if(out_R<-5000){out_R=-5000;}	
-//}
 
-
-//左右轮独立速度环测试
-
-
-/******转向PD控制*****/ 
-//float error;
-//static float lasterror,pidout;
-//float kp1 =1.875;      //0.3   1.875
-//float kp2 =0;     
-//float kd =-0.58;      //-0.53  -0.58
-//float GKD = 0.4;
-
-//float out()       //方案一
-//{
-//	lasterror=error;
-//	error = deviation;
-//	pidout= kp1 * error + kp2 * error * abs(error)+kd * (error-lasterror)+avl_gyro_z * GKD;	
-
-//	if(pidout > 1500)    //限幅  1500
-//	{
-//		pidout =1500;
-//	}
-//	else if(pidout < -1500)
-//	{
-//		pidout = -1500;
-//	}
-
-//	return pidout;
-
-//}
-
-//float error;
-//static float lasterror,pidout;
-//float kp_a =0.3;      
-//float kp_b =0.000012;     
-//float GKD = 0.003 ;
-
-//float out()                         //方案二
-//{
-//	
-//	error = deviation;
-//	pidout= kp_a * error + kp_b * error * error * error + avl_gyro_z * GKD;	
-//	lasterror=error;
-//	if(pidout > 1500)    //限幅
-//	{
-//		pidout =1500;
-//	}
-//	else if(pidout < -1500)
-//	{
-//		pidout = -1500;
-//	}
-
-//	return pidout;
-
-//}
 
 
 //========================================================================
@@ -167,6 +83,8 @@ void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
 	//1-误差计算
 	err_speed_L_last = err_speed_L;
 	err_speed_L = speed_L_t - speed_L;
+	
+	
 	
 	//2-控制
 	speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
@@ -207,30 +125,30 @@ void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
 
 
 
-//========================================================================
-// 角速度环 （中环）- 输入角速度期望，输出电机差速修正值
-//========================================================================
-float gyro_loop(float expect_gyro, float avl_gyro_z)
-{
-    float err_gyro;
-    
-    // 计算角速度误差
-    err_gyro = expect_gyro - avl_gyro_z;
-    
-    // 更新误差数组
-    direction_err2[1] = direction_err2[0];
-    direction_err2[0] = err_gyro;
+////========================================================================
+//// 角速度环 （中环）- 输入角速度期望，输出电机差速修正值
+////========================================================================
+//float gyro_loop(float expect_gyro, float avl_gyro_z)
+//{
+//    float err_gyro;
+//    
+//    // 计算角速度误差
+//    err_gyro = expect_gyro - avl_gyro_z;
+//    
+//    // 更新误差数组
+//    direction_err2[1] = direction_err2[0];
+//    direction_err2[0] = err_gyro;
 
-    // PD控制器计算修正量
-    correct_L = pid_motor_run.Kp_gyro * direction_err2[0]
-              + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
-    
-    // 限幅
-    if(correct_L > 10000) correct_L = 10000;
-    if(correct_L < -10000) correct_L = -10000;
-    
-    return correct_L;  // 返回电机差速修正值
-}
+//    // PD控制器计算修正量
+//    correct_L = pid_motor_run.Kp_gyro * direction_err2[0]
+//              + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
+//    
+//    // 限幅
+//    if(correct_L > 10000) correct_L = 10000;
+//    if(correct_L < -10000) correct_L = -10000;
+//    
+//    return correct_L;  // 返回电机差速修正值
+//}
 
 
 //========================================================================
@@ -261,14 +179,14 @@ float direction_loop(float err_position)
 //    }
     
     // PD控制器计算角速度期望
-    expect_gyro = pid_motor_run.Kp * direction_err1[0] 
+    correct_L = pid_motor_run.Kp * direction_err1[0] 
                 + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]); // 可以根据需要添加direction_err1[3]
     
     // 限幅
-    if(expect_gyro > limit_gyro) expect_gyro = limit_gyro;
-    if(expect_gyro < -limit_gyro) expect_gyro = -limit_gyro;
+    if(correct_L > 10000) correct_L = 10000;
+    if(correct_L < -10000) correct_L = -10000;
     
-    return expect_gyro;  // 返回角速度期望值
+    return correct_L;  // 返回角速度期望值
 }
 
 
@@ -278,132 +196,144 @@ float direction_loop(float err_position)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////
-//void direction_return(float err_position)
+////========================================================================
+//// 角速度环 （中环）- 输入角速度期望，输出电机差速修正值
+////========================================================================
+//float gyro_loop(float expect_gyro, float avl_gyro_z)
 //{
-//	static float err_feedforward=0, err_gyro,dec=0;
-//	static float direction_err1[4]={0}, direction_err2[2]={0};
-//	static float expect_gyro_last=0,correct_L_last=0;
-//	static float D_err=0;
-//	static int flag=0;
-//	//1-电磁位置->方向环->角速度期望
-////	direction_err1[3]=direction_err1[2];
-//	direction_err1[2]=direction_err1[1];
-//	direction_err1[1]=direction_err1[0];
-//	direction_err1[0]=err_position;
+//    float err_gyro;
+//    
+//    // 计算角速度误差
+//    err_gyro = expect_gyro - avl_gyro_z;
+//    
+//    // 更新误差数组
+//    direction_err2[1] = direction_err2[0];
+//    direction_err2[0] = err_gyro;
 
-//	
-//	D_err = direction_err1[0] - direction_err1[1];
-//	
-//	if(flag==0 &&(D_err>5.3||D_err<-5.3))
-//	{
-//		direction_err1[0] = direction_err1[1];
-//		flag=1;
-//	}
-//	else
-//	{
-//		flag=0;
-//	}
-//	
-//	//P D
-//	expect_gyro =  pid_motor_run.Kp *  direction_err1[0]		
-//							 + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]);    //之后再测direction_err1[3]) 
-
-//	
-//	if(expect_gyro>limit_gyro){expect_gyro=limit_gyro;}//限幅
-//	if(expect_gyro<-limit_gyro){expect_gyro=-limit_gyro;}
-//	
-//	//2-角速度->角速度环->电机差速(值)
-//	err_gyro = expect_gyro - avl_gyro_z;
-//	direction_err2[1]=direction_err2[0];
-//	direction_err2[0]=err_gyro;
-
-//	correct_L	=  pid_motor_run.Kp_gyro *  direction_err2[0]
-//						 + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
-//	
-//	 
-//	
-//	if(correct_L>10000){correct_L=10000;}
-//	if(correct_L<-10000){correct_L=-10000;}
-
-//	correct_L_last = correct_L;
+//    // PD控制器计算修正量
+//    correct_L = pid_motor_run.Kp_gyro * direction_err2[0]
+//              + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
+//    
+//    // 限幅
+//    if(correct_L > 10000) correct_L = 10000;
+//    if(correct_L < -10000) correct_L = -10000;
+//    
+//    return correct_L;  // 返回电机差速修正值
 //}
+
+
+////========================================================================
+//// 方向环（位置环）（外环）- 输入位置误差，输出角速度期望
+////========================================================================
+//float direction_loop(float err_position)
+//{
+//    static float err_feedforward = 0, err_gyro, dec = 0;
+//    static float expect_gyro_last = 0, correct_L_last = 0;
+//    
+//    // 更新位置误差数组（1阶或2阶滤波）
+//    direction_err1[2] = direction_err1[1];
+//    direction_err1[1] = direction_err1[0];
+//    direction_err1[0] = err_position;
+
+//    // 计算误差变化量
+//    D_err = direction_err1[0] - direction_err1[1];
+//    
+//    // 抗干扰处理：如果误差突变过大，认为是干扰，保持上次值
+////    if(flag == 0 && (D_err > 5.3 || D_err < -5.3))
+////    {
+////        direction_err1[0] = direction_err1[1];
+////        flag = 1;
+////    }
+////    else
+////    {
+////        flag = 0;
+////    }
+//    
+//    // PD控制器计算角速度期望
+//    correct_L = pid_motor_run.Kp * direction_err1[0] 
+//                + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]); // 可以根据需要添加direction_err1[3]
+//    
+//    // 限幅
+//    if(expect_gyro > limit_gyro) expect_gyro = limit_gyro;
+//    if(expect_gyro < -limit_gyro) expect_gyro = -limit_gyro;
+//    
+//    return expect_gyro;  // 返回角速度期望值
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

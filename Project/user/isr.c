@@ -161,26 +161,32 @@ void TM1_IRQHandler() interrupt 3
     if (tim1_irq_handler != NULL)
     {									
 				encoder_update();
-			gyro_get();
-			angle_get();
-				
+			  gyro_get();
+			
+			
 
 				
-			  gyro_loop(expect_gyro,0);//获取correctL 
+//			  gyro_loop(expect_gyro,0);//获取correctL 
         timer_10ms_count++;// 计数器累加										
-//		  	speed_loop_LR(speed_target + correct_L,speed_target - correct_L);	  		
-//				set_pwm_motor_R(out_R);
-//				set_pwm_motor_L(out_L);
+
 			if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
         {
             timer_10ms_count = 0;  // 计数器清零
 					  caiyang();      
 					adc_differ();	
+					if (element == 1&&ringR_flag_task==1)
+					{
+							deviation = deviation + 30;
+					}
+					if (element == 1&&ringR_flag_task==4)
+					{
+							deviation = deviation - 45;
+					}
           direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度                           // 10ms执行一次的函数
          
         }
 					
-			xunji();      
+			    xunji();      
 		
 			
     }

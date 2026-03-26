@@ -58,16 +58,15 @@ void main()
 
 	while(1)
     {				
-		  if(element ==2||element ==1)
-		  {
-		   gpio_set_level(IO_P52, 0);
-			}
-		  else
-		  {
-		
-				gpio_set_level(IO_P52, 1);
-		
-		  }
+//		  	if(ringR_flag_task ==4)
+//				{
+//		   gpio_set_level(IO_P52, 0);
+//				}
+//				else
+//				{
+//				gpio_set_level(IO_P52, 1);
+//		
+//				}
 		
 		
 		
@@ -78,13 +77,13 @@ void main()
 //			ips114_show();
 //			fuya_set_duty(4000);
 			Key_Menu_Adjust();    // 扫描按键并修改参数
-        UI_Display_Update();  // 刷新屏幕菜单
+       UI_Display_Update();  // 刷新屏幕菜单
 		
 
 
 //			sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-			sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
-//			sprintf(buf,"%d,%d,%d,%f\n",speed_L,speed_R,speed_avl,distance_ringR);//十字250
+//			sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+			sprintf(buf,"%f\n",angle);//十字250
 				wireless_uart_send_string(buf);
 		}
 }

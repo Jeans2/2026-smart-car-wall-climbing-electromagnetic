@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  encoder                                                            22/03/26  19:17:51  PAGE 1   
+C251 COMPILER V5.60.0,  encoder                                                            26/03/26  15:49:38  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
@@ -66,7 +66,7 @@ stmt  level    source
    53   1      //       tempL_pluse, tempR_pluse, speed_avl, speed_L, speed_R);
    54   1      //    //◊Û”“¬÷ÀŸ∂»
    55   1      //    if(tempL_pluse<0)
-C251 COMPILER V5.60.0,  encoder                                                            22/03/26  19:17:51  PAGE 2   
+C251 COMPILER V5.60.0,  encoder                                                            26/03/26  15:49:38  PAGE 2   
 
    56   1      //    {
    57   1      //    speed_L =-speed_L;

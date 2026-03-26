@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               22/03/26  19:17:49  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               26/03/26  19:25:08  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    49   1        debug_init();
    50   1        
    51   1        // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               22/03/26  19:17:49  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               26/03/26  19:25:08  PAGE 2   
 
    52   1          System_Init();
    53   1             pit_ms_init(PIT_CH, 2); 
@@ -77,41 +77,40 @@ stmt  level    source
    58   1      
    59   1        while(1)
    60   1          {       
-   61   2            if(element ==2||element ==1)
-   62   2            {
-   63   3             gpio_set_level(IO_P52, 0);
-   64   3            }
-   65   2            else
-   66   2            {
-   67   3          
-   68   3              gpio_set_level(IO_P52, 1);
-   69   3          
-   70   3            }
+   61   2      //        if(ringR_flag_task ==4)
+   62   2      //        {
+   63   2      //       gpio_set_level(IO_P52, 0);
+   64   2      //        }
+   65   2      //        else
+   66   2      //        {
+   67   2      //        gpio_set_level(IO_P52, 1);
+   68   2      //    
+   69   2      //        }
+   70   2          
    71   2          
    72   2          
    73   2          
    74   2          
    75   2          
    76   2          
-   77   2          
-   78   2      //      ips114_show();
-   79   2      //      fuya_set_duty(4000);
-   80   2            Key_Menu_Adjust();    // 扫描按键并修改参数
-   81   2              UI_Display_Update();  // 刷新屏幕菜单
-   82   2          
+   77   2      //      ips114_show();
+   78   2      //      fuya_set_duty(4000);
+   79   2            Key_Menu_Adjust();    // 扫描按键并修改参数
+   80   2             UI_Display_Update();  // 刷新屏幕菜单
+   81   2          
+   82   2      
    83   2      
-   84   2      
-   85   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-   86   2            sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
-   87   2      //      sprintf(buf,"%d,%d,%d,%f\n",speed_L,speed_R,speed_avl,distance_ringR);//十字250
-   88   2              wireless_uart_send_string(buf);
-   89   2          }
-   90   1      }
+   84   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
+   85   2      //      sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+   86   2            sprintf(buf,"%f\n",angle);//十字250
+   87   2              wireless_uart_send_string(buf);
+   88   2          }
+   89   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       336     ------
+  code size            =       179     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -126,7 +125,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        18     ------
+  hconst size          =         6     ------
 End of Module Information.
 
 
