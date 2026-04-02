@@ -176,11 +176,11 @@ void TM1_IRQHandler() interrupt 3
 					adc_differ();	
 					if (element == 1&&ringR_flag_task==1)
 					{
-							deviation = deviation + 30;
+							deviation = deviation - 30;
 					}
 					if (element == 1&&ringR_flag_task==4)
 					{
-							deviation = deviation - 45;
+							deviation = deviation + 45;
 					}
           direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度                           // 10ms执行一次的函数
          

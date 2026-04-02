@@ -2,8 +2,8 @@
 
 
 float abs_angle = 0;
-int16 speed_straight = 85;//85
-int16 speed_ringR = 70;//70
+int16 speed_straight = 95;//85
+int16 speed_ringR = 80;//70
 int8  element = 0;
 int8 turn_flag=0;
 //int16 Ring_choice=1;
@@ -25,15 +25,17 @@ int16 ringR_flag_execute=1;
 void xunji(void) 
 {
 	
-	if(R+L>180&&ring_flag_ing==0)	//右环岛
+	if(R+L>120&&ring_flag_ing==0)	//右环岛
 	{
 ;
 		element = 1;
 		ringR_flag_task = 1;
 //		distance_ringR = 0;
 		ring_flag_ing = 200;
-		angle_clear();  		
+		angle_clear(); 
+		
 	}
+	
 //	if(element==1&& ringR_flag_task == 0)
 //	{
 //			if((R+RM+L+LM)<110)
@@ -64,7 +66,7 @@ void xunji(void)
 			{
 			 ring_flag_ing--;
 			}
-			gpio_set_level(IO_P52, 0);
+			
 			  break;
 			
 //				/**环岛任务**/
@@ -114,18 +116,19 @@ void ringR_task(void)
         case 1:  
                                          
 				  angle_get();
-					if(angle > 180)                        
+					if(angle < -280)                        
            {                           
                ringR_flag_task = 4;																								
                ringR_flag_execute = 4;
 							distance_ringR = 0;
+						 gpio_set_level(IO_P52, 0);
            }
            break;
                         
         case 4:                                     
             
 					distance_ringR += speed_avl;
-          if(distance_ringR > 10000)               
+          if(distance_ringR > 12000)               
           {   
              
               distance_ringR = 0;

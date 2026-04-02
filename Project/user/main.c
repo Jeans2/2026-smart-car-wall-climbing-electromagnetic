@@ -82,8 +82,8 @@ void main()
 
 //        printf("%f\n",deviation);
 //			sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-//			sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
 //			sprintf(buf,"%f\n",angle);//十字250
-//				wireless_uart_send_string(buf);
+				wireless_uart_send_string(buf);
 		}
 }

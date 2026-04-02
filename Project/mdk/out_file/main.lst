@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               02/04/26  17:30:52  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               02/04/26  18:07:25  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    49   1        debug_init();
    50   1        
    51   1        // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               02/04/26  17:30:52  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               02/04/26  18:07:25  PAGE 2   
 
    52   1          System_Init();
    53   1             pit_ms_init(PIT_CH, 2); 
@@ -101,16 +101,16 @@ stmt  level    source
    82   2      
    83   2      //        printf("%f\n",deviation);
    84   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-   85   2      //      sprintf(buf,"%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+   85   2           sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
    86   2      //      sprintf(buf,"%f\n",angle);//十字250
-   87   2      //        wireless_uart_send_string(buf);
+   87   2              wireless_uart_send_string(buf);
    88   2          }
    89   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       129     ------
+  code size            =       299     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -125,7 +125,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         2     ------
+  hconst size          =        20     ------
 End of Module Information.
 
 
