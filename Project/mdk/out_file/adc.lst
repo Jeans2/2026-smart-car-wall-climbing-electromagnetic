@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                26/03/26  15:49:37  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                31/03/26  17:01:34  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        temp = adc_convert(ch);
    56   1        max = temp;
    57   1        min = temp;
-C251 COMPILER V5.60.0,  adc                                                                26/03/26  15:49:37  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                31/03/26  17:01:34  PAGE 2   
 
    58   1        sum += temp;
    59   1        
@@ -134,7 +134,7 @@ stmt  level    source
   121          void adc_normalizing(void)
   122          {
   123   1        
-C251 COMPILER V5.60.0,  adc                                                                26/03/26  15:49:37  PAGE 3   
+C251 COMPILER V5.60.0,  adc                                                                31/03/26  17:01:34  PAGE 3   
 
   124   1       
   125   1        L  = 100*(ADC_temp[0]-0)/(1000-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
@@ -151,7 +151,7 @@ stmt  level    source
   136          
   137          
   138          float deviation;
-  139          struct ADC adc_set_differ = {1,1,2};  // 1.3 1 0.8
+  139          struct ADC adc_set_differ = {1,1,1};  // 1.3 1 0.8
   140          float add = 0,sub = 0;
   141          void adc_differ()     //差比和差
   142          {

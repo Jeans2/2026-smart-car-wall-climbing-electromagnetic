@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
@@ -66,7 +66,7 @@ stmt  level    source
    55   2      //      pid_motor_run=pid_motor_straight;  //调用直道pid数值
    56   2            speed_target = speed_straight;        
    57   2      //      direction_return(deviation);//得到差速correct_L
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 2   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 2   
 
    58   2              speed_loop_LR(speed_target + correct_L,speed_target - correct_L);                   
    59   2              set_pwm_motor_R(out_R);
@@ -134,7 +134,7 @@ stmt  level    source
   121   3                    distance_ringR = 0;
   122   3                 }
   123   2                 break;
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 3   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 3   
 
   124   2                              
   125   2              case 4:                                     
@@ -202,7 +202,7 @@ stmt  level    source
   187          //void ringL_execute(void)
   188          //{
   189          //    float target_L = 0;
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 4   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 4   
 
   190          //    float target_R = 0;
   191          //    switch(ringR_flag_execute)
@@ -270,7 +270,7 @@ stmt  level    source
   253          //      ringR_flag_execute=1;
   254          //      distance_ringR += speed_avl;
   255          //      if(distance_ringR>distance_ringL_1)             //2到达打角点
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 5   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 5   
 
   256          //      { 
   257          //        angle_clear();        // 到达打角点，角度清零
@@ -338,7 +338,7 @@ stmt  level    source
   319          
   320          
   321          
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 6   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 6   
 
   322          
   323          
@@ -406,7 +406,7 @@ stmt  level    source
   385          
   386          
   387          
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 7   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 7   
 
   388          
   389          
@@ -474,7 +474,7 @@ stmt  level    source
   451          //      {
   452          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
   453          //      }
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 8   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 8   
 
   454          //      else
   455          //      {
@@ -543,7 +543,7 @@ Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =       708     ------
   ecode size           =    ------     ------
-C251 COMPILER V5.60.0,  xunji                                                              26/03/26  20:21:34  PAGE 9   
+C251 COMPILER V5.60.0,  xunji                                                              02/04/26  17:30:52  PAGE 9   
 
   data size            =    ------     ------
   idata size           =    ------     ------

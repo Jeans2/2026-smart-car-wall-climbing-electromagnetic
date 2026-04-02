@@ -47,7 +47,7 @@ float expect_gyro = 0;  // 角速度期望值
 float correct_L = 0;    // 电机差速修正值
 //float avl_gyro_z = 0;    实际角速度（需要从传感器获取）已定义
 static float direction_err2[2] = {0};
-struct PID pid_motor_run = {1.54,0,1.5,  0,0,0};// 1.5 4.0               0.55 0.04             95速度---3.6
+struct PID pid_motor_run = {1.54,1.5,0,  0,0,0};// 1.5 4.0               0.55 0.04             95速度---3.6
 
 
 

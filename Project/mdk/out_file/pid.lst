@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                26/03/26  18:45:56  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                02/04/26  17:31:19  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -58,7 +58,7 @@ stmt  level    source
    47          float correct_L = 0;    // 电机差速修正值
    48          //float avl_gyro_z = 0;    实际角速度（需要从传感器获取）已定义
    49          static float direction_err2[2] = {0};
-   50          struct PID pid_motor_run = {1.54,0,1.5,  0,0,0};// 1.5 4.0               0.55 0.04             95速度---3
+   50          struct PID pid_motor_run = {1.54,1.5,0,  0,0,0};// 1.5 4.0               0.55 0.04             95速度---3
              -.6
    51          
    52          
@@ -66,7 +66,7 @@ stmt  level    source
    54          
    55          // 方向环（位置环）相关变量
    56          static float direction_err1[4] = {0};
-C251 COMPILER V5.60.0,  pid                                                                26/03/26  18:45:56  PAGE 2   
+C251 COMPILER V5.60.0,  pid                                                                02/04/26  17:31:19  PAGE 2   
 
    57          static float D_err = 0;
    58          static int flag = 0;
@@ -134,7 +134,7 @@ stmt  level    source
   120   1        if(out_L<-3000){out_L=-3000;}
   121   1        if(out_R>3000 ){out_R=3000; }
   122   1        if(out_R<-3000){out_R=-3000;}
-C251 COMPILER V5.60.0,  pid                                                                26/03/26  18:45:56  PAGE 3   
+C251 COMPILER V5.60.0,  pid                                                                02/04/26  17:31:19  PAGE 3   
 
   123   1      }
   124          
@@ -202,7 +202,7 @@ stmt  level    source
   185   1          // 限幅
   186   1          if(correct_L > 10000) correct_L = 10000;
   187   1          if(correct_L < -10000) correct_L = -10000;
-C251 COMPILER V5.60.0,  pid                                                                26/03/26  18:45:56  PAGE 4   
+C251 COMPILER V5.60.0,  pid                                                                02/04/26  17:31:19  PAGE 4   
 
   188   1          
   189   1          return correct_L;  // 返回角速度期望值
@@ -270,7 +270,7 @@ stmt  level    source
   251          //    
   252          //    // PD控制器计算角速度期望
   253          //    correct_L = pid_motor_run.Kp * direction_err1[0] 
-C251 COMPILER V5.60.0,  pid                                                                26/03/26  18:45:56  PAGE 5   
+C251 COMPILER V5.60.0,  pid                                                                02/04/26  17:31:19  PAGE 5   
 
   254          //                + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]); // 可以根据需要添加direct
              -ion_err1[3]
@@ -338,7 +338,7 @@ stmt  level    source
   316          
   317          
   318          
-C251 COMPILER V5.60.0,  pid                                                                26/03/26  18:45:56  PAGE 6   
+C251 COMPILER V5.60.0,  pid                                                                02/04/26  17:31:19  PAGE 6   
 
   319          
   320          
