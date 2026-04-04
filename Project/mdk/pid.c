@@ -40,14 +40,14 @@ struct PID pid_motor_run;
 int16 err_speed=0;
 int16 speed_target = 0;
 float out_L=0,out_R=0;
-struct PID pid_loop_speed = {40,0.125,0};			//40,0.125,0   2ms中断下
+struct PID pid_loop_speed = {24,0.125,0};			//40,0.125,0   2ms中断下           
 //struct PID pid_loop_speed = {60,0.37,0};          //右轮
 //角速度环
 float expect_gyro = 0;  // 角速度期望值
 float correct_L = 0;    // 电机差速修正值
 //float avl_gyro_z = 0;    实际角速度（需要从传感器获取）已定义
 static float direction_err2[2] = {0};
-struct PID pid_motor_run = {1.54,1.5,0,  0,0,0};// 1.5 4.0               0.55 0.04             95速度---3.6
+struct PID pid_motor_run = {2.04,0,2.2,  0,0,0};// 1.54 2              
 
 
 
@@ -116,10 +116,10 @@ void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
 	//输出
 	out_R += speed_output_R;
 	
-  if(out_L>3000 ){out_L=3000; }
-	if(out_L<-3000){out_L=-3000;}
-	if(out_R>3000 ){out_R=3000; }
-	if(out_R<-3000){out_R=-3000;}
+  if(out_L>3500 ){out_L=3500; }
+	if(out_L<-3500){out_L=-3500;}
+	if(out_R>3500 ){out_R=3500; }
+	if(out_R<-3500){out_R=-3500;}
 }
 
 

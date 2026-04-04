@@ -74,15 +74,16 @@ void main()
 		
 		
 		
-//			ips114_show();
-//			fuya_set_duty(4000);
-			Key_Menu_Adjust();    // 扫描按键并修改参数
-       UI_Display_Update();  // 刷新屏幕菜单
+			ips114_show();
+			fuya_set_duty(6000);
+//			Key_Menu_Adjust();    // 扫描按键并修改参数
+//       UI_Display_Update();  // 刷新屏幕菜单
 		
 
 //        printf("%f\n",deviation);
 //			sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+				sprintf(buf,"%d,%d\n",speed_straight,speed_avl);
+//     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
 //			sprintf(buf,"%f\n",angle);//十字250
 				wireless_uart_send_string(buf);
 		}

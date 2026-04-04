@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
@@ -13,8 +13,8 @@ stmt  level    source
     2          
     3          
     4          float abs_angle = 0;
-    5          int16 speed_straight = 95;//85
-    6          int16 speed_ringR = 80;//70
+    5          int16 speed_straight = 110;//105
+    6          int16 speed_ringR = 95;//90
     7          int8  element = 0;
     8          int8 turn_flag=0;
     9          //int16 Ring_choice=1;
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        {
    56   2          case 0:                       //**正常循迹**      
    57   2      //      pid_motor_run=pid_motor_straight;  //调用直道pid数值
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 2   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 2   
 
    58   2            speed_target = speed_straight;        
    59   2      //      direction_return(deviation);//得到差速correct_L
@@ -134,7 +134,7 @@ stmt  level    source
   121   3                     ringR_flag_task = 4;                                               
   122   3                     ringR_flag_execute = 4;
   123   3                    distance_ringR = 0;
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 3   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 3   
 
   124   3                   gpio_set_level(IO_P52, 0);
   125   3                 }
@@ -143,7 +143,7 @@ stmt  level    source
   128   2              case 4:                                     
   129   2                  
   130   2                distance_ringR += speed_avl;
-  131   2                if(distance_ringR > 12000)               
+  131   2                if(distance_ringR > 18000)               
   132   2                {   
   133   3                   
   134   3                    distance_ringR = 0;
@@ -202,7 +202,7 @@ stmt  level    source
   187          
   188          
   189          
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 4   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 4   
 
   190          //void ringL_execute(void)
   191          //{
@@ -270,7 +270,7 @@ stmt  level    source
   253          //  {
   254          //    case 1:                         //1准备进岛
   255          //      ring_flag_ing =200;//进入环岛状态
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 5   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 5   
 
   256          //      ringR_flag_execute=1;
   257          //      distance_ringR += speed_avl;
@@ -338,7 +338,7 @@ stmt  level    source
   319          
   320          
   321          
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 6   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 6   
 
   322          
   323          
@@ -406,7 +406,7 @@ stmt  level    source
   385          
   386          
   387          
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 7   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 7   
 
   388          
   389          
@@ -474,7 +474,7 @@ stmt  level    source
   451          //      gyro_loop(gyro_ring_in);    
   452          //    
   453          //      if(out_gyro>0)
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 8   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 8   
 
   454          //      {
   455          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
@@ -542,7 +542,7 @@ stmt  level    source
   517          
 
 
-C251 COMPILER V5.60.0,  xunji                                                              02/04/26  18:33:09  PAGE 9   
+C251 COMPILER V5.60.0,  xunji                                                              03/04/26  21:40:58  PAGE 9   
 
 Module Information          Static   Overlayable
 ------------------------------------------------

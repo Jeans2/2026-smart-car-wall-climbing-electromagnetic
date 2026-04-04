@@ -1,25 +1,24 @@
 #include "menu.h"
 
 // 光标菜单变量
-#define MENU_ITEMS 5             // 菜单总项数
-uint8 cursor_index = 0;          // 当前光标位置 (0:Kp, 1:Kd, 2:A, 3:B, 4:C)
+#define MENU_ITEMS 7             // ??菜单总项数从 5 改成 7
+uint8 cursor_index = 0;          // 当前光标位置 (0~6)
 char disp_buf[32];               // 屏幕显示缓存区
 
 
 // =========================================================================
 // 函数名：Key_Menu_Adjust
-// 功  能：光标切换与对应参数的修改 (已彻底清理宏定义)
+// 功  能：光标切换与对应参数的修改 
 // =========================================================================
 void Key_Menu_Adjust(void)
 {
     static uint8 key1_last = 1, key2_last = 1, key3_last = 1, key4_last = 1;
     uint8 key1_now, key2_now, key3_now, key4_now;
 
-    // 1. 统一使用官方库函数读取引脚状态，干净利落
     key1_now = gpio_get_level(KEY1_PIN);
     key2_now = gpio_get_level(KEY2_PIN);
     key3_now = gpio_get_level(KEY3_PIN);
-    key4_now = gpio_get_level(KEY4_PIN); // 预留读取 KEY4
+    key4_now = gpio_get_level(KEY4_PIN); 
 
     // ----------------- 功能 1：切换调参光标 (KEY1) -----------------
     if(key1_now == 0 && key1_last == 1)    
@@ -40,11 +39,14 @@ void Key_Menu_Adjust(void)
         {
             switch(cursor_index)
             {
-                case 0: pid_motor_run.Kp += 0.1f;         break;
-                case 1: pid_motor_run.Kd += 0.1f;         break; 
-                case 2: adc_set_differ.A += 0.1f;         break; 
-                case 3: adc_set_differ.B += 0.1f;         break;
-                case 4: adc_set_differ.C += 0.1f;         break;
+                case 0: pid_motor_run.Kp  += 0.1f;          break;
+                case 1: pid_motor_run.Kd  += 0.1f;          break; 
+                case 2: adc_set_differ.A  += 0.1f;          break; 
+                case 3: adc_set_differ.B  += 0.1f;          break;
+                case 4: adc_set_differ.C  += 0.1f;          break;
+                // ?? 新增：速度环 Kp 和 Ki (自定义步长)
+                case 5: pid_loop_speed.Kp += 1.0f;          break; // 每次加 1
+                case 6: pid_loop_speed.Ki += 0.01f;         break; // 每次加 0.01
             }
         }
     }
@@ -57,11 +59,14 @@ void Key_Menu_Adjust(void)
         {
             switch(cursor_index)
             {
-                case 0: pid_motor_run.Kp -= 0.1f;         if(pid_motor_run.Kp < 0) pid_motor_run.Kp = 0; break;
-                case 1: pid_motor_run.Kd -= 0.1f;         if(pid_motor_run.Kd < 0) pid_motor_run.Kd = 0; break;
-                case 2: adc_set_differ.A -= 0.1f;         if(adc_set_differ.A < 0) adc_set_differ.A = 0; break;
-                case 3: adc_set_differ.B -= 0.1f;         if(adc_set_differ.B < 0) adc_set_differ.B = 0; break;
-                case 4: adc_set_differ.C -= 0.1f;         if(adc_set_differ.C < 0) adc_set_differ.C = 0; break;
+                case 0: pid_motor_run.Kp  -= 0.1f;          if(pid_motor_run.Kp < 0)  pid_motor_run.Kp = 0;  break;
+                case 1: pid_motor_run.Kd  -= 0.1f;          if(pid_motor_run.Kd < 0)  pid_motor_run.Kd = 0;  break;
+                case 2: adc_set_differ.A  -= 0.1f;          if(adc_set_differ.A < 0)  adc_set_differ.A = 0;  break;
+                case 3: adc_set_differ.B  -= 0.1f;          if(adc_set_differ.B < 0)  adc_set_differ.B = 0;  break;
+                case 4: adc_set_differ.C  -= 0.1f;          if(adc_set_differ.C < 0)  adc_set_differ.C = 0;  break;
+                // ?? 新增：速度环 Kp 和 Ki，加了防越界保护
+                case 5: pid_loop_speed.Kp -= 1.0f;          if(pid_loop_speed.Kp < 0) pid_loop_speed.Kp = 0; break;
+                case 6: pid_loop_speed.Ki -= 0.01f;         if(pid_loop_speed.Ki < 0) pid_loop_speed.Ki = 0; break;
             }
         }
     }
@@ -72,11 +77,10 @@ void Key_Menu_Adjust(void)
         system_delay_ms(15);
         if(gpio_get_level(KEY4_PIN) == 0)
         {
-            // 这里留空，一会儿可以把“一键保存到Flash”的功能写进来
+            // 留给 Flash 保存
         }
     }
 
-    // 更新历史状态
     key1_last = key1_now;
     key2_last = key2_now;
     key3_last = key3_now;
@@ -111,15 +115,13 @@ void UI_Display_Update(void)
     prefix = (cursor_index == 4) ? '>' : ' ';
     sprintf(disp_buf, "%c Form C : %.2f  ", prefix, adc_set_differ.C);
     ips114_show_string(0, 4*16, disp_buf);
+
+    // ?? 新增行：由于一块 1.14 寸 IPS 屏幕能显示多行，我们直接往下排 (y轴坐标 5*16 和 6*16)
+    prefix = (cursor_index == 5) ? '>' : ' ';
+    sprintf(disp_buf, "%c Spd Kp : %.1f  ", prefix, pid_loop_speed.Kp); // 速度环 P 通常只看一位小数就够了
+    ips114_show_string(0, 5*16, disp_buf);
+
+    prefix = (cursor_index == 6) ? '>' : ' ';
+    sprintf(disp_buf, "%c Spd Ki : %.2f  ", prefix, pid_loop_speed.Ki); // 速度环 I 需要看两位小数
+    ips114_show_string(0, 6*16, disp_buf);
 }
-
-
-
-
-
-
-
-
-
-
-

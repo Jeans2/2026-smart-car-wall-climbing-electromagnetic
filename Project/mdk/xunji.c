@@ -2,8 +2,8 @@
 
 
 float abs_angle = 0;
-int16 speed_straight = 95;//85
-int16 speed_ringR = 80;//70
+int16 speed_straight = 110;//105
+int16 speed_ringR = 95;//90
 int8  element = 0;
 int8 turn_flag=0;
 //int16 Ring_choice=1;
@@ -128,7 +128,7 @@ void ringR_task(void)
         case 4:                                     
             
 					distance_ringR += speed_avl;
-          if(distance_ringR > 12000)               
+          if(distance_ringR > 18000)               
           {   
              
               distance_ringR = 0;
