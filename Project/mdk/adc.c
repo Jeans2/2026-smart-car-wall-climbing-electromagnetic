@@ -18,7 +18,7 @@ void my_adc_init(void)
 		adc_init(ADC_LM_CH ,ADC_10BIT);//LM
 		adc_init(ADC_R_CH ,ADC_10BIT);//R
 		adc_init(ADC_RM_CH ,ADC_10BIT);//RM
-		adc_init(ADC_V ,ADC_10BIT);
+	
 }	
 	
 //电磁采样
@@ -136,7 +136,7 @@ void adc_normalizing(void)
 
 
 float deviation;
-struct ADC adc_set_differ = {1,2.3,1};  // 1.3 1 0.8
+struct ADC adc_set_differ = {1,2.6,1};  // 1.3 1 0.8
 float add = 0,sub = 0;
 void adc_differ()     //差比和差
 {

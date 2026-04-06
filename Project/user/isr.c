@@ -37,6 +37,7 @@
 //#define large_t (0.02*1)
 //#define small_t (0.02*0.5)
 unsigned char timer_10ms_count = 0;  // 10ms计数器
+
 void DMA_UART1_IRQHandler(void) interrupt 4
 {
     static vuint8 dwon_count = 0;
@@ -180,13 +181,34 @@ void TM1_IRQHandler() interrupt 3
 					}
 					if (element == 1&&ringR_flag_task==4)
 					{
-							deviation = deviation + 45;
+							deviation = deviation + 100;
 					}
           direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度                           // 10ms执行一次的函数
          
         }
+			switch (car_state)
+			{
+				case 1:
+					xunji();
+
+         break;		
+       
+				case 0:
+					set_pwm_motor_R(0);
+					set_pwm_motor_L(0);
+				
+				
+				 break;
 					
-			    xunji();      
+			}
+			
+			
+			
+			
+			
+					
+      
+			          
 		
 			
     }

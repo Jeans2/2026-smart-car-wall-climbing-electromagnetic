@@ -6,14 +6,10 @@ int16 speed_straight = 110;//105
 int16 speed_ringR = 95;//90
 int8  element = 0;
 int8 turn_flag=0;
-//int16 Ring_choice=1;
+
 
 float distance_ringR = 0;       // 距离积分
 float distance_ringR_1 = 8000;     // 打角点前直道路距离
-//float distance_ringL_1 = 10000;     // 打角点前直道路距离
-
-
-
 
 
 //环岛状态标志
@@ -36,27 +32,12 @@ void xunji(void)
 		
 	}
 	
-//	if(element==1&& ringR_flag_task == 0)
-//	{
-//			if((R+RM+L+LM)<110)
-//			{
-//						element=0;
-//						angle_clear();
-//				distance_ringR=0;
-//				ringR_flag_task=1;
-//				ringR_flag_execute=1;				
-//				
-//			
-//			}
-//	}
 //	if(L+LM+RM+R<20)									//出界保护
 //	{element = 9;			turn_flag = 9;}
 	switch (element)
 	{
 		case 0:												//**正常循迹**			
-//			pid_motor_run=pid_motor_straight;  //调用直道pid数值
-			speed_target = speed_straight;				
-//			direction_return(deviation);//得到差速correct_L
+			  speed_target = speed_straight;				
 				speed_loop_LR(speed_target + correct_L,speed_target - correct_L);		     		   	    
 			  set_pwm_motor_R(out_R);
         set_pwm_motor_L(out_L);
@@ -116,7 +97,7 @@ void ringR_task(void)
         case 1:  
                                          
 				  angle_get();
-					if(angle < -280)                        
+					if(angle < -260)                     
            {                           
                ringR_flag_task = 4;																								
                ringR_flag_execute = 4;
@@ -128,7 +109,7 @@ void ringR_task(void)
         case 4:                                     
             
 					distance_ringR += speed_avl;
-          if(distance_ringR > 18000)               
+          if(distance_ringR > 22000)               
           {   
              
               distance_ringR = 0;

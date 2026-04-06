@@ -13,6 +13,6 @@
 #define KP_MAX  5.0f   // Kp的最大允许值
 #define KP_MIN  0.0f   // Kp的最小允许值 (通常不能为负)
 
-//void Key_PID_Adjust(void);
+
 void key_init(void);
 #endif

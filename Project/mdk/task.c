@@ -14,7 +14,6 @@ void System_Init(void)
     motor_init();       // 电机初始化
 		ips114_init();
 		imu660rb_init();
-//		huan_init();
 	  fuya_init();
 	wireless_uart_init();
 }

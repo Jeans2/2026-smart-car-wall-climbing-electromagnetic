@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  encoder                                                            02/04/26  19:43:51  PAGE 1   
+C251 COMPILER V5.60.0,  encoder                                                            06/04/26  16:22:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
@@ -15,83 +15,38 @@ stmt  level    source
     4          SlidingAverageFilter filter_Right;
     5          int16 speed_L=0,speed_R=0,speed_avl=0;
     6          float speed_L_next=0,speed_R_next=0,speed_avl_next;
-    7          //int16 lastspeed_L=0,lastspeed_R=0;
-    8          int32 distance_text=0;
+    7          int32 distance_text=0;
+    8          
     9          
    10          
    11          
-   12          
-   13          void encoder_init(void)
-   14          {
-   15   1          encoder_dir_init(ENCODER_DIR_1, ENCODER_DIR_DIR_1, ENCODER_DIR_PULSE_1);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å ´
+   12          void encoder_init(void)
+   13          {
+   14   1          encoder_dir_init(ENCODER_DIR_1, ENCODER_DIR_DIR_1, ENCODER_DIR_PULSE_1);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å ´
              -ø·½ÏòÔöÁ¿±àÂëÆ÷Ä£Ê½
-   16   1          encoder_dir_init(ENCODER_DIR_2, ENCODER_DIR_DIR_2, ENCODER_DIR_PULSE_2);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å
+   15   1          encoder_dir_init(ENCODER_DIR_2, ENCODER_DIR_DIR_2, ENCODER_DIR_PULSE_2);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å
              - ´ø·½ÏòÔöÁ¿±àÂëÆ÷Ä£Ê½
-   17   1          
-   18   1          initSlidingAverage(&filter_Left,6);  // ³õÊ¼»¯ÂË²¨Æ÷
-   19   1          initSlidingAverage(&filter_Right,6);
-   20   1      }
+   16   1          
+   17   1          initSlidingAverage(&filter_Left,6);  // ³õÊ¼»¯ÂË²¨Æ÷
+   18   1          initSlidingAverage(&filter_Right,6);
+   19   1      }
+   20          
    21          
-   22          
-   23          void encoder_update(void)
-   24          {
-   25   1        
-   26   1            tempL_pluse = encoder_get_count(ENCODER_DIR_1);
-   27   1            encoder_clear_count(ENCODER_DIR_1);
-   28   1            
-   29   1            tempR_pluse = encoder_get_count(ENCODER_DIR_2);
-   30   1            encoder_clear_count(ENCODER_DIR_2);
-   31   1      
-   32   1              
-   33   1          //²É¼¯±àÂëÆ÷·½ÏòÐÅÏ¢
-   34   1          
-   35   1          
-   36   1            
-   37   1          
-   38   1          speed_L = -tempL_pluse;
-   39   1          speed_R= tempR_pluse;
-   40   1        speed_avl = (speed_L + speed_R)/2;
-   41   1          //speed_avl=tempL_pluse;
-   42   1      //    printf("%d,%d,%d\n",tempL_pluse, tempR_pluse,speed_avl);
-   43   1          
-   44   1      //    if(0 == ENCODER_DIR_DIR_2)    
-   45   1      //    {
-   46   1      //       tempR_pluse = -tempR_pluse;
-   47   1      //    }
-   48   1      //      speed_L = (wheel_d * pi) * ((float)tempL_pluse / encoder_pulses) / time; 
-   49   1      //      speed_R = (wheel_d * pi) * ((float)tempR_pluse / encoder_pulses) / time;
-   50   1            
-   51   1            
-   52   1      //      printf("tempL_pluse:%d,tempR_pluse:%d,speed_avl:%d,speed_L:%d,speed_R:%d\n",
-   53   1      //       tempL_pluse, tempR_pluse, speed_avl, speed_L, speed_R);
-   54   1      //    //×óÓÒÂÖËÙ¶È
-   55   1      //    if(tempL_pluse<0)
-C251 COMPILER V5.60.0,  encoder                                                            02/04/26  19:43:51  PAGE 2   
-
-   56   1      //    {
-   57   1      //    speed_L =-speed_L;
-   58   1      //    }
-   59   1      //    if(tempR_pluse<0)
-   60   1      //    {
-   61   1      //    speed_R = -speed_R;
-   62   1      //    }
-   63   1        //0-»ñÈ¡ËÙ¶È&ÇåÁã
-   64   1      //  speed_R = (0.85f*encoder_get_count(ENCODER_DIR_1));
-   65   1      //  speed_L = (0.85f*encoder_get_count(ENCODER_DIR_2));
-   66   1      //  
-   67   1      //  encoder_clear_count(ENCODER_DIR_2);
-   68   1      //  encoder_clear_count(ENCODER_DIR_1);
-   69   1      //  //1-Ò»½×µÍÍ¨ÂË²¨
-   70   1      //  speed_L=(0.9*speed_L + 0.1*lastspeed_L);
-   71   1      //  speed_R=(0.9*speed_R + 0.1*lastspeed_R);
-   72   1      //  lastspeed_L = speed_L;
-   73   1      //  lastspeed_R = speed_R;
-   74   1      //   
-   75   1      //  speed_avl = (speed_L + speed_R)/2;
-   76   1      //  
-   77   1      //  distance_text += (int32)speed_avl;
-   78   1      //  printf("speed_L: %d, speed_R: %d\r\n", speed_L, speed_R); 
-   79   1      }
+   22          void encoder_update(void)
+   23          {
+   24   1        
+   25   1            tempL_pluse = encoder_get_count(ENCODER_DIR_1);
+   26   1            encoder_clear_count(ENCODER_DIR_1);
+   27   1            
+   28   1            tempR_pluse = encoder_get_count(ENCODER_DIR_2);
+   29   1            encoder_clear_count(ENCODER_DIR_2);
+   30   1          
+   31   1                  
+   32   1          speed_L = -tempL_pluse;
+   33   1          speed_R= tempR_pluse;
+   34   1        speed_avl = (speed_L + speed_R)/2;
+   35   1      
+   36   1      }
 
 
 Module Information          Static   Overlayable
@@ -112,6 +67,8 @@ Module Information          Static   Overlayable
   huge data size       =    ------     ------
   const size           =    ------     ------
   hconst size          =        48     ------
+C251 COMPILER V5.60.0,  encoder                                                            06/04/26  16:22:23  PAGE 2   
+
 End of Module Information.
 
 

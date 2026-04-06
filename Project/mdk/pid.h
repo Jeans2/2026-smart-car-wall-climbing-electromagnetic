@@ -46,12 +46,13 @@ extern struct PID pid_motor_run;
 //速度环
 extern int16 err_speed;			//误差
 extern float out_L,out_R;			//输出
-
+extern float speed_output_L;				
+extern float speed_output_R;	
 
 //方向环
 extern float expect_gyro;			//误差
 extern float correct_L;				//输出
-
+	
 
 //角度环
 //extern float expect_gyro_angles;

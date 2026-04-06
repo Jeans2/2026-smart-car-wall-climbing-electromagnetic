@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               03/04/26  20:52:02  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               06/04/26  16:22:22  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    49   1        debug_init();
    50   1        
    51   1        // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               03/04/26  20:52:02  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               06/04/26  16:22:22  PAGE 2   
 
    52   1          System_Init();
    53   1             pit_ms_init(PIT_CH, 2); 
@@ -92,26 +92,27 @@ stmt  level    source
    73   2          
    74   2          
    75   2          
-   76   2          
-   77   2            ips114_show();
-   78   2            fuya_set_duty(6000);
-   79   2      //      Key_Menu_Adjust();    // 扫描按键并修改参数
-   80   2      //       UI_Display_Update();  // 刷新屏幕菜单
+   76   2      //    
+   77   2      //      ips114_show();
+   78   2            fuya_set_duty(4000);
+   79   2            Key_Menu_Adjust();    // 扫描按键并修改参数
+   80   2             UI_Display_Update();  // 刷新屏幕菜单
    81   2          
    82   2      
    83   2      //        printf("%f\n",deviation);
    84   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-   85   2              sprintf(buf,"%d,%d\n",speed_straight,speed_avl);
+   85   2              sprintf(buf,"%d,%d,%d\n",speed_straight,speed_L,speed_R);
    86   2      //     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
    87   2      //      sprintf(buf,"%f\n",angle);//十字250
-   88   2              wireless_uart_send_string(buf);
-   89   2          }
-   90   1      }
+   88   2          
+   89   2              wireless_uart_send_string(buf);
+   90   2          }
+   91   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       187     ------
+  code size            =       202     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -126,7 +127,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         9     ------
+  hconst size          =        12     ------
 End of Module Information.
 
 

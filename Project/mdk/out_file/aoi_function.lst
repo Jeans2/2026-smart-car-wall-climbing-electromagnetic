@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  aoi_function                                                       02/04/26  19:43:57  PAGE 1   
+C251 COMPILER V5.60.0,  aoi_function                                                       06/04/26  16:22:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE aoi_function
@@ -66,7 +66,7 @@ stmt  level    source
    55   1          compare_swap(&arr[4], &arr[5]);
    56   1          compare_swap(&arr[5], &arr[6]);
    57   1          
-C251 COMPILER V5.60.0,  aoi_function                                                       02/04/26  19:43:57  PAGE 2   
+C251 COMPILER V5.60.0,  aoi_function                                                       06/04/26  16:22:24  PAGE 2   
 
    58   1          
    59   1          return arr[3];

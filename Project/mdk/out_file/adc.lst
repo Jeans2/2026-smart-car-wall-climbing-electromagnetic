@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                04/04/26  13:30:44  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                06/04/26  16:22:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -29,7 +29,7 @@ stmt  level    source
    18   1          adc_init(ADC_LM_CH ,ADC_10BIT);//LM
    19   1          adc_init(ADC_R_CH ,ADC_10BIT);//R
    20   1          adc_init(ADC_RM_CH ,ADC_10BIT);//RM
-   21   1          adc_init(ADC_V ,ADC_10BIT);
+   21   1        
    22   1      } 
    23            
    24          //电磁采样
@@ -66,7 +66,7 @@ stmt  level    source
    55   1        temp = adc_convert(ch);
    56   1        max = temp;
    57   1        min = temp;
-C251 COMPILER V5.60.0,  adc                                                                04/04/26  13:30:44  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                06/04/26  16:22:23  PAGE 2   
 
    58   1        sum += temp;
    59   1        
@@ -134,7 +134,7 @@ stmt  level    source
   121          void adc_normalizing(void)
   122          {
   123   1        
-C251 COMPILER V5.60.0,  adc                                                                04/04/26  13:30:44  PAGE 3   
+C251 COMPILER V5.60.0,  adc                                                                06/04/26  16:22:23  PAGE 3   
 
   124   1       
   125   1        L  = 100*(ADC_temp[0]-0)/(1000-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
@@ -151,7 +151,7 @@ stmt  level    source
   136          
   137          
   138          float deviation;
-  139          struct ADC adc_set_differ = {1,2.3,1};  // 1.3 1 0.8
+  139          struct ADC adc_set_differ = {1,2.6,1};  // 1.3 1 0.8
   140          float add = 0,sub = 0;
   141          void adc_differ()     //差比和差
   142          {
@@ -167,7 +167,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1466     ------
+  code size            =      1455     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

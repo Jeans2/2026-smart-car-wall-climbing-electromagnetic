@@ -4,7 +4,7 @@
 #define MENU_ITEMS 7             // ??菜单总项数从 5 改成 7
 uint8 cursor_index = 0;          // 当前光标位置 (0~6)
 char disp_buf[32];               // 屏幕显示缓存区
-
+uint8 car_state = 0; 
 
 // =========================================================================
 // 函数名：Key_Menu_Adjust
@@ -77,6 +77,17 @@ void Key_Menu_Adjust(void)
         system_delay_ms(15);
         if(gpio_get_level(KEY4_PIN) == 0)
         {
+							car_state = !car_state; // 状态反转：0变1，1变0
+                      
+            if(car_state == 1) 
+            {
+                // 如果你不清空，车子在原地停着的时候，速度误差会不断累积
+                // 一发车，巨大的积分项会让车子像火箭一样原地起飞甩飞！
+                speed_output_L = 0; 
+                speed_output_R = 0;
+                // 屏幕显示提示
+                ips114_show_string(0, 7*16, " >>> RUNNING! >>> ");
+            }
             // 留给 Flash 保存
         }
     }
