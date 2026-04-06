@@ -1,14 +1,25 @@
 #include "menu.h"
 
-// 光标菜单变量
-#define MENU_ITEMS 7             // ??菜单总项数从 5 改成 7
-uint8 cursor_index = 0;          // 当前光标位置 (0~6)
+// ===================【多级菜单状态定义】===================
+#define MENU_MAIN       0  // 主菜单
+#define MENU_TUNE_CATE  1  // 调参分类菜单
+#define MENU_OBSERVE    2  // 数据观测界面
+#define MENU_SPEED      3  // 速度环调节
+#define MENU_TURN       4  // 转向环调节
+#define MENU_FORM       5  // 差比和调节
+
+uint8 menu_state = MENU_MAIN;    // 默认上电在主菜单
+uint8 cursor_index = 0;          // 当前光标位置 
+uint8 menu_max_items = 3;        // 当前页面的最大选项数 (动态变化)
+
 char disp_buf[32];               // 屏幕显示缓存区
-uint8 car_state = 0; 
+uint8 car_state = 0;             // 0:停车 1:发车
+uint8 start_ramp_flag = 0;
+
 
 // =========================================================================
 // 函数名：Key_Menu_Adjust
-// 功  能：光标切换与对应参数的修改 
+// 功  能：多级菜单状态机与参数修改
 // =========================================================================
 void Key_Menu_Adjust(void)
 {
@@ -20,119 +31,224 @@ void Key_Menu_Adjust(void)
     key3_now = gpio_get_level(KEY3_PIN);
     key4_now = gpio_get_level(KEY4_PIN); 
 
-    // ----------------- 功能 1：切换调参光标 (KEY1) -----------------
+    // ?? 【最高优先级保命机制】：只要在发车状态，按 KEY4 必定紧急停车！
+    if(car_state == 1 && key4_now == 0 && key4_last == 1)
+    {
+        system_delay_ms(10);
+        if(gpio_get_level(KEY4_PIN) == 0)
+        {
+            car_state = 0;
+            start_ramp_flag = 0;
+            // ips114_clear(); // 如果你有清屏函数，可以在这里调用
+            key4_last = key4_now;
+            return; // 停车后直接退出本次按键检测
+        }
+    }
+
+    // ----------------- 功能 1：切换光标 (KEY1 向下选择) -----------------
     if(key1_now == 0 && key1_last == 1)    
     {
-        system_delay_ms(15);
+        system_delay_ms(10);
         if(gpio_get_level(KEY1_PIN) == 0)
         {
             cursor_index++; 
-            if(cursor_index >= MENU_ITEMS) cursor_index = 0; // 循环光标
+            if(cursor_index >= menu_max_items) cursor_index = 0; // 循环光标
         }
     }
     
-    // ----------------- 功能 2：增加当前参数 (KEY2) -----------------
+    // ----------------- 功能 2：增加参数 / 向上选择 (KEY2) -----------------
     if(key2_now == 0 && key2_last == 1)    
     {
-        system_delay_ms(15);
+        system_delay_ms(10);
         if(gpio_get_level(KEY2_PIN) == 0)
         {
-            switch(cursor_index)
-            {
-                case 0: pid_motor_run.Kp  += 0.1f;          break;
-                case 1: pid_motor_run.Kd  += 0.1f;          break; 
-                case 2: adc_set_differ.A  += 0.1f;          break; 
-                case 3: adc_set_differ.B  += 0.1f;          break;
-                case 4: adc_set_differ.C  += 0.1f;          break;
-                // ?? 新增：速度环 Kp 和 Ki (自定义步长)
-                case 5: pid_loop_speed.Kp += 1.0f;          break; // 每次加 1
-                case 6: pid_loop_speed.Ki += 0.01f;         break; // 每次加 0.01
+            // 只有在最底层的调参界面，KEY2 才是“加参数”
+            if(menu_state == MENU_SPEED) {
+                if(cursor_index == 0) pid_loop_speed.Kp += 1.0f;
+                if(cursor_index == 1) pid_loop_speed.Ki += 0.01f;
+            }
+            else if(menu_state == MENU_TURN) {
+                if(cursor_index == 0) pid_motor_run.Kp += 0.1f;
+                if(cursor_index == 1) pid_motor_run.Kd += 0.1f;
+            }
+            else if(menu_state == MENU_FORM) {
+                if(cursor_index == 0) adc_set_differ.A += 0.1f;
+                if(cursor_index == 1) adc_set_differ.B += 0.1f;
+                if(cursor_index == 2) adc_set_differ.C += 0.1f;
+            }
+            else {
+                // 如果在导航菜单里，KEY2 可以作为“光标向上”用，提升体验
+                if(cursor_index == 0) cursor_index = menu_max_items - 1;
+                else cursor_index--;
             }
         }
     }
     
-    // ----------------- 功能 3：减小当前参数 (KEY3) -----------------
+    // ----------------- 功能 3：减小参数 (KEY3) -----------------
     if(key3_now == 0 && key3_last == 1)    
     {
-        system_delay_ms(15);
+        system_delay_ms(10);
         if(gpio_get_level(KEY3_PIN) == 0)
         {
-            switch(cursor_index)
-            {
-                case 0: pid_motor_run.Kp  -= 0.1f;          if(pid_motor_run.Kp < 0)  pid_motor_run.Kp = 0;  break;
-                case 1: pid_motor_run.Kd  -= 0.1f;          if(pid_motor_run.Kd < 0)  pid_motor_run.Kd = 0;  break;
-                case 2: adc_set_differ.A  -= 0.1f;          if(adc_set_differ.A < 0)  adc_set_differ.A = 0;  break;
-                case 3: adc_set_differ.B  -= 0.1f;          if(adc_set_differ.B < 0)  adc_set_differ.B = 0;  break;
-                case 4: adc_set_differ.C  -= 0.1f;          if(adc_set_differ.C < 0)  adc_set_differ.C = 0;  break;
-                // ?? 新增：速度环 Kp 和 Ki，加了防越界保护
-                case 5: pid_loop_speed.Kp -= 1.0f;          if(pid_loop_speed.Kp < 0) pid_loop_speed.Kp = 0; break;
-                case 6: pid_loop_speed.Ki -= 0.01f;         if(pid_loop_speed.Ki < 0) pid_loop_speed.Ki = 0; break;
+            if(menu_state == MENU_SPEED) {
+                if(cursor_index == 0) { pid_loop_speed.Kp -= 1.0f;  if(pid_loop_speed.Kp < 0) pid_loop_speed.Kp = 0; }
+                if(cursor_index == 1) { pid_loop_speed.Ki -= 0.01f; if(pid_loop_speed.Ki < 0) pid_loop_speed.Ki = 0; }
+            }
+            else if(menu_state == MENU_TURN) {
+                if(cursor_index == 0) { pid_motor_run.Kp -= 0.1f; if(pid_motor_run.Kp < 0) pid_motor_run.Kp = 0; }
+                if(cursor_index == 1) { pid_motor_run.Kd -= 0.1f; if(pid_motor_run.Kd < 0) pid_motor_run.Kd = 0; }
+            }
+            else if(menu_state == MENU_FORM) {
+                if(cursor_index == 0) { adc_set_differ.A -= 0.1f; if(adc_set_differ.A < 0) adc_set_differ.A = 0; }
+                if(cursor_index == 1) { adc_set_differ.B -= 0.1f; if(adc_set_differ.B < 0) adc_set_differ.B = 0; }
+                if(cursor_index == 2) { adc_set_differ.C -= 0.1f; if(adc_set_differ.C < 0) adc_set_differ.C = 0; }
             }
         }
     }
 
-    // ----------------- 功能 4：预留位 (KEY4) -----------------
+    // ----------------- 功能 4：确认/进入下一级/发车 (KEY4) -----------------
     if(key4_now == 0 && key4_last == 1)    
     {
-        system_delay_ms(15);
+        system_delay_ms(10);
         if(gpio_get_level(KEY4_PIN) == 0)
         {
-							car_state = !car_state; // 状态反转：0变1，1变0
-                      
-            if(car_state == 1) 
+            // 依据当前处于哪个界面，决定 KEY4 的行为
+            switch(menu_state)
             {
-                // 如果你不清空，车子在原地停着的时候，速度误差会不断累积
-                // 一发车，巨大的积分项会让车子像火箭一样原地起飞甩飞！
-                speed_output_L = 0; 
-                speed_output_R = 0;
-                // 屏幕显示提示
-                ips114_show_string(0, 7*16, " >>> RUNNING! >>> ");
+                case MENU_MAIN: // 【主菜单】
+                    if(cursor_index == 0)      { menu_state = MENU_TUNE_CATE; cursor_index = 0; menu_max_items = 4; } // 进调参
+                    else if(cursor_index == 1) { menu_state = MENU_OBSERVE;   cursor_index = 0; menu_max_items = 1; } // 进观测
+                    else if(cursor_index == 2) { 
+                        // 按下发车！
+                        car_state = 1; 
+                        err_speed_L_last = 0; err_speed_L = 0;
+                        err_speed_R_last = 0; err_speed_R = 0;
+                        out_L = 0; out_R = 0;
+                        direction_err1[0] = 0; direction_err1[1] = 0; direction_err1[2] = 0;            
+                        start_ramp_flag = 1;
+                    }
+                    break;
+
+                case MENU_TUNE_CATE: // 【调参大类菜单】
+                    if(cursor_index == 0)      { menu_state = MENU_SPEED; cursor_index = 0; menu_max_items = 3; } // 进速度环
+                    else if(cursor_index == 1) { menu_state = MENU_TURN;  cursor_index = 0; menu_max_items = 3; } // 进转向环
+                    else if(cursor_index == 2) { menu_state = MENU_FORM;  cursor_index = 0; menu_max_items = 4; } // 进差比和
+                    else if(cursor_index == 3) { menu_state = MENU_MAIN;  cursor_index = 0; menu_max_items = 3; } // 返回上一级
+                    break;
+
+                case MENU_OBSERVE: // 【数据观测】
+                    if(cursor_index == 0)      { menu_state = MENU_MAIN;  cursor_index = 0; menu_max_items = 3; } // 返回
+                    break;
+
+                case MENU_SPEED: // 【速度环底层】
+                    if(cursor_index == 2)      { menu_state = MENU_TUNE_CATE; cursor_index = 0; menu_max_items = 4; } // 选中了Back则返回
+                    break;
+                case MENU_TURN:  // 【转向环底层】
+                    if(cursor_index == 2)      { menu_state = MENU_TUNE_CATE; cursor_index = 1; menu_max_items = 4; } // 返回
+                    break;
+                case MENU_FORM:  // 【差比和底层】
+                    if(cursor_index == 3)      { menu_state = MENU_TUNE_CATE; cursor_index = 2; menu_max_items = 4; } // 返回
+                    break;
             }
-            // 留给 Flash 保存
         }
     }
 
-    key1_last = key1_now;
-    key2_last = key2_now;
-    key3_last = key3_now;
-    key4_last = key4_now;
+    key1_last = key1_now; key2_last = key2_now; key3_last = key3_now; key4_last = key4_now;
 }
 
 
 // =========================================================================
 // 函数名：UI_Display_Update
-// 功  能：动态显示光标和参数列表
+// 功  能：根据状态机渲染多级界面
 // =========================================================================
 void UI_Display_Update(void)
 {
-    char prefix;
+    char p[8]; // 用于存光标字符
+    uint8 i;
 
-    prefix = (cursor_index == 0) ? '>' : ' '; 
-    sprintf(disp_buf, "%c Turn Kp: %.2f  ", prefix, pid_motor_run.Kp);
-    ips114_show_string(0, 0*16, disp_buf);
-    
-    prefix = (cursor_index == 1) ? '>' : ' ';
-    sprintf(disp_buf, "%c Turn Kd: %.2f  ", prefix, pid_motor_run.Kd);
-    ips114_show_string(0, 1*16, disp_buf);
-    
-    prefix = (cursor_index == 2) ? '>' : ' ';
-    sprintf(disp_buf, "%c Form A : %.1f  ", prefix, adc_set_differ.A);
-    ips114_show_string(0, 2*16, disp_buf);
-    
-    prefix = (cursor_index == 3) ? '>' : ' ';
-    sprintf(disp_buf, "%c Form B : %.1f  ", prefix, adc_set_differ.B);
-    ips114_show_string(0, 3*16, disp_buf);
-    
-    prefix = (cursor_index == 4) ? '>' : ' ';
-    sprintf(disp_buf, "%c Form C : %.2f  ", prefix, adc_set_differ.C);
-    ips114_show_string(0, 4*16, disp_buf);
+    // 如果发车了，强制覆盖全屏显示运行状态
+    if (car_state == 1) {
+        ips114_show_string(0, 3*16, "                  "); // 清空一些杂项
+        ips114_show_string(0, 4*16, " >>> RUNNING! >>> ");
+        ips114_show_string(0, 5*16, " PRESS KEY4 STOP  ");
+        return; 
+    }
 
-    // ?? 新增行：由于一块 1.14 寸 IPS 屏幕能显示多行，我们直接往下排 (y轴坐标 5*16 和 6*16)
-    prefix = (cursor_index == 5) ? '>' : ' ';
-    sprintf(disp_buf, "%c Spd Kp : %.1f  ", prefix, pid_loop_speed.Kp); // 速度环 P 通常只看一位小数就够了
-    ips114_show_string(0, 5*16, disp_buf);
+    // 初始化光标数组全为空格
+    for(i=0; i<8; i++) p[i] = ' ';
+    p[cursor_index] = '>'; // 给当前选中项打上光标
 
-    prefix = (cursor_index == 6) ? '>' : ' ';
-    sprintf(disp_buf, "%c Spd Ki : %.2f  ", prefix, pid_loop_speed.Ki); // 速度环 I 需要看两位小数
-    ips114_show_string(0, 6*16, disp_buf);
+    // 根据当前状态画UI
+    switch(menu_state)
+    {
+        case MENU_MAIN:
+            sprintf(disp_buf, "%c 1. Params        ", p[0]); ips114_show_string(0, 0*16, disp_buf);
+            sprintf(disp_buf, "%c 2. Observe       ", p[1]); ips114_show_string(0, 1*16, disp_buf);
+            sprintf(disp_buf, "%c 3. [START CAR!]  ", p[2]); ips114_show_string(0, 2*16, disp_buf);
+            
+            ips114_show_string(0, 3*16, "                  "); // 擦除多余行，防重影
+            ips114_show_string(0, 4*16, "                  ");
+            ips114_show_string(0, 5*16, "                  ");
+            ips114_show_string(0, 6*16, "                  ");
+            break;
+
+        case MENU_TUNE_CATE:
+            sprintf(disp_buf, "%c 1. Speed Loop    ", p[0]); ips114_show_string(0, 0*16, disp_buf);
+            sprintf(disp_buf, "%c 2. Turn Loop     ", p[1]); ips114_show_string(0, 1*16, disp_buf);
+            sprintf(disp_buf, "%c 3. A    B   C    ", p[2]); ips114_show_string(0, 2*16, disp_buf);
+            sprintf(disp_buf, "%c <- Back          ", p[3]); ips114_show_string(0, 3*16, disp_buf);
+            ips114_show_string(0, 4*16, "                  ");
+            ips114_show_string(0, 5*16, "                  ");
+            break;
+
+        case MENU_SPEED:
+            sprintf(disp_buf, "%c Spd Kp: %.1f     ", p[0], pid_loop_speed.Kp); ips114_show_string(0, 0*16, disp_buf);
+            sprintf(disp_buf, "%c Spd Ki: %.2f     ", p[1], pid_loop_speed.Ki); ips114_show_string(0, 1*16, disp_buf);
+            sprintf(disp_buf, "%c <- Back          ", p[2]);                    ips114_show_string(0, 2*16, disp_buf);
+            ips114_show_string(0, 3*16, "                  ");
+            break;
+
+        case MENU_TURN:
+            sprintf(disp_buf, "%c Turn Kp: %.2f    ", p[0], pid_motor_run.Kp);  ips114_show_string(0, 0*16, disp_buf);
+            sprintf(disp_buf, "%c Turn Kd: %.2f    ", p[1], pid_motor_run.Kd);  ips114_show_string(0, 1*16, disp_buf);
+            sprintf(disp_buf, "%c <- Back          ", p[2]);                    ips114_show_string(0, 2*16, disp_buf);
+            ips114_show_string(0, 3*16, "                  ");
+            break;
+
+        case MENU_FORM:
+            sprintf(disp_buf, "%c  A: %.1f         ", p[0], adc_set_differ.A);  ips114_show_string(0, 0*16, disp_buf);
+            sprintf(disp_buf, "%c  B: %.1f         ", p[1], adc_set_differ.B);  ips114_show_string(0, 1*16, disp_buf);
+            sprintf(disp_buf, "%c  C: %.2f         ", p[2], adc_set_differ.C);  ips114_show_string(0, 2*16, disp_buf);
+            sprintf(disp_buf, "%c <- Back          ", p[3]);                    ips114_show_string(0, 3*16, disp_buf);
+            break;
+
+        case MENU_OBSERVE:            
+            ips114_show_string(10, 16*0, "L :                ");
+            ips114_show_string(10, 16*1, "LM:                ");
+            ips114_show_string(10, 16*2, "RM:                ");
+            ips114_show_string(10, 16*3, "R :                ");
+            
+            ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
+            ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
+            ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
+            ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
+            
+           
+            ips114_show_string(0, 16*4, "                  ");
+
+           
+            sprintf(disp_buf, "%c <- Back                  ", p[0]); 
+            ips114_show_string(0, 16*5, disp_buf); 
+            break;
+           
+    }
 }
+
+
+
+
+
+
+
+
+

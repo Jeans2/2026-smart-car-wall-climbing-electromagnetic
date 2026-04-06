@@ -1,22 +1,22 @@
 #include "pid.h" 
 
-//P I D 							
-struct PID pid_motor_straight={0,0,0,  0.38,0,0.33};//0.38 0.25			//循迹 // 直道转向环 角速度环参数
-struct PID pid_motor_turn=		{180,0,60   ,16,0,20};	    //12 3 // 弯道参数
-struct PID pid_motor_ringR=		{750,0,45   ,16,0,20};      //苯环参数
+////P I D 							
+//struct PID pid_motor_straight={0,0,0,  0.38,0,0.33};//0.38 0.25			//循迹 // 直道转向环 角速度环参数
+//struct PID pid_motor_turn=		{180,0,60   ,16,0,20};	    //12 3 // 弯道参数
+//struct PID pid_motor_ringR=		{750,0,45   ,16,0,20};      //苯环参数
 
-struct PID pid_loop_speed_start=		{10,3};										//速度环
-struct PID pid_loop_speed_run=	  	{20,5};										//速度环
+//struct PID pid_loop_speed_start=		{10,3};										//速度环
+//struct PID pid_loop_speed_run=	  	{20,5};										//速度环
 
-struct PID pid_loop_angle_ring=		{50,0,0   ,16,0,20};				//角度环
+//struct PID pid_loop_angle_ring=		{50,0,0   ,16,0,20};				//角度环
 
-struct PID pid_loop_gyro=		  {0,0,0   ,16,0,20};					//角速度环
+//struct PID pid_loop_gyro=		  {0,0,0   ,16,0,20};					//角速度环
 
-float limit_gyro = 800;
+//float limit_gyro = 800;
 
 
 
-//2-循迹
+
 struct PID pid_motor_run;
 
 
@@ -40,22 +40,26 @@ struct PID pid_motor_run;
 int16 err_speed=0;
 int16 speed_target = 0;
 float out_L=0,out_R=0;
+int16 err_speed_L_last=0,err_speed_L=0;	 
+int16 err_speed_R_last=0,err_speed_R=0;
 float speed_output_L=0;
 float speed_output_R=0;
 struct PID pid_loop_speed = {24,0.2,0};			//40,0.125,0   2ms中断下           
-//struct PID pid_loop_speed = {60,0.37,0};          //右轮
-//角速度环
-float expect_gyro = 0;  // 角速度期望值
+
+////角速度环
+//float expect_gyro = 0;  // 角速度期望值
 float correct_L = 0;    // 电机差速修正值
-//float avl_gyro_z = 0;    实际角速度（需要从传感器获取）已定义
-static float direction_err2[2] = {0};
+
+//static float direction_err2[2] = {0};
+
+
 struct PID pid_motor_run = {2.04,0,2.2,  0,0,0};// 1.54 2              
 
 
 
 
 // 方向环（位置环）相关变量
-static float direction_err1[4] = {0};
+float direction_err1[4] = {0};
 static float D_err = 0;
 static int flag = 0;
 
@@ -76,10 +80,7 @@ static int flag = 0;
 //========================================================================
 void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
 {
-	//0-编码器输入更新
-	static int16 err_speed_L_last=0,err_speed_L=0;
-	 
-	static int16 err_speed_R_last=0,err_speed_R=0;
+
 	 
 	
 	//1-误差计算

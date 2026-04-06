@@ -186,7 +186,7 @@ void TM1_IRQHandler() interrupt 3
           direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度                           // 10ms执行一次的函数
          
         }
-			switch (car_state)
+			switch (start_ramp_flag)
 			{
 				case 1:
 					xunji();

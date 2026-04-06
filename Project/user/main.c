@@ -73,8 +73,8 @@ void main()
 		
 		
 		
-//		
-//			ips114_show();
+	
+			
 			fuya_set_duty(4000);
 			Key_Menu_Adjust();    // 扫描按键并修改参数
        UI_Display_Update();  // 刷新屏幕菜单

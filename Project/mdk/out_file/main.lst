@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               06/04/26  16:22:22  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               06/04/26  19:07:16  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    49   1        debug_init();
    50   1        
    51   1        // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               06/04/26  16:22:22  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               06/04/26  19:07:16  PAGE 2   
 
    52   1          System_Init();
    53   1             pit_ms_init(PIT_CH, 2); 
@@ -92,8 +92,8 @@ stmt  level    source
    73   2          
    74   2          
    75   2          
-   76   2      //    
-   77   2      //      ips114_show();
+   76   2        
+   77   2            
    78   2            fuya_set_duty(4000);
    79   2            Key_Menu_Adjust();    // 扫描按键并修改参数
    80   2             UI_Display_Update();  // 刷新屏幕菜单

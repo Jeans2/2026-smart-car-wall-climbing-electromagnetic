@@ -6,8 +6,7 @@ void ips114_show()
 	ips114_show_string(0,16*1,"LM:");
 	ips114_show_string(0,16*2,"RM");
 	ips114_show_string(0,16*3,"R:");
-//	ips114_show_string(0,16*4,"kp:");
-//	ips114_show_string(0,16*5,"kd:");
+
 
 	
 	ips114_show_float(30,16*0,ADC_temp[0],3,1);

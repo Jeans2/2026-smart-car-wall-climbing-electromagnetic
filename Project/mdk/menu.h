@@ -5,7 +5,7 @@
 #include "bsp_system.h"
 void UI_Display_Update(void);
 void Key_Menu_Adjust(void);
-extern uint8 car_state;
+extern uint8 start_ramp_flag;
 
 
 

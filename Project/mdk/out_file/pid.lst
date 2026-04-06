@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  16:22:23  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -11,23 +11,23 @@ stmt  level    source
 
     1          #include "pid.h" 
     2          
-    3          //P I D               
-    4          struct PID pid_motor_straight={0,0,0,  0.38,0,0.33};//0.38 0.25     //循迹 // 直道转向环 角速度环参数
-    5          struct PID pid_motor_turn=    {180,0,60   ,16,0,20};      //12 3 // 弯道参数
-    6          struct PID pid_motor_ringR=   {750,0,45   ,16,0,20};      //苯环参数
+    3          ////P I D               
+    4          //struct PID pid_motor_straight={0,0,0,  0.38,0,0.33};//0.38 0.25     //循迹 // 直道转向环 角速度环参数
+    5          //struct PID pid_motor_turn=    {180,0,60   ,16,0,20};      //12 3 // 弯道参数
+    6          //struct PID pid_motor_ringR=   {750,0,45   ,16,0,20};      //苯环参数
     7          
-    8          struct PID pid_loop_speed_start=    {10,3};                   //速度环
-    9          struct PID pid_loop_speed_run=      {20,5};                   //速度环
+    8          //struct PID pid_loop_speed_start=    {10,3};                   //速度环
+    9          //struct PID pid_loop_speed_run=      {20,5};                   //速度环
    10          
-   11          struct PID pid_loop_angle_ring=   {50,0,0   ,16,0,20};        //角度环
+   11          //struct PID pid_loop_angle_ring=   {50,0,0   ,16,0,20};        //角度环
    12          
-   13          struct PID pid_loop_gyro=     {0,0,0   ,16,0,20};         //角速度环
+   13          //struct PID pid_loop_gyro=     {0,0,0   ,16,0,20};         //角速度环
    14          
-   15          float limit_gyro = 800;
+   15          //float limit_gyro = 800;
    16          
    17          
    18          
-   19          //2-循迹
+   19          
    20          struct PID pid_motor_run;
    21          
    22          
@@ -51,30 +51,30 @@ stmt  level    source
    40          int16 err_speed=0;
    41          int16 speed_target = 0;
    42          float out_L=0,out_R=0;
-   43          float speed_output_L=0;
-   44          float speed_output_R=0;
-   45          struct PID pid_loop_speed = {24,0.2,0};     //40,0.125,0   2ms中断下           
-   46          //struct PID pid_loop_speed = {60,0.37,0};          //右轮
-   47          //角速度环
-   48          float expect_gyro = 0;  // 角速度期望值
-   49          float correct_L = 0;    // 电机差速修正值
-   50          //float avl_gyro_z = 0;    实际角速度（需要从传感器获取）已定义
-   51          static float direction_err2[2] = {0};
-   52          struct PID pid_motor_run = {2.04,0,2.2,  0,0,0};// 1.54 2              
-   53          
+   43          int16 err_speed_L_last=0,err_speed_L=0;  
+   44          int16 err_speed_R_last=0,err_speed_R=0;
+   45          float speed_output_L=0;
+   46          float speed_output_R=0;
+   47          struct PID pid_loop_speed = {24,0.2,0};     //40,0.125,0   2ms中断下           
+   48          
+   49          ////角速度环
+   50          //float expect_gyro = 0;  // 角速度期望值
+   51          float correct_L = 0;    // 电机差速修正值
+   52          
+   53          //static float direction_err2[2] = {0};
    54          
    55          
-   56          
-   57          // 方向环（位置环）相关变量
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  16:22:23  PAGE 2   
+   56          struct PID pid_motor_run = {2.04,0,2.2,  0,0,0};// 1.54 2              
+   57          
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 2   
 
-   58          static float direction_err1[4] = {0};
-   59          static float D_err = 0;
-   60          static int flag = 0;
-   61          
-   62          
-   63          
-   64          
+   58          
+   59          
+   60          
+   61          // 方向环（位置环）相关变量
+   62          float direction_err1[4] = {0};
+   63          static float D_err = 0;
+   64          static int flag = 0;
    65          
    66          
    67          
@@ -84,131 +84,131 @@ stmt  level    source
    71          
    72          
    73          
-   74          //========================================================================
-   75          // 速度环（内环）
-   76          //========================================================================
-   77          void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
-   78          {
-   79   1        //0-编码器输入更新
-   80   1        static int16 err_speed_L_last=0,err_speed_L=0;
-   81   1         
-   82   1        static int16 err_speed_R_last=0,err_speed_R=0;
-   83   1         
-   84   1        
-   85   1        //1-误差计算
-   86   1        err_speed_L_last = err_speed_L;
-   87   1        err_speed_L = speed_L_t - speed_L;
-   88   1        
+   74          
+   75          
+   76          
+   77          
+   78          //========================================================================
+   79          // 速度环（内环）
+   80          //========================================================================
+   81          void speed_loop_LR(int16 speed_L_t,int16 speed_R_t)
+   82          {
+   83   1      
+   84   1         
+   85   1        
+   86   1        //1-误差计算
+   87   1        err_speed_L_last = err_speed_L;
+   88   1        err_speed_L = speed_L_t - speed_L;
    89   1        
    90   1        
-   91   1        //2-控制
-   92   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
-   93   1                          + pid_loop_speed.Ki * err_speed_L;
-   94   1      
-   95   1        //增量
-   96   1        if(speed_output_L>2000 ){speed_output_L=2000; }
-   97   1        if(speed_output_L<-2000){speed_output_L=-2000;}
-   98   1        
-   99   1        //输出
-  100   1        out_L += speed_output_L;
-  101   1        
+   91   1        
+   92   1        //2-控制
+   93   1        speed_output_L = pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
+   94   1                          + pid_loop_speed.Ki * err_speed_L;
+   95   1      
+   96   1        //增量
+   97   1        if(speed_output_L>2000 ){speed_output_L=2000; }
+   98   1        if(speed_output_L<-2000){speed_output_L=-2000;}
+   99   1        
+  100   1        //输出
+  101   1        out_L += speed_output_L;
   102   1        
   103   1        
-  104   1        //0-编码器输入更新
-  105   1        
-  106   1        //1-误差计算
-  107   1        err_speed_R_last = err_speed_R;
-  108   1        err_speed_R = speed_R_t - speed_R;
-  109   1        
-  110   1        //2-控制
-  111   1        speed_output_R =  pid_loop_speed.Kp * (err_speed_R - err_speed_R_last)
-  112   1                          + pid_loop_speed.Ki *  err_speed_R;
-  113   1      
-  114   1        //增量
-  115   1        if(speed_output_R>2000 ){speed_output_R=2000; }
-  116   1        if(speed_output_R<-2000){speed_output_R=-2000;}
-  117   1        
-  118   1        //输出
-  119   1        out_R += speed_output_R;
-  120   1        
-  121   1        if(out_L>3500 ){out_L=3500; }
-  122   1        if(out_L<-3500){out_L=-3500;}
-  123   1        if(out_R>3500 ){out_R=3500; }
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  16:22:23  PAGE 3   
+  104   1        
+  105   1        //0-编码器输入更新
+  106   1        
+  107   1        //1-误差计算
+  108   1        err_speed_R_last = err_speed_R;
+  109   1        err_speed_R = speed_R_t - speed_R;
+  110   1        
+  111   1        //2-控制
+  112   1        speed_output_R =  pid_loop_speed.Kp * (err_speed_R - err_speed_R_last)
+  113   1                          + pid_loop_speed.Ki *  err_speed_R;
+  114   1      
+  115   1        //增量
+  116   1        if(speed_output_R>2000 ){speed_output_R=2000; }
+  117   1        if(speed_output_R<-2000){speed_output_R=-2000;}
+  118   1        
+  119   1        //输出
+  120   1        out_R += speed_output_R;
+  121   1        
+  122   1        if(out_L>3500 ){out_L=3500; }
+  123   1        if(out_L<-3500){out_L=-3500;}
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 3   
 
-  124   1        if(out_R<-3500){out_R=-3500;}
-  125   1      }
-  126          
+  124   1        if(out_R>3500 ){out_R=3500; }
+  125   1        if(out_R<-3500){out_R=-3500;}
+  126   1      }
   127          
   128          
   129          
-  130          ////========================================================================
-  131          //// 角速度环 （中环）- 输入角速度期望，输出电机差速修正值
-  132          ////========================================================================
-  133          //float gyro_loop(float expect_gyro, float avl_gyro_z)
-  134          //{
-  135          //    float err_gyro;
-  136          //    
-  137          //    // 计算角速度误差
-  138          //    err_gyro = expect_gyro - avl_gyro_z;
-  139          //    
-  140          //    // 更新误差数组
-  141          //    direction_err2[1] = direction_err2[0];
-  142          //    direction_err2[0] = err_gyro;
-  143          
-  144          //    // PD控制器计算修正量
-  145          //    correct_L = pid_motor_run.Kp_gyro * direction_err2[0]
-  146          //              + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
-  147          //    
-  148          //    // 限幅
-  149          //    if(correct_L > 10000) correct_L = 10000;
-  150          //    if(correct_L < -10000) correct_L = -10000;
-  151          //    
-  152          //    return correct_L;  // 返回电机差速修正值
-  153          //}
-  154          
+  130          
+  131          ////========================================================================
+  132          //// 角速度环 （中环）- 输入角速度期望，输出电机差速修正值
+  133          ////========================================================================
+  134          //float gyro_loop(float expect_gyro, float avl_gyro_z)
+  135          //{
+  136          //    float err_gyro;
+  137          //    
+  138          //    // 计算角速度误差
+  139          //    err_gyro = expect_gyro - avl_gyro_z;
+  140          //    
+  141          //    // 更新误差数组
+  142          //    direction_err2[1] = direction_err2[0];
+  143          //    direction_err2[0] = err_gyro;
+  144          
+  145          //    // PD控制器计算修正量
+  146          //    correct_L = pid_motor_run.Kp_gyro * direction_err2[0]
+  147          //              + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
+  148          //    
+  149          //    // 限幅
+  150          //    if(correct_L > 10000) correct_L = 10000;
+  151          //    if(correct_L < -10000) correct_L = -10000;
+  152          //    
+  153          //    return correct_L;  // 返回电机差速修正值
+  154          //}
   155          
-  156          //========================================================================
-  157          // 方向环（位置环）（外环）- 输入位置误差，输出角速度期望
-  158          //========================================================================
-  159          float direction_loop(float err_position)
-  160          {
-  161   1          static float err_feedforward = 0, err_gyro, dec = 0;
-  162   1          static float expect_gyro_last = 0, correct_L_last = 0;
-  163   1          
-  164   1          // 更新位置误差数组（1阶或2阶滤波）
-  165   1          direction_err1[2] = direction_err1[1];
-  166   1          direction_err1[1] = direction_err1[0];
-  167   1          direction_err1[0] = err_position;
-  168   1      
-  169   1          // 计算误差变化量
-  170   1          D_err = direction_err1[0] - direction_err1[1];
-  171   1          
-  172   1          // 抗干扰处理：如果误差突变过大，认为是干扰，保持上次值
-  173   1      //    if(flag == 0 && (D_err > 5.3 || D_err < -5.3))
-  174   1      //    {
-  175   1      //        direction_err1[0] = direction_err1[1];
-  176   1      //        flag = 1;
-  177   1      //    }
-  178   1      //    else
-  179   1      //    {
-  180   1      //        flag = 0;
-  181   1      //    }
-  182   1          
-  183   1          // PD控制器计算角速度期望
-  184   1          correct_L = pid_motor_run.Kp * direction_err1[0] 
-  185   1                      + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]); // 可以根据需要添加directio
+  156          
+  157          //========================================================================
+  158          // 方向环（位置环）（外环）- 输入位置误差，输出角速度期望
+  159          //========================================================================
+  160          float direction_loop(float err_position)
+  161          {
+  162   1          static float err_feedforward = 0, err_gyro, dec = 0;
+  163   1          static float expect_gyro_last = 0, correct_L_last = 0;
+  164   1          
+  165   1          // 更新位置误差数组（1阶或2阶滤波）
+  166   1          direction_err1[2] = direction_err1[1];
+  167   1          direction_err1[1] = direction_err1[0];
+  168   1          direction_err1[0] = err_position;
+  169   1      
+  170   1          // 计算误差变化量
+  171   1          D_err = direction_err1[0] - direction_err1[1];
+  172   1          
+  173   1          // 抗干扰处理：如果误差突变过大，认为是干扰，保持上次值
+  174   1      //    if(flag == 0 && (D_err > 5.3 || D_err < -5.3))
+  175   1      //    {
+  176   1      //        direction_err1[0] = direction_err1[1];
+  177   1      //        flag = 1;
+  178   1      //    }
+  179   1      //    else
+  180   1      //    {
+  181   1      //        flag = 0;
+  182   1      //    }
+  183   1          
+  184   1          // PD控制器计算角速度期望
+  185   1          correct_L = pid_motor_run.Kp * direction_err1[0] 
+  186   1                      + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]); // 可以根据需要添加directio
              -n_err1[3]
-  186   1          
-  187   1          // 限幅
-  188   1          if(correct_L > 10000) correct_L = 10000;
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  16:22:23  PAGE 4   
+  187   1          
+  188   1          // 限幅
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 4   
 
-  189   1          if(correct_L < -10000) correct_L = -10000;
-  190   1          
-  191   1          return correct_L;  // 返回角速度期望值
-  192   1      }
-  193          
+  189   1          if(correct_L > 10000) correct_L = 10000;
+  190   1          if(correct_L < -10000) correct_L = -10000;
+  191   1          
+  192   1          return correct_L;  // 返回角速度期望值
+  193   1      }
   194          
   195          
   196          
@@ -270,7 +270,7 @@ stmt  level    source
   252          
   253          
   254          
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  16:22:23  PAGE 5   
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 5   
 
   255          
   256          
@@ -295,6 +295,7 @@ stmt  level    source
   275          
   276          
   277          
+  278          
 
 
 Module Information          Static   Overlayable
@@ -304,7 +305,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =       318     ------
+  xdata size           =       134     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -314,7 +315,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =       452     ------
+  hconst size          =       218     ------
 End of Module Information.
 
 

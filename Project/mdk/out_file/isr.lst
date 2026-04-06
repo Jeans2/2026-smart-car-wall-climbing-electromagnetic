@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  16:22:22  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                06/04/26  17:55:38  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
@@ -66,7 +66,7 @@ stmt  level    source
    49   2      
    50   2              // 程序自动下载
    51   2              if (uart_rx_buff[UART_1][0] == 0x7F)
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  16:22:22  PAGE 2   
+C251 COMPILER V5.60.0,  isr                                                                06/04/26  17:55:38  PAGE 2   
 
    52   2              {
    53   3                  if (dwon_count++ > 20)
@@ -134,7 +134,7 @@ stmt  level    source
   115   1          if (DMA_UR3R_STA & 0x02) // 数据丢弃
   116   1          {
   117   2              DMA_UR3R_STA &= ~0x02;      // 清标志位
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  16:22:22  PAGE 3   
+C251 COMPILER V5.60.0,  isr                                                                06/04/26  17:55:38  PAGE 3   
 
   118   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
   119   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
@@ -202,7 +202,7 @@ stmt  level    source
   181   4                }
   182   3                if (element == 1&&ringR_flag_task==4)
   183   3                {
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  16:22:22  PAGE 4   
+C251 COMPILER V5.60.0,  isr                                                                06/04/26  17:55:38  PAGE 4   
 
   184   4                    deviation = deviation + 100;
   185   4                }
@@ -210,7 +210,7 @@ stmt  level    source
              -                   // 10ms执行一次的函数
   187   3               
   188   3              }
-  189   2            switch (car_state)
+  189   2            switch (start_ramp_flag)
   190   2            {
   191   3              case 1:
   192   3                xunji();
@@ -270,7 +270,7 @@ stmt  level    source
   246   1      }
   247          
   248          
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  16:22:22  PAGE 5   
+C251 COMPILER V5.60.0,  isr                                                                06/04/26  17:55:38  PAGE 5   
 
   249          //#define     INT0_VECTOR             0       //0003H
   250          //#define     TMR0_VECTOR             1       //000BH
@@ -339,7 +339,7 @@ Module Information          Static   Overlayable
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  16:22:22  PAGE 6   
+C251 COMPILER V5.60.0,  isr                                                                06/04/26  17:55:38  PAGE 6   
 
   pdata size           =    ------     ------
   xdata size           =         6     ------

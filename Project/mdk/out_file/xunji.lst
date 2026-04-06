@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
@@ -66,7 +66,7 @@ stmt  level    source
    55   2            ringR_task();
    56   2            ringR_execute();
    57   2            break;
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 2   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 2   
 
    58   2            
    59   2          
@@ -134,7 +134,7 @@ stmt  level    source
   121   2                break;
   122   2                                      
   123   2              default:
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 3   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 3   
 
   124   2                break;  
   125   2          }
@@ -202,7 +202,7 @@ stmt  level    source
   187          //            target_L = speed_target -50; 
   188          //            target_R = speed_target +40;
   189          //           
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 4   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 4   
 
   190          //                    
   191          //            break;
@@ -270,7 +270,7 @@ stmt  level    source
   253          //      if(angle<-80)           //2´ò½ÇÍê³É
   254          //      {
   255          //        ringR_flag_task=3;
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 5   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 5   
 
   256          //        ringR_flag_execute=3;
   257          //      }
@@ -338,7 +338,7 @@ stmt  level    source
   319          
   320          
   321          
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 6   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 6   
 
   322          
   323          
@@ -406,7 +406,7 @@ stmt  level    source
   385          
   386          
   387          
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 7   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 7   
 
   388          
   389          
@@ -474,7 +474,7 @@ stmt  level    source
   451          //      if(out_gyro>0)
   452          //      {
   453          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
-C251 COMPILER V5.60.0,  xunji                                                              06/04/26  16:22:23  PAGE 8   
+C251 COMPILER V5.60.0,  xunji                                                              06/04/26  17:55:39  PAGE 8   
 
   454          //      }
   455          //      else

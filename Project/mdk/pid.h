@@ -46,9 +46,11 @@ extern struct PID pid_motor_run;
 //速度环
 extern int16 err_speed;			//误差
 extern float out_L,out_R;			//输出
-extern float speed_output_L;				
-extern float speed_output_R;	
-
+extern int16 err_speed_L_last;
+extern int16 err_speed_L;
+extern int16 err_speed_R_last;
+extern int16 err_speed_R;
+extern float direction_err1[4];
 //方向环
 extern float expect_gyro;			//误差
 extern float correct_L;				//输出
@@ -58,24 +60,19 @@ extern float correct_L;				//输出
 //extern float expect_gyro_angles;
 //extern float out_angle;
 
-//角速度环
-extern int16 out_gyro;
+////角速度环
+//extern int16 out_gyro;
 
 
 
 
-/*************函数*************/
-
-//void speed_loop(void);
-//void speed_loop_LR(void);
 
 
 
-//float out();
-//void speed_loop(void);//速度环
+
 void speed_loop_LR(int16 speed_L_t,int16 speed_R_t);
 float gyro_loop(float expect_gyro, float avl_gyro_z);
 float direction_loop(float err_position);
-//void direction_return(float err_position);//方向环
+
 #endif
 
