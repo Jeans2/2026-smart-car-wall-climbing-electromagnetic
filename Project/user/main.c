@@ -55,7 +55,8 @@ void main()
 			
 				gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);																											
 //			expect_gyro = ;
-
+			iap_init();
+			Load_Params_From_EEPROM();
 	while(1)
     {				
 //		  	if(ringR_flag_task ==4)

@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  motor                                                              06/04/26  17:55:39  PAGE 1   
+C251 COMPILER V5.60.0,  motor                                                              06/04/26  22:59:00  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE motor
 OBJECT MODULE PLACED IN .\out_file\motor.obj
-COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE motor.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(
-                    -..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\c
-                    -ode) DEBUG PRINT(.\out_file\motor.lst) TABS(2) OBJECT(.\out_file\motor.obj) 
+COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE motor.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\motor.lst) TABS(2) OBJECT(.\out_file\motor.obj) 
 
 stmt  level    source
 
@@ -67,7 +67,7 @@ Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =       329     ------
   ecode size           =    ------     ------
-C251 COMPILER V5.60.0,  motor                                                              06/04/26  17:55:39  PAGE 2   
+C251 COMPILER V5.60.0,  motor                                                              06/04/26  22:59:00  PAGE 2   
 
   data size            =    ------     ------
   idata size           =    ------     ------

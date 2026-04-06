@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  main                                                               06/04/26  19:07:16  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               06/04/26  23:23:13  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
 OBJECT MODULE PLACED IN .\out_file\main.obj
-COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE 
-                    -INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\us
-                    -er;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
+COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE ..\user\main.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE I
+                    -NCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\use
+                    -r;..\code) DEBUG PRINT(.\out_file\main.lst) TABS(2) OBJECT(.\out_file\main.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    49   1        debug_init();
    50   1        
    51   1        // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               06/04/26  19:07:16  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               06/04/26  23:23:13  PAGE 2   
 
    52   1          System_Init();
    53   1             pit_ms_init(PIT_CH, 2); 
@@ -74,45 +74,46 @@ stmt  level    source
    55   1            
    56   1              gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);                                                     
    57   1      //      expect_gyro = ;
-   58   1      
-   59   1        while(1)
-   60   1          {       
-   61   2      //        if(ringR_flag_task ==4)
-   62   2      //        {
-   63   2      //       gpio_set_level(IO_P52, 0);
-   64   2      //        }
-   65   2      //        else
-   66   2      //        {
-   67   2      //        gpio_set_level(IO_P52, 1);
-   68   2      //    
-   69   2      //        }
-   70   2          
+   58   1            iap_init();
+   59   1            Load_Params_From_EEPROM();
+   60   1        while(1)
+   61   1          {       
+   62   2      //        if(ringR_flag_task ==4)
+   63   2      //        {
+   64   2      //       gpio_set_level(IO_P52, 0);
+   65   2      //        }
+   66   2      //        else
+   67   2      //        {
+   68   2      //        gpio_set_level(IO_P52, 1);
+   69   2      //    
+   70   2      //        }
    71   2          
    72   2          
    73   2          
    74   2          
    75   2          
-   76   2        
-   77   2            
-   78   2            fuya_set_duty(4000);
-   79   2            Key_Menu_Adjust();    // 扫描按键并修改参数
-   80   2             UI_Display_Update();  // 刷新屏幕菜单
-   81   2          
-   82   2      
-   83   2      //        printf("%f\n",deviation);
-   84   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-   85   2              sprintf(buf,"%d,%d,%d\n",speed_straight,speed_L,speed_R);
-   86   2      //     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
-   87   2      //      sprintf(buf,"%f\n",angle);//十字250
-   88   2          
-   89   2              wireless_uart_send_string(buf);
-   90   2          }
-   91   1      }
+   76   2          
+   77   2        
+   78   2            
+   79   2            fuya_set_duty(4000);
+   80   2            Key_Menu_Adjust();    // 扫描按键并修改参数
+   81   2             UI_Display_Update();  // 刷新屏幕菜单
+   82   2          
+   83   2      
+   84   2      //        printf("%f\n",deviation);
+   85   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
+   86   2              sprintf(buf,"%d,%d,%d\n",speed_straight,speed_L,speed_R);
+   87   2      //     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+   88   2      //      sprintf(buf,"%f\n",angle);//十字250
+   89   2          
+   90   2              wireless_uart_send_string(buf);
+   91   2          }
+   92   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       202     ------
+  code size            =       208     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

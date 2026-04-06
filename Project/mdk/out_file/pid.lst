@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  22:58:59  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
 OBJECT MODULE PLACED IN .\out_file\pid.obj
-COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE pid.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
-                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
-                    -e) DEBUG PRINT(.\out_file\pid.lst) TABS(2) OBJECT(.\out_file\pid.obj) 
+COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE pid.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\
+                    -..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\code
+                    -) DEBUG PRINT(.\out_file\pid.lst) TABS(2) OBJECT(.\out_file\pid.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    55          
    56          struct PID pid_motor_run = {2.04,0,2.2,  0,0,0};// 1.54 2              
    57          
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 2   
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  22:58:59  PAGE 2   
 
    58          
    59          
@@ -134,7 +134,7 @@ stmt  level    source
   121   1        
   122   1        if(out_L>3500 ){out_L=3500; }
   123   1        if(out_L<-3500){out_L=-3500;}
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 3   
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  22:58:59  PAGE 3   
 
   124   1        if(out_R>3500 ){out_R=3500; }
   125   1        if(out_R<-3500){out_R=-3500;}
@@ -202,7 +202,7 @@ stmt  level    source
              -n_err1[3]
   187   1          
   188   1          // оч╥Ы
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 4   
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  22:58:59  PAGE 4   
 
   189   1          if(correct_L > 10000) correct_L = 10000;
   190   1          if(correct_L < -10000) correct_L = -10000;
@@ -270,7 +270,7 @@ stmt  level    source
   252          
   253          
   254          
-C251 COMPILER V5.60.0,  pid                                                                06/04/26  17:55:39  PAGE 5   
+C251 COMPILER V5.60.0,  pid                                                                06/04/26  22:58:59  PAGE 5   
 
   255          
   256          
