@@ -2,14 +2,26 @@
 #define __IMU660RB_H
 #include "bsp_system.h"
 
-//extern float null_drift_z;	//¡„∆Ø
-extern float angle;
-extern float avl_gyro_z;
-extern float gyro_z_filtered;
-void gyro_get(void);
+
+//extern float angle_x;
+extern float angle_z;
+//extern float avl_gyro_z;
+//extern float gyro_z_filtered;
+//extern float gyro_x_filtered;
+//extern float acc_z_filtered;
+//extern float acc_x_filtered;
+//extern float acc_y_filtered;
+extern float pitch;
+
+
 void angle_get(void);
 void angle_clear(void);
-//void null_drift_calculate(void);
+void gyro_get_x(void);
+void gyro_get_z(void);
+void gyro_init_calibration(void);
+void get_acc_z(void);
+void get_acc_x(void);
+void get_acc_y(void);
 
 #endif
 

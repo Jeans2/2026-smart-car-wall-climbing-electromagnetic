@@ -162,10 +162,9 @@ void TM1_IRQHandler() interrupt 3
     if (tim1_irq_handler != NULL)
     {									
 				encoder_update();
-			  gyro_get();
+				angle_get();
+				
 			
-			
-
 				
 //			  gyro_loop(expect_gyro,0);//获取correctL 
         timer_10ms_count++;// 计数器累加										
@@ -189,6 +188,7 @@ void TM1_IRQHandler() interrupt 3
 			switch (start_ramp_flag)
 			{
 				case 1:
+					fuya_set_duty(6000);
 					xunji();
 
          break;		
@@ -196,7 +196,7 @@ void TM1_IRQHandler() interrupt 3
 				case 0:
 					set_pwm_motor_R(0);
 					set_pwm_motor_L(0);
-				
+					
 				
 				 break;
 					

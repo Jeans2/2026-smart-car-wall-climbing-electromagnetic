@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  menu                                                               06/04/26  22:58:59  PAGE 1   
+C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE menu
 OBJECT MODULE PLACED IN .\out_file\menu.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE menu.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
-                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
-                    -e) DEBUG PRINT(.\out_file\menu.lst) TABS(2) OBJECT(.\out_file\menu.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE menu.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\menu.lst) TABS(2) OBJECT(.\out_file\menu.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    55   1          
    56   1          // 先只读第一个字节，看看是不是我们的校验标志
    57   1          flag = iap_read_byte(EEPROM_PARAM_ADDR);
-C251 COMPILER V5.60.0,  menu                                                               06/04/26  22:58:59  PAGE 2   
+C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 2   
 
    58   1          
    59   1          if(flag == EEPROM_INIT_FLAG)
@@ -109,7 +109,7 @@ stmt  level    source
    96   1          // ?? 【最高优先级保命机制】：只要在发车状态，按 KEY4 必定紧急停车！
    97   1          if(car_state == 1 && key4_now == 0 && key4_last == 1)
    98   1          {
-   99   2              system_delay_ms(10);
+   99   2              system_delay_ms(5);
   100   2              if(gpio_get_level(KEY4_PIN) == 0)
   101   2              {
   102   3                  car_state = 0;
@@ -123,7 +123,7 @@ stmt  level    source
   110   1          // ----------------- 功能 1：切换光标 (KEY1 向下选择) -----------------
   111   1          if(key1_now == 0 && key1_last == 1)    
   112   1          {
-  113   2              system_delay_ms(10);
+  113   2              system_delay_ms(5);
   114   2              if(gpio_get_level(KEY1_PIN) == 0)
   115   2              {
   116   3                  cursor_index++; 
@@ -134,9 +134,9 @@ stmt  level    source
   121   1          // ----------------- 功能 2：增加参数 / 向上选择 (KEY2) -----------------
   122   1          if(key2_now == 0 && key2_last == 1)    
   123   1          {
-C251 COMPILER V5.60.0,  menu                                                               06/04/26  22:58:59  PAGE 3   
+C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 3   
 
-  124   2              system_delay_ms(10);
+  124   2              system_delay_ms(5);
   125   2              if(gpio_get_level(KEY2_PIN) == 0)
   126   2              {
   127   3                  // 只有在最底层的调参界面，KEY2 才是“加参数”
@@ -164,7 +164,7 @@ stmt  level    source
   149   1          // ----------------- 功能 3：减小参数 (KEY3) -----------------
   150   1          if(key3_now == 0 && key3_last == 1)    
   151   1          {
-  152   2              system_delay_ms(10);
+  152   2              system_delay_ms(5);
   153   2              if(gpio_get_level(KEY3_PIN) == 0)
   154   2              {
   155   3                  if(menu_state == MENU_SPEED) {
@@ -193,7 +193,7 @@ stmt  level    source
   171   1          // ----------------- 功能 4：确认/进入下一级/发车 (KEY4) -----------------
   172   1          if(key4_now == 0 && key4_last == 1)    
   173   1          {
-  174   2              system_delay_ms(10);
+  174   2              system_delay_ms(5);
   175   2              if(gpio_get_level(KEY4_PIN) == 0)
   176   2              {
   177   3                  // 依据当前处于哪个界面，决定 KEY4 的行为
@@ -202,7 +202,7 @@ stmt  level    source
   180   4                      case MENU_MAIN: // 【主菜单】
   181   4                          if(cursor_index == 0)      { menu_state = MENU_TUNE_CATE; cursor_index = 0; menu_max_
              -items = 4; } // 进调参
-C251 COMPILER V5.60.0,  menu                                                               06/04/26  22:58:59  PAGE 4   
+C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 4   
 
   182   4                          else if(cursor_index == 1) { menu_state = MENU_OBSERVE;   cursor_index = 0; menu_max_
              -items = 1; } // 进观测
@@ -212,173 +212,176 @@ stmt  level    source
   186   5                              err_speed_L_last = 0; err_speed_L = 0;
   187   5                              err_speed_R_last = 0; err_speed_R = 0;
   188   5                              out_L = 0; out_R = 0;
-  189   5                              direction_err1[0] = 0; direction_err1[1] = 0; direction_err1[2] = 0;            
-  190   5                              start_ramp_flag = 1;
-  191   5                          }
-  192   4                          break;
-  193   4      
-  194   4                      case MENU_TUNE_CATE: // 【调参大类菜单】
-  195   4                          if(cursor_index == 0)      { menu_state = MENU_SPEED; cursor_index = 0; menu_max_item
+  189   5                              direction_err1[0] = 0; direction_err1[1] = 0; direction_err1[2] = 0; 
+  190   5                              system_delay_ms(1000);
+  191   5                              start_ramp_flag = 1;
+  192   5                          }
+  193   4                          break;
+  194   4      
+  195   4                      case MENU_TUNE_CATE: // 【调参大类菜单】
+  196   4                          if(cursor_index == 0)      { menu_state = MENU_SPEED; cursor_index = 0; menu_max_item
              -s = 3; } // 进速度环
-  196   4                          else if(cursor_index == 1) { menu_state = MENU_TURN;  cursor_index = 0; menu_max_item
+  197   4                          else if(cursor_index == 1) { menu_state = MENU_TURN;  cursor_index = 0; menu_max_item
              -s = 3; } // 进转向环
-  197   4                          else if(cursor_index == 2) { menu_state = MENU_FORM;  cursor_index = 0; menu_max_item
+  198   4                          else if(cursor_index == 2) { menu_state = MENU_FORM;  cursor_index = 0; menu_max_item
              -s = 4; } // 进差比和
-  198   4                          else if(cursor_index == 3) { menu_state = MENU_MAIN;  cursor_index = 0; menu_max_item
+  199   4                          else if(cursor_index == 3) { menu_state = MENU_MAIN;  cursor_index = 0; menu_max_item
              -s = 3; } // 返回上一级
-  199   4                          break;
-  200   4      
-  201   4                      case MENU_OBSERVE: // 【数据观测】
-  202   4                          if(cursor_index == 0)      { menu_state = MENU_MAIN;  cursor_index = 0; menu_max_item
+  200   4                          break;
+  201   4      
+  202   4                      case MENU_OBSERVE: // 【数据观测】
+  203   4                          if(cursor_index == 0)      { menu_state = MENU_MAIN;  cursor_index = 0; menu_max_item
              -s = 3; } // 返回
-  203   4                          break;
-  204   4      
-  205   4                     case MENU_SPEED: // 【速度环底层】
-  206   4                          if(cursor_index == 2) { 
-  207   5                              Save_Params_To_EEPROM(); // <--- 退出时自动保存参数
-  208   5                              menu_state = MENU_TUNE_CATE; 
-  209   5                              cursor_index = 0; 
-  210   5                              menu_max_items = 4; 
-  211   5                          } 
-  212   4                          break;
-  213   4                      case MENU_TURN:  // 【转向环底层】
-  214   4                          if(cursor_index == 2) { 
-  215   5                              Save_Params_To_EEPROM(); // <--- 退出时自动保存参数
-  216   5                              menu_state = MENU_TUNE_CATE; 
-  217   5                              cursor_index = 1; 
-  218   5                              menu_max_items = 4; 
-  219   5                          } 
-  220   4                          break;
-  221   4                      case MENU_FORM:  // 【差比和底层】
-  222   4                          if(cursor_index == 3) { 
-  223   5                              Save_Params_To_EEPROM(); // <--- 退出时自动保存参数
-  224   5                              menu_state = MENU_TUNE_CATE; 
-  225   5                              cursor_index = 2; 
-  226   5                              menu_max_items = 4; 
-  227   5                          } 
-  228   4                          break;
-  229   4                  }
-  230   3              }
-  231   2          }
-  232   1      
-  233   1          key1_last = key1_now; key2_last = key2_now; key3_last = key3_now; key4_last = key4_now;
-  234   1      }
-  235          
+  204   4                          break;
+  205   4      
+  206   4                     case MENU_SPEED: // 【速度环底层】
+  207   4                          if(cursor_index == 2) { 
+  208   5                              Save_Params_To_EEPROM(); // <--- 退出时自动保存参数
+  209   5                              menu_state = MENU_TUNE_CATE; 
+  210   5                              cursor_index = 0; 
+  211   5                              menu_max_items = 4; 
+  212   5                          } 
+  213   4                          break;
+  214   4                      case MENU_TURN:  // 【转向环底层】
+  215   4                          if(cursor_index == 2) { 
+  216   5                              Save_Params_To_EEPROM(); // <--- 退出时自动保存参数
+  217   5                              menu_state = MENU_TUNE_CATE; 
+  218   5                              cursor_index = 1; 
+  219   5                              menu_max_items = 4; 
+  220   5                          } 
+  221   4                          break;
+  222   4                      case MENU_FORM:  // 【差比和底层】
+  223   4                          if(cursor_index == 3) { 
+  224   5                              Save_Params_To_EEPROM(); // <--- 退出时自动保存参数
+  225   5                              menu_state = MENU_TUNE_CATE; 
+  226   5                              cursor_index = 2; 
+  227   5                              menu_max_items = 4; 
+  228   5                          } 
+  229   4                          break;
+  230   4                  }
+  231   3              }
+  232   2          }
+  233   1      
+  234   1          key1_last = key1_now; key2_last = key2_now; key3_last = key3_now; key4_last = key4_now;
+  235   1      }
   236          
-  237          // =========================================================================
-  238          // 函数名：UI_Display_Update
-  239          // 功  能：根据状态机渲染多级界面
-  240          // =========================================================================
-  241          void UI_Display_Update(void)
-C251 COMPILER V5.60.0,  menu                                                               06/04/26  22:58:59  PAGE 5   
+  237          
+  238          // =========================================================================
+  239          // 函数名：UI_Display_Update
+  240          // 功  能：根据状态机渲染多级界面
+  241          // =========================================================================
+C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 5   
 
-  242          {
-  243   1          char p[8]; // 用于存光标字符
-  244   1          uint8 i;
-  245   1      
-  246   1          // 如果发车了，强制覆盖全屏显示运行状态
-  247   1          if (car_state == 1) {
-  248   2              ips114_show_string(0, 3*16, "                  "); // 清空一些杂项
-  249   2              ips114_show_string(0, 4*16, " >>> RUNNING! >>> ");
-  250   2              ips114_show_string(0, 5*16, " PRESS KEY4 STOP  ");
-  251   2              return; 
-  252   2          }
-  253   1      
-  254   1          // 初始化光标数组全为空格
-  255   1          for(i=0; i<8; i++) p[i] = ' ';
-  256   1          p[cursor_index] = '>'; // 给当前选中项打上光标
-  257   1      
-  258   1          // 根据当前状态画UI
-  259   1          switch(menu_state)
-  260   1          {
-  261   2              case MENU_MAIN:
-  262   2                  sprintf(disp_buf, "%c 1. Params        ", p[0]); ips114_show_string(0, 0*16, disp_buf);
-  263   2                  sprintf(disp_buf, "%c 2. Observe       ", p[1]); ips114_show_string(0, 1*16, disp_buf);
-  264   2                  sprintf(disp_buf, "%c 3. [START CAR!]  ", p[2]); ips114_show_string(0, 2*16, disp_buf);
-  265   2                  
-  266   2                  ips114_show_string(0, 3*16, "                  "); // 擦除多余行，防重影
-  267   2                  ips114_show_string(0, 4*16, "                  ");
-  268   2                  ips114_show_string(0, 5*16, "                  ");
-  269   2                  ips114_show_string(0, 6*16, "                  ");
-  270   2                  break;
-  271   2      
-  272   2              case MENU_TUNE_CATE:
-  273   2                  sprintf(disp_buf, "%c 1. Speed Loop    ", p[0]); ips114_show_string(0, 0*16, disp_buf);
-  274   2                  sprintf(disp_buf, "%c 2. Turn Loop     ", p[1]); ips114_show_string(0, 1*16, disp_buf);
-  275   2                  sprintf(disp_buf, "%c 3. A    B   C    ", p[2]); ips114_show_string(0, 2*16, disp_buf);
-  276   2                  sprintf(disp_buf, "%c <- Back          ", p[3]); ips114_show_string(0, 3*16, disp_buf);
-  277   2                  ips114_show_string(0, 4*16, "                  ");
-  278   2                  ips114_show_string(0, 5*16, "                  ");
-  279   2                  break;
-  280   2      
-  281   2              case MENU_SPEED:
-  282   2                  sprintf(disp_buf, "%c Spd Kp: %.1f     ", p[0], pid_loop_speed.Kp); ips114_show_string(0, 0*1
+  242          void UI_Display_Update(void)
+  243          {
+  244   1          char p[8]; // 用于存光标字符
+  245   1          uint8 i;
+  246   1      
+  247   1          // 如果发车了，强制覆盖全屏显示运行状态
+  248   1          if (start_ramp_flag == 1) {
+  249   2              ips114_show_string(0, 3*16, "                  "); // 清空一些杂项
+  250   2              ips114_show_string(0, 4*16, " >>> RUNNING! >>> ");
+  251   2              ips114_show_string(0, 5*16, " PRESS KEY4 STOP  ");
+  252   2              return; 
+  253   2          }
+  254   1      
+  255   1          // 初始化光标数组全为空格
+  256   1          for(i=0; i<8; i++) p[i] = ' ';
+  257   1          p[cursor_index] = '>'; // 给当前选中项打上光标
+  258   1      
+  259   1          // 根据当前状态画UI
+  260   1          switch(menu_state)
+  261   1          {
+  262   2              case MENU_MAIN:
+  263   2                  sprintf(disp_buf, "%c 1. Params        ", p[0]); ips114_show_string(0, 0*16, disp_buf);
+  264   2                  sprintf(disp_buf, "%c 2. Observe       ", p[1]); ips114_show_string(0, 1*16, disp_buf);
+  265   2                  sprintf(disp_buf, "%c 3. [START CAR!]  ", p[2]); ips114_show_string(0, 2*16, disp_buf);
+  266   2                  
+  267   2                  ips114_show_string(0, 3*16, "                  "); // 擦除多余行，防重影
+  268   2                  ips114_show_string(0, 4*16, "                  ");
+  269   2                  ips114_show_string(0, 5*16, "                  ");
+  270   2                  ips114_show_string(0, 6*16, "                  ");
+  271   2                  break;
+  272   2      
+  273   2              case MENU_TUNE_CATE:
+  274   2                  sprintf(disp_buf, "%c 1. Speed Loop    ", p[0]); ips114_show_string(0, 0*16, disp_buf);
+  275   2                  sprintf(disp_buf, "%c 2. Turn Loop     ", p[1]); ips114_show_string(0, 1*16, disp_buf);
+  276   2                  sprintf(disp_buf, "%c 3. A    B   C    ", p[2]); ips114_show_string(0, 2*16, disp_buf);
+  277   2                  sprintf(disp_buf, "%c <- Back          ", p[3]); ips114_show_string(0, 3*16, disp_buf);
+  278   2                  ips114_show_string(0, 4*16, "                  ");
+  279   2                  ips114_show_string(0, 5*16, "                  ");
+  280   2                  break;
+  281   2      
+  282   2              case MENU_SPEED:
+  283   2                  sprintf(disp_buf, "%c Spd Kp: %.1f     ", p[0], pid_loop_speed.Kp); ips114_show_string(0, 0*1
              -6, disp_buf);
-  283   2                  sprintf(disp_buf, "%c Spd Ki: %.2f     ", p[1], pid_loop_speed.Ki); ips114_show_string(0, 1*1
+  284   2                  sprintf(disp_buf, "%c Spd Ki: %.2f     ", p[1], pid_loop_speed.Ki); ips114_show_string(0, 1*1
              -6, disp_buf);
-  284   2                  sprintf(disp_buf, "%c <- Back          ", p[2]);                    ips114_show_string(0, 2*1
+  285   2                  sprintf(disp_buf, "%c <- Back          ", p[2]);                    ips114_show_string(0, 2*1
              -6, disp_buf);
-  285   2                  ips114_show_string(0, 3*16, "                  ");
-  286   2                  break;
-  287   2      
-  288   2              case MENU_TURN:
-  289   2                  sprintf(disp_buf, "%c Turn Kp: %.2f    ", p[0], pid_motor_run.Kp);  ips114_show_string(0, 0*1
+  286   2                  ips114_show_string(0, 3*16, "                  ");
+  287   2                  break;
+  288   2      
+  289   2              case MENU_TURN:
+  290   2                  sprintf(disp_buf, "%c Turn Kp: %.2f    ", p[0], pid_motor_run.Kp);  ips114_show_string(0, 0*1
              -6, disp_buf);
-  290   2                  sprintf(disp_buf, "%c Turn Kd: %.2f    ", p[1], pid_motor_run.Kd);  ips114_show_string(0, 1*1
+  291   2                  sprintf(disp_buf, "%c Turn Kd: %.2f    ", p[1], pid_motor_run.Kd);  ips114_show_string(0, 1*1
              -6, disp_buf);
-  291   2                  sprintf(disp_buf, "%c <- Back          ", p[2]);                    ips114_show_string(0, 2*1
+  292   2                  sprintf(disp_buf, "%c <- Back          ", p[2]);                    ips114_show_string(0, 2*1
              -6, disp_buf);
-  292   2                  ips114_show_string(0, 3*16, "                  ");
-  293   2                  break;
-  294   2      
-  295   2              case MENU_FORM:
-  296   2                  sprintf(disp_buf, "%c  A: %.1f         ", p[0], adc_set_differ.A);  ips114_show_string(0, 0*1
+  293   2                  ips114_show_string(0, 3*16, "                  ");
+  294   2                  break;
+  295   2      
+  296   2              case MENU_FORM:
+  297   2                  sprintf(disp_buf, "%c  A: %.1f         ", p[0], adc_set_differ.A);  ips114_show_string(0, 0*1
              -6, disp_buf);
-  297   2                  sprintf(disp_buf, "%c  B: %.1f         ", p[1], adc_set_differ.B);  ips114_show_string(0, 1*1
+  298   2                  sprintf(disp_buf, "%c  B: %.1f         ", p[1], adc_set_differ.B);  ips114_show_string(0, 1*1
              -6, disp_buf);
-  298   2                  sprintf(disp_buf, "%c  C: %.2f         ", p[2], adc_set_differ.C);  ips114_show_string(0, 2*1
-             -6, disp_buf);
-C251 COMPILER V5.60.0,  menu                                                               06/04/26  22:58:59  PAGE 6   
+  299   2                  sprintf(disp_buf, "%c  C: %.2f         ", p[2], adc_set_differ.C);  ips114_show_string(0, 2*1
+C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 6   
 
-  299   2                  sprintf(disp_buf, "%c <- Back          ", p[3]);                    ips114_show_string(0, 3*1
              -6, disp_buf);
-  300   2                  break;
-  301   2      
-  302   2              case MENU_OBSERVE:            
-  303   2                  ips114_show_string(10, 16*0, "L :                ");
-  304   2                  ips114_show_string(10, 16*1, "LM:                ");
-  305   2                  ips114_show_string(10, 16*2, "RM:                ");
-  306   2                  ips114_show_string(10, 16*3, "R :                ");
-  307   2                  
-  308   2                  ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
-  309   2                  ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
-  310   2                  ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
-  311   2                  ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
-  312   2                  
-  313   2                 
-  314   2                  ips114_show_string(0, 16*4, "                  ");
-  315   2      
+  300   2                  sprintf(disp_buf, "%c <- Back          ", p[3]);                    ips114_show_string(0, 3*1
+             -6, disp_buf);
+  301   2                  break;
+  302   2      
+  303   2              case MENU_OBSERVE:            
+  304   2                  ips114_show_string(10, 16*0, "L :                ");
+  305   2                  ips114_show_string(10, 16*1, "LM:                ");
+  306   2                  ips114_show_string(10, 16*2, "RM:                ");
+  307   2                  ips114_show_string(10, 16*3, "R :                ");
+  308   2                  ips114_show_string(10, 16*4, "P :                ");
+  309   2                  
+  310   2                  ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
+  311   2                  ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
+  312   2                  ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
+  313   2                  ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
+  314   2                  ips114_show_float(40, 16*4, pitch, 3, 1);
+  315   2                  
   316   2                 
-  317   2                  sprintf(disp_buf, "%c <- Back                  ", p[0]); 
-  318   2                  ips114_show_string(0, 16*5, disp_buf); 
-  319   2                  break;
-  320   2                 
-  321   2          }
-  322   1      }
-  323          
-  324          
-  325          
+  317   2                  ips114_show_string(0, 16*5, "                  ");
+  318   2      
+  319   2                 
+  320   2                  sprintf(disp_buf, "%c <- Back                  ", p[0]); 
+  321   2                  ips114_show_string(0, 16*5, disp_buf); 
+  322   2                  break;
+  323   2                 
+  324   2          }
+  325   1      }
   326          
   327          
   328          
   329          
   330          
   331          
+  332          
+  333          
+  334          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      3649     ------
+  code size            =      3704     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -393,7 +396,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =       514     ------
+  hconst size          =       534     ------
 End of Module Information.
 
 

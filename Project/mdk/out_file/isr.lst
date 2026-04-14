@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  22:58:58  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                14/04/26  19:35:47  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
 OBJECT MODULE PLACED IN .\out_file\isr.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE ..\user\isr.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE IN
-                    -CDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user
-                    -;..\code) DEBUG PRINT(.\out_file\isr.lst) TABS(2) OBJECT(.\out_file\isr.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\user\isr.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE I
+                    -NCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\use
+                    -r;..\code) DEBUG PRINT(.\out_file\isr.lst) TABS(2) OBJECT(.\out_file\isr.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    49   2      
    50   2              // 程序自动下载
    51   2              if (uart_rx_buff[UART_1][0] == 0x7F)
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  22:58:58  PAGE 2   
+C251 COMPILER V5.60.0,  isr                                                                14/04/26  19:35:47  PAGE 2   
 
    52   2              {
    53   3                  if (dwon_count++ > 20)
@@ -134,7 +134,7 @@ stmt  level    source
   115   1          if (DMA_UR3R_STA & 0x02) // 数据丢弃
   116   1          {
   117   2              DMA_UR3R_STA &= ~0x02;      // 清标志位
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  22:58:58  PAGE 3   
+C251 COMPILER V5.60.0,  isr                                                                14/04/26  19:35:47  PAGE 3   
 
   118   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
   119   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
@@ -183,36 +183,36 @@ stmt  level    source
   162   1          if (tim1_irq_handler != NULL)
   163   1          {                 
   164   2              encoder_update();
-  165   2              gyro_get();
-  166   2            
+  165   2              angle_get();
+  166   2              
   167   2            
-  168   2      
-  169   2              
-  170   2      //        gyro_loop(expect_gyro,0);//获取correctL 
-  171   2              timer_10ms_count++;// 计数器累加                   
-  172   2      
-  173   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
-  174   2              {
-  175   3                  timer_10ms_count = 0;  // 计数器清零
-  176   3                  caiyang();      
-  177   3                adc_differ(); 
-  178   3                if (element == 1&&ringR_flag_task==1)
-  179   3                {
-  180   4                    deviation = deviation - 30;
-  181   4                }
-  182   3                if (element == 1&&ringR_flag_task==4)
-  183   3                {
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  22:58:58  PAGE 4   
+  168   2              
+  169   2      //        gyro_loop(expect_gyro,0);//获取correctL 
+  170   2              timer_10ms_count++;// 计数器累加                   
+  171   2      
+  172   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
+  173   2              {
+  174   3                  timer_10ms_count = 0;  // 计数器清零
+  175   3                  caiyang();      
+  176   3                adc_differ(); 
+  177   3                if (element == 1&&ringR_flag_task==1)
+  178   3                {
+  179   4                    deviation = deviation - 30;
+  180   4                }
+  181   3                if (element == 1&&ringR_flag_task==4)
+  182   3                {
+  183   4                    deviation = deviation + 100;
+C251 COMPILER V5.60.0,  isr                                                                14/04/26  19:35:47  PAGE 4   
 
-  184   4                    deviation = deviation + 100;
-  185   4                }
-  186   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
+  184   4                }
+  185   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
              -                   // 10ms执行一次的函数
-  187   3               
-  188   3              }
-  189   2            switch (start_ramp_flag)
-  190   2            {
-  191   3              case 1:
+  186   3               
+  187   3              }
+  188   2            switch (start_ramp_flag)
+  189   2            {
+  190   3              case 1:
+  191   3                fuya_set_duty(6000);
   192   3                xunji();
   193   3      
   194   3               break;   
@@ -220,7 +220,7 @@ stmt  level    source
   196   3              case 0:
   197   3                set_pwm_motor_R(0);
   198   3                set_pwm_motor_L(0);
-  199   3              
+  199   3                
   200   3              
   201   3               break;
   202   3                
@@ -270,7 +270,7 @@ stmt  level    source
   246   1      }
   247          
   248          
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  22:58:58  PAGE 5   
+C251 COMPILER V5.60.0,  isr                                                                14/04/26  19:35:47  PAGE 5   
 
   249          //#define     INT0_VECTOR             0       //0003H
   250          //#define     TMR0_VECTOR             1       //000BH
@@ -335,11 +335,11 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1133     ------
+  code size            =      1140     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
-C251 COMPILER V5.60.0,  isr                                                                06/04/26  22:58:58  PAGE 6   
+C251 COMPILER V5.60.0,  isr                                                                14/04/26  19:35:47  PAGE 6   
 
   pdata size           =    ------     ------
   xdata size           =         6     ------

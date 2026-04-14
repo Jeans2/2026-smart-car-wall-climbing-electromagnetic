@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  aoi_function                                                       06/04/26  22:59:00  PAGE 1   
+C251 COMPILER V5.60.0,  aoi_function                                                       14/04/26  19:35:49  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE aoi_function
 OBJECT MODULE PLACED IN .\out_file\aoi_function.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE aoi_function.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE I
-                    -NCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\use
-                    -r;..\code) DEBUG PRINT(.\out_file\aoi_function.lst) TABS(2) OBJECT(.\out_file\aoi_function.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE aoi_function.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE 
+                    -INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\us
+                    -er;..\code) DEBUG PRINT(.\out_file\aoi_function.lst) TABS(2) OBJECT(.\out_file\aoi_function.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    55   1          compare_swap(&arr[4], &arr[5]);
    56   1          compare_swap(&arr[5], &arr[6]);
    57   1          
-C251 COMPILER V5.60.0,  aoi_function                                                       06/04/26  22:59:00  PAGE 2   
+C251 COMPILER V5.60.0,  aoi_function                                                       14/04/26  19:35:49  PAGE 2   
 
    58   1          
    59   1          return arr[3];

@@ -16,6 +16,7 @@ void System_Init(void)
 		imu660rb_init();
 	  fuya_init();
 	wireless_uart_init();
+		gyro_init_calibration();
 }
 
 void caiyang(void)

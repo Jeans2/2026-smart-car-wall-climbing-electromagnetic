@@ -96,7 +96,7 @@ void Key_Menu_Adjust(void)
     // ?? 【最高优先级保命机制】：只要在发车状态，按 KEY4 必定紧急停车！
     if(car_state == 1 && key4_now == 0 && key4_last == 1)
     {
-        system_delay_ms(10);
+        system_delay_ms(5);
         if(gpio_get_level(KEY4_PIN) == 0)
         {
             car_state = 0;
@@ -110,7 +110,7 @@ void Key_Menu_Adjust(void)
     // ----------------- 功能 1：切换光标 (KEY1 向下选择) -----------------
     if(key1_now == 0 && key1_last == 1)    
     {
-        system_delay_ms(10);
+        system_delay_ms(5);
         if(gpio_get_level(KEY1_PIN) == 0)
         {
             cursor_index++; 
@@ -121,7 +121,7 @@ void Key_Menu_Adjust(void)
     // ----------------- 功能 2：增加参数 / 向上选择 (KEY2) -----------------
     if(key2_now == 0 && key2_last == 1)    
     {
-        system_delay_ms(10);
+        system_delay_ms(5);
         if(gpio_get_level(KEY2_PIN) == 0)
         {
             // 只有在最底层的调参界面，KEY2 才是“加参数”
@@ -149,7 +149,7 @@ void Key_Menu_Adjust(void)
     // ----------------- 功能 3：减小参数 (KEY3) -----------------
     if(key3_now == 0 && key3_last == 1)    
     {
-        system_delay_ms(10);
+        system_delay_ms(5);
         if(gpio_get_level(KEY3_PIN) == 0)
         {
             if(menu_state == MENU_SPEED) {
@@ -171,7 +171,7 @@ void Key_Menu_Adjust(void)
     // ----------------- 功能 4：确认/进入下一级/发车 (KEY4) -----------------
     if(key4_now == 0 && key4_last == 1)    
     {
-        system_delay_ms(10);
+        system_delay_ms(5);
         if(gpio_get_level(KEY4_PIN) == 0)
         {
             // 依据当前处于哪个界面，决定 KEY4 的行为
@@ -186,7 +186,8 @@ void Key_Menu_Adjust(void)
                         err_speed_L_last = 0; err_speed_L = 0;
                         err_speed_R_last = 0; err_speed_R = 0;
                         out_L = 0; out_R = 0;
-                        direction_err1[0] = 0; direction_err1[1] = 0; direction_err1[2] = 0;            
+                        direction_err1[0] = 0; direction_err1[1] = 0; direction_err1[2] = 0; 
+												system_delay_ms(1000);
                         start_ramp_flag = 1;
                     }
                     break;
@@ -244,7 +245,7 @@ void UI_Display_Update(void)
     uint8 i;
 
     // 如果发车了，强制覆盖全屏显示运行状态
-    if (car_state == 1) {
+    if (start_ramp_flag == 1) {
         ips114_show_string(0, 3*16, "                  "); // 清空一些杂项
         ips114_show_string(0, 4*16, " >>> RUNNING! >>> ");
         ips114_show_string(0, 5*16, " PRESS KEY4 STOP  ");
@@ -304,14 +305,16 @@ void UI_Display_Update(void)
             ips114_show_string(10, 16*1, "LM:                ");
             ips114_show_string(10, 16*2, "RM:                ");
             ips114_show_string(10, 16*3, "R :                ");
+						ips114_show_string(10, 16*4, "P :                ");
             
             ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
             ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
             ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
             ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
+						ips114_show_float(40, 16*4, pitch, 3, 1);
             
            
-            ips114_show_string(0, 16*4, "                  ");
+            ips114_show_string(0, 16*5, "                  ");
 
            
             sprintf(disp_buf, "%c <- Back                  ", p[0]); 

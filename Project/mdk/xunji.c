@@ -23,17 +23,30 @@ void xunji(void)
 	
 	if(R+L>120&&ring_flag_ing==0)	//右环岛
 	{
-;
+		
 		element = 1;
 		ringR_flag_task = 1;
-//		distance_ringR = 0;
 		ring_flag_ing = 200;
 		angle_clear(); 
-		
+		gpio_set_level(IO_P52, 0);
 	}
-	
-//	if(L+LM+RM+R<20)									//出界保护
-//	{element = 9;			turn_flag = 9;}
+//	if(pitch<-20)
+//	{
+//			ring_flag_ing = 300;
+//	
+//	}
+		
+//	if((R+L>120)&&(L - R)>((R+RM+L+LM) * 0.20)&&acc_z_filtered>0.90&&ring_flag_ing==0)	//右环岛
+//	{
+
+//		element = 1;
+//		ringR_flag_task = 1;
+//		ring_flag_ing = 200;
+//		angle_clear(); 
+//		gpio_set_level(IO_P52, 0);
+//	}
+	if(L+LM+RM+R<20)									//出界保护
+	{element = 9;			}
 	switch (element)
 	{
 		case 0:												//**正常循迹**			
@@ -61,7 +74,12 @@ void xunji(void)
 //			ringL_task();
 //			ringL_execute();
 //			break;
-
+		case 9: 
+			set_pwm_motor_R(0);
+			set_pwm_motor_L(0);
+			fuya_set_duty(0);
+			break;
+		
 		default:break;
 		
 	}
@@ -97,19 +115,19 @@ void ringR_task(void)
         case 1:  
                                          
 				  angle_get();
-					if(angle < -260)                     
+					if(angle_z < -260)                     
            {                           
                ringR_flag_task = 4;																								
                ringR_flag_execute = 4;
 							distance_ringR = 0;
-						 gpio_set_level(IO_P52, 0);
+						 
            }
            break;
                         
         case 4:                                     
             
 					distance_ringR += speed_avl;
-          if(distance_ringR > 22000)               
+          if(distance_ringR > 18000)               
           {   
              
               distance_ringR = 0;
@@ -168,133 +186,7 @@ void ringR_execute(void)
 
 
 
-//void ringL_execute(void)
-//{
-//    float target_L = 0;
-//    float target_R = 0;
-//    switch(ringR_flag_execute)
-//    {
-//        case 1: // 1-直线进岛 
-//						speed_target=speed_ringR;
-//						target_L = speed_target;
-//            target_R = speed_target;  		
-//						
-//            break;
-//        
-//        case 2: // 2-打角进岛 
-//            // 左轮减速，右轮加速。
-//						speed_target=speed_ringR;
-//						target_L = speed_target -50; 
-//            target_R = speed_target +40;
-//           
-//										
-//            break;
-//        
-//        case 3: // 3-岛内电磁巡线
-//            // 车进岛了，此时恢复差比和差公式，让电感带着车跑圆圈
-//						speed_target=speed_ringR;
-//						target_L = speed_target + correct_L; 
-//            target_R = speed_target - correct_L;
-//								          						
-//            break;
-//        
-//        case 4: // 4-固定差速打角出岛
-//            // 再次屏蔽电磁，给固定差速强行扭出环岛
-//						speed_target=speed_ringR;
-//            target_L = speed_target - 50;
-//            target_R = speed_target + 20;
-//            break;
-//        
-//        case 5: // 5-直线出岛 (与状态1一致，锁死直线跑开)
-//						
-//            speed_target=speed_straight;
-//						target_L = speed_target;
-//            target_R = speed_target;
-//													
-//            break;
-//        
-//        default:
-//            break;
-//    }
 
-//    
-//    if(ringR_flag_execute != 0)
-//    {
-//        // 只有在环岛状态时，才执行环岛的速度分配
-//        speed_loop_LR(target_L, target_R);
-//        set_pwm_motor_R(out_R);
-//				set_pwm_motor_L(out_L);
-//    }
-//}
-
-
-//void ringL_task(void)
-//{
-//	switch(ringR_flag_task)
-//	{
-//		case 1:													//1准备进岛
-//			ring_flag_ing =200;//进入环岛状态
-//			ringR_flag_execute=1;
-//			distance_ringR += speed_avl;
-//			if(distance_ringR>distance_ringL_1)							//2到达打角点
-//			{	
-//				angle_clear();				// 到达打角点，角度清零
-//				
-//				distance_ringR=0;
-//				ringR_flag_task=2;
-//				ringR_flag_execute=2;	
-//					
-//			}
-//			break;
-//			
-//		case 2:								
-//											//1进岛角度积分
-//		
-//			if(angle<-80)						//2打角完成
-//			{
-//				ringR_flag_task=3;
-//				ringR_flag_execute=3;
-//			}
-//			break;
-//					
-//		case 3:
-//											//1岛内角度积分
-//		
-//			if(angle<-260)					//2即将到达打角点
-//			{							//335
-//				ringR_flag_task=4;
-//				ringR_flag_execute=4;
-//			}
-//			break;
-//						
-//		case 4:
-//											//1岛内角度积分
-//			if(angle<-340)			
-//			{
-//				
-//				ringR_flag_task=5;
-//				ringR_flag_execute=5;
-//			}
-//			break;
-//		
-//		case 5:
-//			
-//			distance_ringR += speed_avl;
-//			
-//			if(distance_ringR>5000)							//2到达打角点
-//			{	
-//				angle_clear();
-//				distance_ringR=0;
-//				ringR_flag_task=1;
-//				ringR_flag_execute=1;
-//				element=0;
-//				distance_ringR=0;
-//			}
-//								
-//		default:
-//			break;	
-//	}
-//}
 
 
 

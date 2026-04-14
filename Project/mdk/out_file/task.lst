@@ -1,11 +1,11 @@
-C251 COMPILER V5.60.0,  task                                                               06/04/26  22:58:59  PAGE 1   
+C251 COMPILER V5.60.0,  task                                                               14/04/26  19:35:48  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE task
 OBJECT MODULE PLACED IN .\out_file\task.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE task.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..
-                    -\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\cod
-                    -e) DEBUG PRINT(.\out_file\task.lst) TABS(2) OBJECT(.\out_file\task.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE task.c LARGE NOALIAS WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(.
+                    -.\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\co
+                    -de) DEBUG PRINT(.\out_file\task.lst) TABS(2) OBJECT(.\out_file\task.obj) 
 
 stmt  level    source
 
@@ -27,20 +27,21 @@ stmt  level    source
    16   1          imu660rb_init();
    17   1          fuya_init();
    18   1        wireless_uart_init();
-   19   1      }
-   20          
-   21          void caiyang(void)
-   22          {
-   23   1      
-   24   1          siai_adc_all_sample();
-   25   1          adc_normalizing();
-   26   1        
-   27   1      }
+   19   1          gyro_init_calibration();
+   20   1      }
+   21          
+   22          void caiyang(void)
+   23          {
+   24   1      
+   25   1          siai_adc_all_sample();
+   26   1          adc_normalizing();
+   27   1        
+   28   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        32     ------
+  code size            =        35     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

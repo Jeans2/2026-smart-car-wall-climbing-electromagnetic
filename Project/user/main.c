@@ -59,34 +59,25 @@ void main()
 			Load_Params_From_EEPROM();
 	while(1)
     {				
-//		  	if(ringR_flag_task ==4)
-//				{
-//		   gpio_set_level(IO_P52, 0);
-//				}
-//				else
-//				{
-//				gpio_set_level(IO_P52, 1);
-//		
-//				}
-		
-		
-		
-		
-		
-		
-	
+						
+				
+//			ips114_show();
+				if(start_ramp_flag ==0)				
+				{
+						  Key_Menu_Adjust();    // 扫描按键并修改参数
+							UI_Display_Update();  // 刷新屏幕菜单
+				
+				}		
 			
-			fuya_set_duty(4000);
-			Key_Menu_Adjust();    // 扫描按键并修改参数
-       UI_Display_Update();  // 刷新屏幕菜单
 		
 
 //        printf("%f\n",deviation);
 //			sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-				sprintf(buf,"%d,%d,%d\n",speed_straight,speed_L,speed_R);
+//				sprintf(buf,"%d,%d,%d\n",speed_straight,speed_L,speed_R);
 //     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
-//			sprintf(buf,"%f\n",angle);//十字250
-		
-				wireless_uart_send_string(buf);
+////			sprintf(buf,"%f\n",angle);//十字250
+////				sprintf(buf,"%f,%f,%f\n",pitch,acc_z_filtered,acc_y_filtered);//十字250
+
+//				wireless_uart_send_string(buf);
 		}
 }
