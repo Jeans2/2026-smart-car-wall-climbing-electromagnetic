@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  xunji                                                              14/04/26  19:35:48  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              24/04/26  20:55:03  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
@@ -13,12 +13,12 @@ stmt  level    source
     2          
     3          
     4          float abs_angle = 0;
-    5          int16 speed_straight = 110;//105
-    6          int16 speed_ringR = 95;//90
+    5          int16 speed_straight = 120;//105
+    6          int16 speed_ringR = 110;//90
     7          int8  element = 0;
     8          int8 turn_flag=0;
     9          
-   10          
+   10          char buf[50];
    11          float distance_ringR = 0;       // 距离积分
    12          float distance_ringR_1 = 8000;     // 打角点前直道路距离
    13          
@@ -27,76 +27,76 @@ stmt  level    source
    16          int16 ring_flag_ing=0;//是否处于环岛任务的状态中，初始为0 
    17          int16 ringR_flag_task=0;// 任务决策状态 (0:未遇到环岛, 1~5:环岛各阶段)
    18          int16 ringR_flag_execute=1;
-   19          
-   20            
-   21          void xunji(void) 
-   22          {
-   23   1        
-   24   1        if(R+L>120&&ring_flag_ing==0) //右环岛
-   25   1        {
-   26   2          
-   27   2          element = 1;
-   28   2          ringR_flag_task = 1;
-   29   2          ring_flag_ing = 200;
-   30   2          angle_clear(); 
-   31   2          gpio_set_level(IO_P52, 0);
-   32   2        }
-   33   1      //  if(pitch<-20)
-   34   1      //  {
-   35   1      //      ring_flag_ing = 300;
-   36   1      //  
-   37   1      //  }
+   19          int16 ring_check = 0;
+   20          
+   21          
+   22          
+   23          void xunji(void) 
+   24          {
+   25   1        
+   26   1        if(R + RM >90&&abs(R-RM)<10&& pitch < 5 && pitch > -5 && ring_flag_ing == 0)  //左环岛
+   27   1        {
+   28   2          
+   29   2          element = 1;
+   30   2          ringR_flag_task = 1;
+   31   2          ring_flag_ing = 200; // 进环死区
+   32   2          angle_clear(); 
+   33   2          
+   34   2          sprintf(buf,"L:%f,LM:%f,RM:%f,R%f\n",L,LM,RM,R);
+   35   2          wireless_uart_send_string(buf);
+   36   2        }
+   37   1      
    38   1          
-   39   1      //  if((R+L>120)&&(L - R)>((R+RM+L+LM) * 0.20)&&acc_z_filtered>0.90&&ring_flag_ing==0)  //右环岛
-   40   1      //  {
-   41   1      
-   42   1      //    element = 1;
-   43   1      //    ringR_flag_task = 1;
-   44   1      //    ring_flag_ing = 200;
-   45   1      //    angle_clear(); 
-   46   1      //    gpio_set_level(IO_P52, 0);
-   47   1      //  }
-   48   1        if(L+LM+RM+R<20)                  //出界保护
-   49   1        {element = 9;     }
-   50   1        switch (element)
-   51   1        {
-   52   2          case 0:                       //**正常循迹**      
-   53   2              speed_target = speed_straight;        
-   54   2              speed_loop_LR(speed_target + correct_L,speed_target - correct_L);                   
-   55   2              set_pwm_motor_R(out_R);
-   56   2              set_pwm_motor_L(out_L);
-   57   2      
-C251 COMPILER V5.60.0,  xunji                                                              14/04/26  19:35:48  PAGE 2   
+   39   1      
+   40   1        if(L+LM+RM+R<30)                  //出界保护
+   41   1        {element = 9;     }
+   42   1        switch (element)
+   43   1        {
+   44   2          case 0:                       //**正常循迹**      
+   45   2              speed_target = speed_straight;        
+   46   2              speed_loop_LR(speed_target + correct_L,speed_target - correct_L);                   
+   47   2              set_pwm_motor_R(out_R);
+   48   2              set_pwm_motor_L(out_L);
+   49   2      
+   50   2          
+   51   2            if(ring_flag_ing>0)
+   52   2            {
+   53   3             ring_flag_ing--;
+   54   3            }
+   55   2            
+   56   2              break;
+   57   2            
+C251 COMPILER V5.60.0,  xunji                                                              24/04/26  20:55:03  PAGE 2   
 
-   58   2          
-   59   2            if(ring_flag_ing>0)
-   60   2            {
-   61   3             ring_flag_ing--;
-   62   3            }
+   58   2      //        /**环岛任务**/
+   59   2          case 1:             //右环岛        
+   60   2            ringR_task();
+   61   2            ringR_execute();
+   62   2            break;
    63   2            
-   64   2              break;
-   65   2            
-   66   2      //        /**环岛任务**/
-   67   2          case 1:             //右环岛        
-   68   2            ringR_task();
-   69   2            ringR_execute();
-   70   2            break;
-   71   2            
+   64   2          
+   65   2      //    case 2:             //左环岛
+   66   2      //      ringL_task();
+   67   2      //      ringL_execute();
+   68   2      //      break;
+   69   2          case 9: 
+   70   2            start_ramp_flag = 0;
+   71   2            break;
    72   2          
-   73   2      //    case 2:             //左环岛
-   74   2      //      ringL_task();
-   75   2      //      ringL_execute();
-   76   2      //      break;
-   77   2          case 9: 
-   78   2            set_pwm_motor_R(0);
-   79   2            set_pwm_motor_L(0);
-   80   2            fuya_set_duty(0);
-   81   2            break;
-   82   2          
-   83   2          default:break;
-   84   2          
-   85   2        }
-   86   1      }
+   73   2          default:break;
+   74   2          
+   75   2        }
+   76   1      }
+   77          
+   78          
+   79          
+   80          
+   81          
+   82          
+   83          
+   84          
+   85          
+   86          
    87          
    88          
    89          
@@ -108,101 +108,101 @@ stmt  level    source
    95          
    96          
    97          
-   98          
-   99          
-  100          
-  101          
-  102          
-  103          
-  104          
-  105          
-  106          
-  107          
-  108          //  /***************元素执行**************/
-  109          //环岛状态判断
-  110          void ringR_task(void)
-  111          {
-  112   1          switch(ringR_flag_task)
-  113   1          {
-  114   2                        
-  115   2              case 1:  
-  116   2                                               
-  117   2                angle_get();
-  118   2                if(angle_z < -260)                     
-  119   2                 {                           
-  120   3                     ringR_flag_task = 4;                                               
-  121   3                     ringR_flag_execute = 4;
-  122   3                    distance_ringR = 0;
+   98          //  /***************元素执行**************/
+   99          //环岛状态判断
+  100          void ringR_task(void)
+  101          {
+  102   1          switch(ringR_flag_task)
+  103   1          {
+  104   2                        
+  105   2              case 1:  
+  106   2                                               
+  107   2                angle_get();
+  108   2                
+  109   2                if(angle_z > 340)                     
+  110   2                {                           
+  111   3                     ringR_flag_task = 4;                                               
+  112   3                     ringR_flag_execute = 4;
+  113   3                    distance_ringR = 0;
+  114   3                  
+  115   3                }       
+  116   2                break;
+  117   2                              
+  118   2              case 4:                                     
+  119   2                  
+  120   2                distance_ringR += speed_avl;
+  121   2                if(distance_ringR > 22000)               
+  122   2                {   
   123   3                   
-C251 COMPILER V5.60.0,  xunji                                                              14/04/26  19:35:48  PAGE 3   
+C251 COMPILER V5.60.0,  xunji                                                              24/04/26  20:55:03  PAGE 3   
 
-  124   3                 }
-  125   2                 break;
-  126   2                              
-  127   2              case 4:                                     
-  128   2                  
-  129   2                distance_ringR += speed_avl;
-  130   2                if(distance_ringR > 18000)               
-  131   2                {   
-  132   3                   
-  133   3                    distance_ringR = 0;
-  134   3                    ringR_flag_task = 0;
-  135   3                    ringR_flag_execute = 1;
-  136   3                    element = 0;   
-  137   3                    gpio_set_level(IO_P52, 1);
-  138   3                }
-  139   2                break;
-  140   2                                      
-  141   2              default:
-  142   2                break;  
-  143   2          }
-  144   1      }
-  145          
-  146          
-  147          
-  148          
-  149          
-  150          
-  151          //环岛执行
-  152          void ringR_execute(void)
-  153          {
-  154   1          float target_L = 0;
-  155   1          float target_R = 0;
-  156   1          
-  157   1          switch(ringR_flag_execute)
-  158   1          {
-  159   2              case 1: // 1-直线进岛 
-  160   2                   speed_target = speed_ringR;
-  161   2                  target_L = speed_target + correct_L; 
-  162   2                  target_R = speed_target - correct_L;       
-  163   2                  break;
-  164   2              
-  165   2      
-  166   2              
-  167   2              case 4: // 4-直线出岛 
-  168   2                 speed_target = speed_ringR;
-  169   2                  target_L = speed_target + correct_L; 
-  170   2                  target_R = speed_target - correct_L; 
-  171   2                  break;
-  172   2              
-  173   2              default:
-  174   2                  break;
-  175   2          }
-  176   1      
-  177   1          if(ringR_flag_execute != 0)
-  178   1          {
-  179   2              // 只有在环岛状态时，才执行环岛的速度分配
-  180   2              speed_loop_LR(target_L, target_R);
-  181   2              set_pwm_motor_R(out_R);
-  182   2              set_pwm_motor_L(out_L);
-  183   2          }
-  184   1      }
+  124   3                    distance_ringR = 0;
+  125   3                    ringR_flag_task = 0;
+  126   3                    ringR_flag_execute = 1;
+  127   3                    element = 0;   
+  128   3                    
+  129   3                    
+  130   3                }
+  131   2                
+  132   2                break;
+  133   2                                      
+  134   2              default:
+  135   2                break;  
+  136   2          }
+  137   1      }
+  138          
+  139          
+  140          
+  141          
+  142          
+  143          
+  144          //环岛执行
+  145          void ringR_execute(void)
+  146          {
+  147   1          float target_L = 0;
+  148   1          float target_R = 0;
+  149   1          
+  150   1          switch(ringR_flag_execute)
+  151   1          {
+  152   2              case 1: // 1-直线进岛 
+  153   2                   speed_target = speed_ringR;
+  154   2                  target_L = speed_target + correct_L; 
+  155   2                  target_R = speed_target - correct_L;       
+  156   2                  break;
+  157   2              
+  158   2      
+  159   2              
+  160   2              case 4: // 4-直线出岛 
+  161   2                 speed_target = speed_ringR;
+  162   2                  target_L = speed_target + correct_L; 
+  163   2                  target_R = speed_target - correct_L; 
+  164   2                  break;
+  165   2              
+  166   2              default:
+  167   2                  break;
+  168   2          }
+  169   1      
+  170   1          if(ringR_flag_execute != 0)
+  171   1          {
+  172   2              // 只有在环岛状态时，才执行环岛的速度分配
+  173   2              speed_loop_LR(target_L, target_R);
+  174   2              set_pwm_motor_R(out_R);
+  175   2              set_pwm_motor_L(out_L);
+  176   2              if(L+LM+RM+R<30)                  //出界保护
+  177   2              {start_ramp_flag = 0;   }
+  178   2          }
+  179   1      }
+  180          
+  181          
+  182          
+  183          
+  184          
   185          
   186          
   187          
   188          
   189          
-C251 COMPILER V5.60.0,  xunji                                                              14/04/26  19:35:48  PAGE 4   
+C251 COMPILER V5.60.0,  xunji                                                              24/04/26  20:55:03  PAGE 4   
 
   190          
   191          
@@ -270,7 +270,7 @@ stmt  level    source
   253          
   254          
   255          
-C251 COMPILER V5.60.0,  xunji                                                              14/04/26  19:35:48  PAGE 5   
+C251 COMPILER V5.60.0,  xunji                                                              24/04/26  20:55:03  PAGE 5   
 
   256          
   257          
@@ -313,114 +313,109 @@ stmt  level    source
   294          
   295          
   296          
-  297          
-  298          
-  299          
-  300          
-  301          
-  302          //环岛任务执行
-  303          //void ringR_execute(void)
-  304          //{
-  305          //  static float expect_gyro;
-  306          //  switch(ringR_flag_execute){
-  307          //    case 1:                             //1-直线x进岛     
-  308          //      speed_target=speed_ringR;         
-  309          //      gyro_loop(0);
-  310          //      if(out_gyro>0)
-  311          //      {
-  312          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
-  313          //      }
-  314          //      else
-  315          //      {
-  316          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
-  317          //      }
-  318          //      motor_L(out_L);
-  319          //      motor_R(out_R);
-  320          //      break;
-  321          //    
-C251 COMPILER V5.60.0,  xunji                                                              14/04/26  19:35:48  PAGE 6   
+  297          //环岛任务执行
+  298          //void ringR_execute(void)
+  299          //{
+  300          //  static float expect_gyro;
+  301          //  switch(ringR_flag_execute){
+  302          //    case 1:                             //1-直线x进岛     
+  303          //      speed_target=speed_ringR;         
+  304          //      gyro_loop(0);
+  305          //      if(out_gyro>0)
+  306          //      {
+  307          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
+  308          //      }
+  309          //      else
+  310          //      {
+  311          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
+  312          //      }
+  313          //      motor_L(out_L);
+  314          //      motor_R(out_R);
+  315          //      break;
+  316          //    
+  317          //    case 2:                             //2-打角进岛
+  318          //      speed_target = speed_ringR;     
+  319          //      gyro_loop(gyro_ring_in);    
+  320          //    
+  321          //      if(out_gyro>0)
+C251 COMPILER V5.60.0,  xunji                                                              24/04/26  20:55:03  PAGE 6   
 
-  322          //    case 2:                             //2-打角进岛
-  323          //      speed_target = speed_ringR;     
-  324          //      gyro_loop(gyro_ring_in);    
-  325          //    
-  326          //      if(out_gyro>0)
-  327          //      {
-  328          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
-  329          //      }
-  330          //      else
-  331          //      {
-  332          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
-  333          //      }
-  334          
-  335          //      motor_L(out_L);
-  336          //      motor_R(out_R);
-  337          //      break;
-  338          //    
-  339          //    case 3:                             //3-角速度环
-  340          //      speed_target = speed_ringR;     
-  341          //      gyro_loop(gyro_ring_middle);    
-  342          //    
-  343          //      if(out_gyro>0)
-  344          //      {
-  345          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
-  346          //      }
-  347          //      else
-  348          //      {
-  349          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
-  350          //      }
-  351          
-  352          //      motor_L(out_L);
-  353          //      motor_R(out_R);
-  354          //      break;
-  355          //    
-  356          //    case 4:                             //固定角速度出岛
-  357          //      speed_target = speed_ringR;     
-  358          //      gyro_loop(gyro_ring_out);   
-  359          //    
-  360          //      if(out_gyro>0)
-  361          //      {
-  362          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
-  363          //      }
-  364          //      else
-  365          //      {
-  366          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
-  367          //      }
-  368          //      motor_L(out_L);
-  369          //      motor_R(out_R);
-  370          //      break;
-  371          //    
-  372          //    case 5:                             //直线x出岛
-  373          //      speed_target=speed_straight;          
-  374          //      gyro_loop(0);
-  375          //      if(out_gyro>0)
-  376          //      {
-  377          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
-  378          //      }
-  379          //      else
-  380          //      {
-  381          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
-  382          //      }     motor_L(out_L);
-  383          //      motor_R(out_R);
-  384          //    
-  385          //    default:break;
-  386          //  }
-  387          //}
-C251 COMPILER V5.60.0,  xunji                                                              14/04/26  19:35:48  PAGE 7   
+  322          //      {
+  323          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
+  324          //      }
+  325          //      else
+  326          //      {
+  327          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
+  328          //      }
+  329          
+  330          //      motor_L(out_L);
+  331          //      motor_R(out_R);
+  332          //      break;
+  333          //    
+  334          //    case 3:                             //3-角速度环
+  335          //      speed_target = speed_ringR;     
+  336          //      gyro_loop(gyro_ring_middle);    
+  337          //    
+  338          //      if(out_gyro>0)
+  339          //      {
+  340          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
+  341          //      }
+  342          //      else
+  343          //      {
+  344          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
+  345          //      }
+  346          
+  347          //      motor_L(out_L);
+  348          //      motor_R(out_R);
+  349          //      break;
+  350          //    
+  351          //    case 4:                             //固定角速度出岛
+  352          //      speed_target = speed_ringR;     
+  353          //      gyro_loop(gyro_ring_out);   
+  354          //    
+  355          //      if(out_gyro>0)
+  356          //      {
+  357          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
+  358          //      }
+  359          //      else
+  360          //      {
+  361          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
+  362          //      }
+  363          //      motor_L(out_L);
+  364          //      motor_R(out_R);
+  365          //      break;
+  366          //    
+  367          //    case 5:                             //直线x出岛
+  368          //      speed_target=speed_straight;          
+  369          //      gyro_loop(0);
+  370          //      if(out_gyro>0)
+  371          //      {
+  372          //        loop_speed_LR(speed_target + small_t*out_gyro,speed_target - large_t*out_gyro);
+  373          //      }
+  374          //      else
+  375          //      {
+  376          //        loop_speed_LR(speed_target + large_t*out_gyro,speed_target - small_t*out_gyro);
+  377          //      }     motor_L(out_L);
+  378          //      motor_R(out_R);
+  379          //    
+  380          //    default:break;
+  381          //  }
+  382          //}
+  383          
+  384          
+  385          
 
-  388          
-  389          
-  390          
 
+C251 COMPILER V5.60.0,  xunji                                                              24/04/26  20:55:03  PAGE 7   
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       799     ------
+  code size            =      1044     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        36     ------
+  xdata size           =        88     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -430,7 +425,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        74     ------
+  hconst size          =       103     ------
 End of Module Information.
 
 

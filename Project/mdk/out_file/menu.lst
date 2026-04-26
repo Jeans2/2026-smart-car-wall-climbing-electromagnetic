@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 1   
+C251 COMPILER V5.60.0,  menu                                                               23/04/26  21:32:03  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE menu
@@ -66,7 +66,7 @@ stmt  level    source
    55   1          
    56   1          // 先只读第一个字节，看看是不是我们的校验标志
    57   1          flag = iap_read_byte(EEPROM_PARAM_ADDR);
-C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 2   
+C251 COMPILER V5.60.0,  menu                                                               23/04/26  21:32:03  PAGE 2   
 
    58   1          
    59   1          if(flag == EEPROM_INIT_FLAG)
@@ -134,7 +134,7 @@ stmt  level    source
   121   1          // ----------------- 功能 2：增加参数 / 向上选择 (KEY2) -----------------
   122   1          if(key2_now == 0 && key2_last == 1)    
   123   1          {
-C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 3   
+C251 COMPILER V5.60.0,  menu                                                               23/04/26  21:32:03  PAGE 3   
 
   124   2              system_delay_ms(5);
   125   2              if(gpio_get_level(KEY2_PIN) == 0)
@@ -202,7 +202,7 @@ stmt  level    source
   180   4                      case MENU_MAIN: // 【主菜单】
   181   4                          if(cursor_index == 0)      { menu_state = MENU_TUNE_CATE; cursor_index = 0; menu_max_
              -items = 4; } // 进调参
-C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 4   
+C251 COMPILER V5.60.0,  menu                                                               23/04/26  21:32:03  PAGE 4   
 
   182   4                          else if(cursor_index == 1) { menu_state = MENU_OBSERVE;   cursor_index = 0; menu_max_
              -items = 1; } // 进观测
@@ -270,7 +270,7 @@ stmt  level    source
   239          // 函数名：UI_Display_Update
   240          // 功  能：根据状态机渲染多级界面
   241          // =========================================================================
-C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 5   
+C251 COMPILER V5.60.0,  menu                                                               23/04/26  21:32:03  PAGE 5   
 
   242          void UI_Display_Update(void)
   243          {
@@ -338,7 +338,7 @@ stmt  level    source
   298   2                  sprintf(disp_buf, "%c  B: %.1f         ", p[1], adc_set_differ.B);  ips114_show_string(0, 1*1
              -6, disp_buf);
   299   2                  sprintf(disp_buf, "%c  C: %.2f         ", p[2], adc_set_differ.C);  ips114_show_string(0, 2*1
-C251 COMPILER V5.60.0,  menu                                                               14/04/26  19:35:48  PAGE 6   
+C251 COMPILER V5.60.0,  menu                                                               23/04/26  21:32:03  PAGE 6   
 
              -6, disp_buf);
   300   2                  sprintf(disp_buf, "%c <- Back          ", p[3]);                    ips114_show_string(0, 3*1

@@ -38,10 +38,10 @@
 #define PIT_CH                          (TIM1_PIT ) 
 #include "fuya.h"
 
-char buf[50];
 
 
 
+//char buf[50];
 
 void main()
 {
@@ -59,13 +59,16 @@ void main()
 			Load_Params_From_EEPROM();
 	while(1)
     {				
-						
+//			sprintf(buf,"L:%f,LM:%f,RM:%f,R%f\n",L,LM,RM,R);
+//			wireless_uart_send_string(buf);
 				
 //			ips114_show();
 				if(start_ramp_flag ==0)				
 				{
 						  Key_Menu_Adjust();    // 扫描按键并修改参数
 							UI_Display_Update();  // 刷新屏幕菜单
+							
+								
 				
 				}		
 			
@@ -73,11 +76,11 @@ void main()
 
 //        printf("%f\n",deviation);
 //			sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-//				sprintf(buf,"%d,%d,%d\n",speed_straight,speed_L,speed_R);
-//     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
+//				sprintf(buf,"%d,%d,%d\n",speed_straight,speed_avl);
+     
 ////			sprintf(buf,"%f\n",angle);//十字250
 ////				sprintf(buf,"%f,%f,%f\n",pitch,acc_z_filtered,acc_y_filtered);//十字250
-
-//				wireless_uart_send_string(buf);
+					
+			
 		}
 }

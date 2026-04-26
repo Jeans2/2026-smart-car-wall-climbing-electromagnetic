@@ -26,16 +26,19 @@ Project File Date:  04/02/2026
 
 <h2>Output:</h2>
 Build target 'STC32G'
-compiling main.c...
 linking...
 *** WARNING L15: MULTIPLE CALL TO FUNCTION
     NAME:    PRINTF/PRINTF
     CALLER1: ?C_C51STARTUP?3
     CALLER2: TM1_IRQHandler/isr
-Program Size: data=8.4 edata+hdata=2060 xdata=7783 const=4834 code=47529
+*** WARNING L15: MULTIPLE CALL TO FUNCTION
+    NAME:    SPRINTF/SPRINTF
+    CALLER1: ?C_C51STARTUP?3
+    CALLER2: TM1_IRQHandler/isr
+Program Size: data=8.4 edata+hdata=2060 xdata=7785 const=4863 code=48158
 creating hex file from ".\out_file\SEEKFREE"...
-".\out_file\SEEKFREE" - 0 Error(s), 1 Warning(s).
-Build Time Elapsed:  00:00:00
+".\out_file\SEEKFREE" - 0 Error(s), 2 Warning(s).
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

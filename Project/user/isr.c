@@ -163,7 +163,7 @@ void TM1_IRQHandler() interrupt 3
     {									
 				encoder_update();
 				angle_get();
-				
+			
 			
 				
 //			  gyro_loop(expect_gyro,0);//获取correctL 
@@ -176,11 +176,11 @@ void TM1_IRQHandler() interrupt 3
 					adc_differ();	
 					if (element == 1&&ringR_flag_task==1)
 					{
-							deviation = deviation - 30;
+							deviation = deviation +40;
 					}
 					if (element == 1&&ringR_flag_task==4)
 					{
-							deviation = deviation + 100;
+							deviation = deviation -40;
 					}
           direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度                           // 10ms执行一次的函数
          
@@ -188,15 +188,16 @@ void TM1_IRQHandler() interrupt 3
 			switch (start_ramp_flag)
 			{
 				case 1:
-					fuya_set_duty(6000);
+					fuya_set_duty(7000);
 					xunji();
 
          break;		
        
 				case 0:
+				
 					set_pwm_motor_R(0);
 					set_pwm_motor_L(0);
-					
+					fuya_set_duty(0);
 				
 				 break;
 					

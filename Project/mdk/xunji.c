@@ -2,12 +2,12 @@
 
 
 float abs_angle = 0;
-int16 speed_straight = 110;//105
-int16 speed_ringR = 95;//90
+int16 speed_straight = 120;//105
+int16 speed_ringR = 110;//90
 int8  element = 0;
 int8 turn_flag=0;
 
-
+char buf[50];
 float distance_ringR = 0;       // 距离积分
 float distance_ringR_1 = 8000;     // 打角点前直道路距离
 
@@ -16,36 +16,28 @@ float distance_ringR_1 = 8000;     // 打角点前直道路距离
 int16 ring_flag_ing=0;//是否处于环岛任务的状态中，初始为0 
 int16 ringR_flag_task=0;// 任务决策状态 (0:未遇到环岛, 1~5:环岛各阶段)
 int16 ringR_flag_execute=1;
+int16 ring_check = 0;
 
-	
+
+
 void xunji(void) 
 {
 	
-	if(R+L>120&&ring_flag_ing==0)	//右环岛
+	if(R + RM >90&&abs(R-RM)<10&& pitch < 5 && pitch > -5 && ring_flag_ing == 0)	//左环岛
 	{
 		
 		element = 1;
 		ringR_flag_task = 1;
-		ring_flag_ing = 200;
+		ring_flag_ing = 200; // 进环死区
 		angle_clear(); 
-		gpio_set_level(IO_P52, 0);
-	}
-//	if(pitch<-20)
-//	{
-//			ring_flag_ing = 300;
-//	
-//	}
 		
-//	if((R+L>120)&&(L - R)>((R+RM+L+LM) * 0.20)&&acc_z_filtered>0.90&&ring_flag_ing==0)	//右环岛
-//	{
+		sprintf(buf,"L:%f,LM:%f,RM:%f,R%f\n",L,LM,RM,R);
+		wireless_uart_send_string(buf);
+	}
 
-//		element = 1;
-//		ringR_flag_task = 1;
-//		ring_flag_ing = 200;
-//		angle_clear(); 
-//		gpio_set_level(IO_P52, 0);
-//	}
-	if(L+LM+RM+R<20)									//出界保护
+		
+
+	if(L+LM+RM+R<30)									//出界保护
 	{element = 9;			}
 	switch (element)
 	{
@@ -75,9 +67,7 @@ void xunji(void)
 //			ringL_execute();
 //			break;
 		case 9: 
-			set_pwm_motor_R(0);
-			set_pwm_motor_L(0);
-			fuya_set_duty(0);
+			start_ramp_flag = 0;
 			break;
 		
 		default:break;
@@ -115,27 +105,30 @@ void ringR_task(void)
         case 1:  
                                          
 				  angle_get();
-					if(angle_z < -260)                     
-           {                           
+					
+					if(angle_z > 340)                     
+          {                           
                ringR_flag_task = 4;																								
                ringR_flag_execute = 4;
 							distance_ringR = 0;
-						 
-           }
-           break;
+						
+          }				
+					break;
                         
         case 4:                                     
             
 					distance_ringR += speed_avl;
-          if(distance_ringR > 18000)               
+          if(distance_ringR > 22000)               
           {   
              
               distance_ringR = 0;
               ringR_flag_task = 0;
               ringR_flag_execute = 1;
               element = 0;   
-							gpio_set_level(IO_P52, 1);
+							
+							
           }
+					
           break;
                                 
         default:
@@ -180,6 +173,8 @@ void ringR_execute(void)
         speed_loop_LR(target_L, target_R);
         set_pwm_motor_R(out_R);
         set_pwm_motor_L(out_L);
+				if(L+LM+RM+R<30)									//出界保护
+				{start_ramp_flag = 0;		}
     }
 }
 

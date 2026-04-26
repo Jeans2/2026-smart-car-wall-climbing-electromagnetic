@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  zf_common_clock                                                    06/04/26  22:58:53  PAGE 1   
+C251 COMPILER V5.60.0,  zf_common_clock                                                    23/04/26  21:37:49  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_common_clock
 OBJECT MODULE PLACED IN .\out_file\zf_common_clock.obj
-COMPILER INVOKED BY: C:\Keil_v5\C251\BIN\C251.EXE ..\..\libraries\zf_common\zf_common_clock.c LARGE NOALIAS WARNINGLEVEL
-                    -(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\
-                    -..\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_common_clock.lst) TABS(2) OBJECT(.\out_file\zf_common_
-                    -clock.obj) 
+COMPILER INVOKED BY: D:\keil_MDK\C251\BIN\C251.EXE ..\..\libraries\zf_common\zf_common_clock.c LARGE NOALIAS WARNINGLEVE
+                    -L(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..
+                    -\..\libraries\zf_driver;..\user;..\code) DEBUG PRINT(.\out_file\zf_common_clock.lst) TABS(2) OBJECT(.\out_file\zf_common
+                    -_clock.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    48          //-------------------------------------------------------------------------------------------------------
              -------------
    49          //  @brief      STC32G设置系统频率
-C251 COMPILER V5.60.0,  zf_common_clock                                                    06/04/26  22:58:53  PAGE 2   
+C251 COMPILER V5.60.0,  zf_common_clock                                                    23/04/26  21:37:49  PAGE 2   
 
    50          //  @param      NULL            空值
    51          //  @return     void          系统频率
@@ -134,7 +134,7 @@ stmt  level    source
   112   2            CLKDIV = 0x00;
   113   2          break;
   114   2            
-C251 COMPILER V5.60.0,  zf_common_clock                                                    06/04/26  22:58:53  PAGE 3   
+C251 COMPILER V5.60.0,  zf_common_clock                                                    23/04/26  21:37:49  PAGE 3   
 
   115   2          default:
   116   2            sys_clk = SYSTEM_CLOCK_30M;
@@ -202,7 +202,7 @@ stmt  level    source
   177   1        S3CON = 0;
   178   1        S4CON = 0;
   179   1        P_SW1 = 0;
-C251 COMPILER V5.60.0,  zf_common_clock                                                    06/04/26  22:58:53  PAGE 4   
+C251 COMPILER V5.60.0,  zf_common_clock                                                    23/04/26  21:37:49  PAGE 4   
 
   180   1        IE2 = 0;
   181   1        TMOD = 0;

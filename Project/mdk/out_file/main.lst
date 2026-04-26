@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               14/04/26  19:47:45  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               24/04/26  15:20:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -55,10 +55,10 @@ stmt  level    source
    38          #define PIT_CH                          (TIM1_PIT ) 
    39          #include "fuya.h"
    40          
-   41          char buf[50];
+   41          
    42          
    43          
-   44          
+   44          //char buf[50];
    45          
    46          void main()
    47          {
@@ -66,7 +66,7 @@ stmt  level    source
    49   1        debug_init();
    50   1        
    51   1        // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               14/04/26  19:47:45  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               24/04/26  15:20:24  PAGE 2   
 
    52   1          System_Init();
    53   1             pit_ms_init(PIT_CH, 2); 
@@ -78,28 +78,31 @@ stmt  level    source
    59   1            Load_Params_From_EEPROM();
    60   1        while(1)
    61   1          {       
-   62   2                  
-   63   2              
-   64   2      //      ips114_show();
-   65   2              if(start_ramp_flag ==0)       
-   66   2              {
-   67   3                    Key_Menu_Adjust();    // 扫描按键并修改参数
-   68   3                    UI_Display_Update();  // 刷新屏幕菜单
-   69   3              
-   70   3              }   
-   71   2            
-   72   2          
-   73   2      
-   74   2      //        printf("%f\n",deviation);
-   75   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-   76   2      //        sprintf(buf,"%d,%d,%d\n",speed_straight,speed_L,speed_R);
-   77   2      //     sprintf(buf,"L:%f,%f,%f,%f,%f\n",L,LM,RM,R,(R+RM+L+LM));
-   78   2      ////      sprintf(buf,"%f\n",angle);//十字250
-   79   2      ////        sprintf(buf,"%f,%f,%f\n",pitch,acc_z_filtered,acc_y_filtered);//十字250
-   80   2      
-   81   2      //        wireless_uart_send_string(buf);
-   82   2          }
-   83   1      }
+   62   2      //      sprintf(buf,"L:%f,LM:%f,RM:%f,R%f\n",L,LM,RM,R);
+   63   2      //      wireless_uart_send_string(buf);
+   64   2              
+   65   2      //      ips114_show();
+   66   2              if(start_ramp_flag ==0)       
+   67   2              {
+   68   3                    Key_Menu_Adjust();    // 扫描按键并修改参数
+   69   3                    UI_Display_Update();  // 刷新屏幕菜单
+   70   3                    
+   71   3                      
+   72   3              
+   73   3              }   
+   74   2            
+   75   2          
+   76   2      
+   77   2      //        printf("%f\n",deviation);
+   78   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
+   79   2      //        sprintf(buf,"%d,%d,%d\n",speed_straight,speed_avl);
+   80   2           
+   81   2      ////      sprintf(buf,"%f\n",angle);//十字250
+   82   2      ////        sprintf(buf,"%f,%f,%f\n",pitch,acc_z_filtered,acc_y_filtered);//十字250
+   83   2                
+   84   2            
+   85   2          }
+   86   1      }
 
 
 Module Information          Static   Overlayable
@@ -109,7 +112,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        54     ------
+  xdata size           =         4     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
