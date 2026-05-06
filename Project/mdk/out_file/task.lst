@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  task                                                               23/04/26  21:32:03  PAGE 1   
+C251 COMPILER V5.60.0,  task                                                               06/05/26  21:07:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE task
@@ -21,12 +21,12 @@ stmt  level    source
    10          {
    11   1           key_init();
    12   1          my_adc_init();
-   13   1          encoder_init();       // ±àÂëÆ÷³õÊ¼»¯
-   14   1          motor_init();       // µç»ú³õÊ¼»¯
+   13   1          encoder_init();       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+   14   1          motor_init();       // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
    15   1          ips114_init();
-   16   1          imu660rb_init();
+   16   1          imu660rc_init(IMU660RC_QUARTERNION_DISABLE);
    17   1          fuya_init();
-   18   1        wireless_uart_init();
+   18   1      //  wireless_uart_init();
    19   1          gyro_init_calibration();
    20   1      }
    21          
@@ -41,12 +41,12 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        35     ------
+  code size            =        36     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         4     ------
+  xdata size           =    ------     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------

@@ -4,23 +4,18 @@
 #include "bsp_system.h"
 
 
-#define ENCODER_DIR_1                 	(TIM0_ENCOEDER)                         // Õý½»±àÂëÆ÷¶ÔÓ¦Ê¹ÓÃµÄ±àÂëÆ÷½Ó¿Ú ÕâÀïÊ¹ÓÃQTIMER1µÄENCOEDER1
-#define ENCODER_DIR_DIR_1              	(IO_P35)            				 	// DIR ¶ÔÓ¦µÄÒý½Å
-#define ENCODER_DIR_PULSE_1            	(TIM0_ENCOEDER_P34)            			// PULSE ¶ÔÓ¦µÄÒý½Å
+#define ENCODER_DIR_1                 	(TIM0_ENCOEDER)                         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦Ê¹ï¿½ÃµÄ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½QTIMER1ï¿½ï¿½ENCOEDER1
+#define ENCODER_DIR_DIR_1              	(IO_P35)            				 	// DIR ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define ENCODER_DIR_PULSE_1            	(TIM0_ENCOEDER_P34)            			// PULSE ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-#define ENCODER_DIR_2                 	(TIM3_ENCOEDER)                         // ´ø·½Ïò±àÂëÆ÷¶ÔÓ¦Ê¹ÓÃµÄ±àÂëÆ÷½Ó¿Ú ÕâÀïÊ¹ÓÃQTIMER1µÄENCOEDER2
-#define ENCODER_DIR_DIR_2           	(IO_P53)             					// DIR ¶ÔÓ¦µÄÒý½Å
-#define ENCODER_DIR_PULSE_2       		(TIM3_ENCOEDER_P04)            			// PULSE ¶ÔÓ¦µÄÒý½Å
+#define ENCODER_DIR_2                 	(TIM3_ENCOEDER)                         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦Ê¹ï¿½ÃµÄ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½QTIMER1ï¿½ï¿½ENCOEDER2
+#define ENCODER_DIR_DIR_2           	(IO_P53)             					// DIR ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define ENCODER_DIR_PULSE_2       		(TIM3_ENCOEDER_P04)            			// PULSE ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 
 
 extern int16 speed_L,speed_R,speed_avl;
-extern float speed_L_next,speed_R_next,speed_avl_next;
-extern int32 distance_text;
-
-static int16 tempL_pluse;
-static int16 tempR_pluse;
 
 
 

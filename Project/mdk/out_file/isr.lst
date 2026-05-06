@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  isr                                                                23/04/26  21:32:02  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
@@ -53,7 +53,7 @@ stmt  level    source
    36          #include "zf_common_headfile.h"
    37          //#define large_t (0.02*1)
    38          //#define small_t (0.02*0.5)
-   39          unsigned char timer_10ms_count = 0;  // 10ms计数器
+   39          static unsigned char timer_10ms_count = 0;
    40          
    41          void DMA_UART1_IRQHandler(void) interrupt 4
    42          {
@@ -66,7 +66,7 @@ stmt  level    source
    49   2      
    50   2              // 程序自动下载
    51   2              if (uart_rx_buff[UART_1][0] == 0x7F)
-C251 COMPILER V5.60.0,  isr                                                                23/04/26  21:32:02  PAGE 2   
+C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 2   
 
    52   2              {
    53   3                  if (dwon_count++ > 20)
@@ -134,7 +134,7 @@ stmt  level    source
   115   1          if (DMA_UR3R_STA & 0x02) // 数据丢弃
   116   1          {
   117   2              DMA_UR3R_STA &= ~0x02;      // 清标志位
-C251 COMPILER V5.60.0,  isr                                                                23/04/26  21:32:02  PAGE 3   
+C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 3   
 
   118   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
   119   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
@@ -185,165 +185,103 @@ stmt  level    source
   164   2              encoder_update();
   165   2              angle_get();
   166   2            
-  167   2            
-  168   2              
-  169   2      //        gyro_loop(expect_gyro,0);//获取correctL 
-  170   2              timer_10ms_count++;// 计数器累加                   
-  171   2      
-  172   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
-  173   2              {
-  174   3                  timer_10ms_count = 0;  // 计数器清零
-  175   3                  caiyang();      
-  176   3                adc_differ(); 
-  177   3                if (element == 1&&ringR_flag_task==1)
-  178   3                {
-  179   4                    deviation = deviation +40;
-  180   4                }
-  181   3                if (element == 1&&ringR_flag_task==4)
-  182   3                {
-  183   4                    deviation = deviation -40;
-C251 COMPILER V5.60.0,  isr                                                                23/04/26  21:32:02  PAGE 4   
+  167   2              
+  168   2      //        gyro_loop(expect_gyro,0);//获取correctL 
+  169   2              timer_10ms_count++;// 计数器累加                   
+  170   2      
+  171   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
+  172   2              {
+  173   3                  timer_10ms_count = 0;  // 计数器清零
+  174   3                  caiyang();      
+  175   3                adc_differ(); 
+  176   3                if (element == 1&&ringR_flag_task==1)
+  177   3                {
+  178   4                    deviation = deviation +40;
+  179   4                }
+  180   3                if (element == 1&&ringR_flag_task==4)
+  181   3                {
+  182   4                    deviation = deviation -40;
+  183   4                }
+C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 4   
 
-  184   4                }
-  185   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
+  184   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
              -                   // 10ms执行一次的函数
-  186   3               
-  187   3              }
-  188   2            switch (start_ramp_flag)
-  189   2            {
-  190   3              case 1:
-  191   3                fuya_set_duty(7000);
-  192   3                xunji();
-  193   3      
-  194   3               break;   
-  195   3             
-  196   3              case 0:
-  197   3              
-  198   3                set_pwm_motor_R(0);
-  199   3                set_pwm_motor_L(0);
-  200   3                fuya_set_duty(0);
-  201   3              
-  202   3               break;
-  203   3                
-  204   3            }
+  185   3               
+  186   3              }
+  187   2            switch (start_ramp_flag)
+  188   2            {
+  189   3              case 1:
+  190   3                fuya_set_duty(7000);
+  191   3                xunji();
+  192   3      
+  193   3               break;   
+  194   3             
+  195   3              case 0:
+  196   3              
+  197   3                set_pwm_motor_R(0);
+  198   3                set_pwm_motor_L(0);
+  199   3                fuya_set_duty(0);
+  200   3              
+  201   3               break;
+  202   3                
+  203   3            }
+  204   2            
   205   2            
   206   2            
   207   2            
   208   2            
-  209   2            
-  210   2                
-  211   2            
-  212   2                      
-  213   2          
-  214   2            
-  215   2          }
-  216   1      }
+  209   2                
+  210   2            
+  211   2                      
+  212   2          
+  213   2            
+  214   2          }
+  215   1      }
+  216          
   217          
-  218          
-  219          void TM2_IRQHandler() interrupt 12
-  220          {
-  221   1          TIM2_CLEAR_FLAG;
-  222   1      
-  223   1          if (tim2_irq_handler != NULL)
-  224   1          {
-  225   2              tim2_irq_handler();
-  226   2          }
-  227   1      }
-  228          
-  229          void TM3_IRQHandler() interrupt 19
-  230          {
-  231   1          TIM3_CLEAR_FLAG;
-  232   1      
-  233   1          if (tim3_irq_handler != NULL)
-  234   1          {
-  235   2              tim3_irq_handler();
-  236   2          }
-  237   1      }
-  238          
-  239          void TM4_IRQHandler() interrupt 20
-  240          {
-  241   1          TIM4_CLEAR_FLAG;
-  242   1      
-  243   1          if (tim4_irq_handler != NULL)
-  244   1          {
-  245   2              tim4_irq_handler();
-  246   2          }
-  247   1      }
+  218          void TM2_IRQHandler() interrupt 12
+  219          {
+  220   1          TIM2_CLEAR_FLAG;
+  221   1      
+  222   1          if (tim2_irq_handler != NULL)
+  223   1          {
+  224   2              tim2_irq_handler();
+  225   2          }
+  226   1      }
+  227          
+  228          void TM3_IRQHandler() interrupt 19
+  229          {
+  230   1          TIM3_CLEAR_FLAG;
+  231   1      
+  232   1          if (tim3_irq_handler != NULL)
+  233   1          {
+  234   2              tim3_irq_handler();
+  235   2          }
+  236   1      }
+  237          
+  238          void TM4_IRQHandler() interrupt 20
+  239          {
+  240   1          TIM4_CLEAR_FLAG;
+  241   1      
+  242   1          if (tim4_irq_handler != NULL)
+  243   1          {
+  244   2              tim4_irq_handler();
+  245   2          }
+  246   1      }
+  247          
   248          
-C251 COMPILER V5.60.0,  isr                                                                23/04/26  21:32:02  PAGE 5   
+C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 5   
 
-  249          
-  250          //#define     INT0_VECTOR             0       //0003H
-  251          //#define     TMR0_VECTOR             1       //000BH
-  252          //#define     INT1_VECTOR             2       //0013H
-  253          //#define     TMR1_VECTOR             3       //001BH
-  254          //#define     UART1_VECTOR            4       //0023H
-  255          //#define     ADC_VECTOR              5       //002BH
-  256          //#define     LVD_VECTOR              6       //0033H
-  257          ////#define   PCA_VECTOR              7       //003BH
-  258          //#define     UART2_VECTOR            8       //0043H
-  259          //#define     SPI_VECTOR              9       //004BH
-  260          //#define     INT2_VECTOR             10      //0053H
-  261          //#define     INT3_VECTOR             11      //005BH
-  262          //#define     TMR2_VECTOR             12      //0063H
-  263          //#define     USER_VECTOR             13      //006BH
-  264          //#define     BRK_VECTOR              14      //0073H
-  265          //#define     ICEP_VECTOR             15      //007BH
-  266          //#define     INT4_VECTOR             16      //0083H
-  267          //#define     UART3_VECTOR            17      //008BH
-  268          //#define     UART4_VECTOR            18      //0093H
-  269          //#define     TMR3_VECTOR             19      //009BH
-  270          //#define     TMR4_VECTOR             20      //00A3H
-  271          //#define     CMP_VECTOR              21      //00ABH
-  272          ////#define   PWM_VECTOR              22      //00B3H
-  273          ////#define   PWMFD_VECTOR            23      //00BBH
-  274          //#define     I2C_VECTOR              24      //00C3H
-  275          //#define     USB_VECTOR              25      //00CBH
-  276          //#define     PWMA_VECTOR             26      //00D3H
-  277          //#define     PWMB_VECTOR             27      //00DBH
-  278          //#define     CAN1_VECTOR             28      //00E3H
-  279          //#define     CAN2_VECTOR             29      //00EBH
-  280          //#define     LIN_VECTOR              30      //00F3H
-  281          
-  282          //#define     RTC_VECTOR              36      //0123H
-  283          //#define     P0INT_VECTOR            37      //012BH
-  284          //#define     P1INT_VECTOR            38      //0133H
-  285          //#define     P2INT_VECTOR            39      //013BH
-  286          //#define     P3INT_VECTOR            40      //0143H
-  287          //#define     P4INT_VECTOR            41      //014BH
-  288          //#define     P5INT_VECTOR            42      //0153H
-  289          //#define     P6INT_VECTOR            43      //015BH
-  290          //#define     P7INT_VECTOR            44      //0163H
-  291          //#define     DMA_M2M_VECTOR          47      //017BH
-  292          //#define     DMA_ADC_VECTOR          48      //0183H
-  293          //#define     DMA_SPI_VECTOR          49      //018BH
-  294          //#define     DMA_UR1T_VECTOR         50      //0193H
-  295          //#define     DMA_UR1R_VECTOR         51      //019BH
-  296          //#define     DMA_UR2T_VECTOR         52      //01A3H
-  297          //#define     DMA_UR2R_VECTOR         53      //01ABH
-  298          //#define     DMA_UR3T_VECTOR         54      //01B3H
-  299          //#define     DMA_UR3R_VECTOR         55      //01BBH
-  300          //#define     DMA_UR4T_VECTOR         56      //01C3H
-  301          //#define     DMA_UR4R_VECTOR         57      //01CBH
-  302          //#define     DMA_LCM_VECTOR          58      //01D3H
-  303          //#define     LCM_VECTOR              59      //01DBH
-  304          //#define     DMA_I2CT_VECTOR         60      //01E3H
-  305          //#define     DMA_I2CR_VECTOR         61      //01EBH
-  306          //#define     I2S_VECTOR              62      //01F3H
-  307          //#define     DMA_I2ST_VECTOR         63      //01FBH
-  308          //#define     DMA_I2SR_VECTOR         64      //0203H
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1145     ------
+  code size            =      1132     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
-C251 COMPILER V5.60.0,  isr                                                                23/04/26  21:32:02  PAGE 6   
-
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         6     ------
+  xdata size           =         2     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------

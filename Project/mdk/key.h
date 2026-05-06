@@ -2,16 +2,17 @@
 #define __KEY_H
 
 
-#define KP_STEP 0.1f   // Ã¿´Î°´¼üÔö¼õµÄ²½³¤
+#define KP_STEP 0.1f   // Ã¿ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
 #include "bsp_system.h"
 
-#define KEY1_PIN    IO_P70  //    ÇĞ»»¹â±ê
-#define KEY2_PIN    IO_P71  // 		KEY2: Ôö¼Óµ±Ç°²ÎÊı
-#define KEY3_PIN    IO_P72  // 		KEY3: ¼õĞ¡µ±Ç°²ÎÊı
-#define KEY4_PIN    IO_P73  //  Kd ¼õĞ¡		KEY4: ±¸ÓÃ°´¼ü£¨Ô¤Áô¸øĞ´Èë Flash£©
+#define KEY1_PIN    IO_P70  //    ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½
+#define KEY2_PIN    IO_P71  // 		KEY2: ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+#define KEY3_PIN    IO_P72  // 		KEY3: ï¿½ï¿½Ğ¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+#define KEY4_PIN    IO_P73  // KEY4: è¿”å›ä¸Šä¸€çº§
+#define KEY5_PIN    IO_P75  // KEY5: ç¡®è®¤/è¿›å…¥/å‘è½¦/åœè½¦
 
-#define KP_MAX  5.0f   // KpµÄ×î´óÔÊĞíÖµ
-#define KP_MIN  0.0f   // KpµÄ×îĞ¡ÔÊĞíÖµ (Í¨³£²»ÄÜÎª¸º)
+#define KP_MAX  5.0f   // 
+#define KP_MIN  0.0f   // 
 
 
 void key_init(void);

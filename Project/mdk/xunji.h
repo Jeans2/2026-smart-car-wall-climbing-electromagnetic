@@ -1,24 +1,14 @@
 #ifndef __XUNJI_H
 #define __XUNJI_H
 
-       
 #include "bsp_system.h"
+
 extern int8 element;
-extern float distance_ringR;
-extern int16 ringR_flag_task;
-
-
-
-
-
-
-
-
+extern int8 ringR_flag_task;
+extern int16 speed_straight;
+extern int16 speed_ringR;
+extern uint8 start_ramp_flag;
 
 void xunji(void);
-void ringR_task(void);
-void ringR_execute(void);
-void ringL_task(void);
-void ringL_execute(void);
 
 #endif

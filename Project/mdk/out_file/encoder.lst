@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  encoder                                                            23/04/26  21:32:04  PAGE 1   
+C251 COMPILER V5.60.0,  encoder                                                            06/05/26  21:07:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE encoder
@@ -11,23 +11,21 @@ stmt  level    source
 
     1          #include "encoder.h"
     2          
-    3          SlidingAverageFilter filter_Left;
-    4          SlidingAverageFilter filter_Right;
-    5          int16 speed_L=0,speed_R=0,speed_avl=0;
-    6          float speed_L_next=0,speed_R_next=0,speed_avl_next;
-    7          int32 distance_text=0;
+    3          static int16 tempL_pluse;
+    4          static int16 tempR_pluse;
+    5          static SlidingAverageFilter filter_Left;
+    6          static SlidingAverageFilter filter_Right;
+    7          int16 speed_L=0,speed_R=0,speed_avl=0;
     8          
     9          
    10          
    11          
    12          void encoder_init(void)
    13          {
-   14   1          encoder_dir_init(ENCODER_DIR_1, ENCODER_DIR_DIR_1, ENCODER_DIR_PULSE_1);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å ´
-             -ø·½ÏòÔöÁ¿±àÂëÆ÷Ä£Ê½
-   15   1          encoder_dir_init(ENCODER_DIR_2, ENCODER_DIR_DIR_2, ENCODER_DIR_PULSE_2);    // ³õÊ¼»¯±àÂëÆ÷Ä£¿éÓëÒý½Å
-             - ´ø·½ÏòÔöÁ¿±àÂëÆ÷Ä£Ê½
+   14   1          encoder_dir_init(ENCODER_DIR_1, ENCODER_DIR_DIR_1, ENCODER_DIR_PULSE_1);   
+   15   1          encoder_dir_init(ENCODER_DIR_2, ENCODER_DIR_DIR_2, ENCODER_DIR_PULSE_2);   
    16   1          
-   17   1          initSlidingAverage(&filter_Left,6);  // ³õÊ¼»¯ÂË²¨Æ÷
+   17   1          initSlidingAverage(&filter_Left,6);  
    18   1          initSlidingAverage(&filter_Right,6);
    19   1      }
    20          
@@ -56,7 +54,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        70     ------
+  xdata size           =        54     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -66,9 +64,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        48     ------
-C251 COMPILER V5.60.0,  encoder                                                            23/04/26  21:32:04  PAGE 2   
-
+  hconst size          =        21     ------
 End of Module Information.
 
 

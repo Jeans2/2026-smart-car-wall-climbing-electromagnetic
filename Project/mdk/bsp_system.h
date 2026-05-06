@@ -5,7 +5,6 @@
 /******logic*******/
 #include "xunji.h"
 #include "pid.h"
-#include "pid.h"
 #include "task.h"
 /******system*******/
 
@@ -22,6 +21,7 @@
 #include "motor.h"
 #include "encoder.h"
 #include "fuya.h"
+
 /*******other*********/
 #include "stdio.h"
 #include "math.h"

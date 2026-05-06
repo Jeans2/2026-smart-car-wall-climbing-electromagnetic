@@ -10,12 +10,12 @@ void System_Init(void)
 {
      key_init();
     my_adc_init();
-    encoder_init();       // ±àÂëÆ÷³õÊ¼»¯
-    motor_init();       // µç»ú³õÊ¼»¯
+    encoder_init();       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+    motor_init();       // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 		ips114_init();
-		imu660rb_init();
+		imu660rc_init(IMU660RC_QUARTERNION_DISABLE);
 	  fuya_init();
-	wireless_uart_init();
+//	wireless_uart_init();
 		gyro_init_calibration();
 }
 

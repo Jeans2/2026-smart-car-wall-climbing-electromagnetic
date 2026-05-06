@@ -21,7 +21,7 @@
 * 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
 * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
 *
-* 文件名称          
+* 文件名称
 * 公司名称          成都逐飞科技有限公司
 * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
 * 开发环境          MDK FOR C251
@@ -35,52 +35,28 @@
 
 #include "zf_common_headfile.h"
 #include "main.h"
-#define PIT_CH                          (TIM1_PIT ) 
-#include "fuya.h"
 
-
-
-
-//char buf[50];
+#define PIT_CH  (TIM1_PIT)
 
 void main()
 {
-    clock_init(SYSTEM_CLOCK_30M);
+	clock_init(SYSTEM_CLOCK_30M);
 	debug_init();
-	
-	// 此处编写用户代码 例如外设初始化代码等
-	  System_Init();
-			 pit_ms_init(PIT_CH, 2); 
-     tim1_irq_handler = encoder_update;
-			
-				gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);																											
-//			expect_gyro = ;
-			iap_init();
-			Load_Params_From_EEPROM();
-	while(1)
-    {				
-//			sprintf(buf,"L:%f,LM:%f,RM:%f,R%f\n",L,LM,RM,R);
-//			wireless_uart_send_string(buf);
-				
-//			ips114_show();
-				if(start_ramp_flag ==0)				
-				{
-						  Key_Menu_Adjust();    // 扫描按键并修改参数
-							UI_Display_Update();  // 刷新屏幕菜单
-							
-								
-				
-				}		
-			
-		
 
-//        printf("%f\n",deviation);
-//			sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-//				sprintf(buf,"%d,%d,%d\n",speed_straight,speed_avl);
-     
-////			sprintf(buf,"%f\n",angle);//十字250
-////				sprintf(buf,"%f,%f,%f\n",pitch,acc_z_filtered,acc_y_filtered);//十字250
-					
-			
+	System_Init();
+	pit_ms_init(PIT_CH, 2);
+	tim1_irq_handler = encoder_update;
+
+	gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
+	iap_init();
+	Load_Params_From_EEPROM();
+
+	while (1)
+	{
+		if (start_ramp_flag == 0)
+		{
+			Key_Menu_Adjust();
+			UI_Display_Update();
 		}
+	}
 }

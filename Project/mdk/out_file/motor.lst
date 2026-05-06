@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  motor                                                              23/04/26  21:32:04  PAGE 1   
+C251 COMPILER V5.60.0,  motor                                                              06/05/26  21:07:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE motor
@@ -67,12 +67,12 @@ Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =       329     ------
   ecode size           =    ------     ------
-C251 COMPILER V5.60.0,  motor                                                              23/04/26  21:32:04  PAGE 2   
+C251 COMPILER V5.60.0,  motor                                                              06/05/26  21:07:28  PAGE 2   
 
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         8     ------
+  xdata size           =         4     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  key                                                                23/04/26  21:32:03  PAGE 1   
+C251 COMPILER V5.60.0,  key                                                                06/05/26  21:07:27  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE key
@@ -11,33 +11,35 @@ stmt  level    source
 
     1          #include "key.h"
     2          
-    3          // ¿ª¹Ø×´Ì¬±äÁ¿ (Ä¬ÈÏÉÏÀ­Îª 1)
+    3          // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ (Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª 1)
     4          uint8 key1_status = 1;  uint8 key2_status = 1;
-    5          uint8 key3_status = 1;  uint8 key4_status = 1;
+    5          uint8 key3_status = 1;  uint8 key4_status = 1;  uint8 key5_status = 1;
     6          uint8 key1_last_status = 1; uint8 key2_last_status = 1;
     7          uint8 key3_last_status = 1; uint8 key4_last_status = 1;
-    8          
-    9          void key_init(void)
-   10          {
-   11   1        system_delay_init();
-   12   1        gpio_init(IO_P70,GPIO,1,GPIO_NO_PULL);
-   13   1        gpio_init(IO_P71,GPIO,1,GPIO_NO_PULL);
-   14   1        gpio_init(IO_P72,GPIO,1,GPIO_NO_PULL);
-   15   1        gpio_init(IO_P73,GPIO,1,GPIO_NO_PULL);
-   16   1        
-   17   1        
-   18   1      }
-   19          
+    8          uint8 key5_last_status = 1;
+    9          
+   10          void key_init(void)
+   11          {
+   12   1        system_delay_init();
+   13   1        gpio_init(IO_P70,GPIO,1,GPIO_NO_PULL);
+   14   1        gpio_init(IO_P71,GPIO,1,GPIO_NO_PULL);
+   15   1        gpio_init(IO_P72,GPIO,1,GPIO_NO_PULL);
+   16   1        gpio_init(IO_P73,GPIO,1,GPIO_NO_PULL);
+   17   1        gpio_init(IO_P75,GPIO,1,GPIO_NO_PULL);
+   18   1        
+   19   1        
+   20   1      }
+   21          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        72     ------
+  code size            =        89     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        12     ------
+  xdata size           =        10     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -47,7 +49,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        48     ------
+  hconst size          =        60     ------
 End of Module Information.
 
 

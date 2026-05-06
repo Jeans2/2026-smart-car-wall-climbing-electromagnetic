@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                23/04/26  21:32:03  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                06/05/26  21:07:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -11,168 +11,87 @@ stmt  level    source
 
     1          #include "adc.h"
     2          
-    3          //1-电磁
-    4          uint16 ADC_original[4][ADC_Sample_Num]={0};
-    5          uint16 max[4]={0},min[4]={0};
-    6          float ADC_temp[4] = {0};
-    7          float L=0,LM=0,RM=0,R=0;
-    8          
-    9          
-   10          
-   11          
-   12          
-   13          
-   14          //adc初始化
-   15          void my_adc_init(void)
+    3          static uint16 ADC_original[4][ADC_Sample_Num] = {0};
+    4          float ADC_temp[4] = {0};
+    5          float L = 0, LM = 0, RM = 0, R = 0;
+    6          
+    7          void my_adc_init(void)
+    8          {
+    9   1        adc_init(ADC_L_CH,  ADC_10BIT);
+   10   1        adc_init(ADC_LM_CH, ADC_10BIT);
+   11   1        adc_init(ADC_R_CH,  ADC_10BIT);
+   12   1        adc_init(ADC_RM_CH, ADC_10BIT);
+   13   1      }
+   14          
+   15          static uint16 adc_sample(adc_channel_enum ch)
    16          {
-   17   1          adc_init(ADC_L_CH ,ADC_10BIT);//L
-   18   1          adc_init(ADC_LM_CH ,ADC_10BIT);//LM
-   19   1          adc_init(ADC_R_CH ,ADC_10BIT);//R
-   20   1          adc_init(ADC_RM_CH ,ADC_10BIT);//RM
-   21   1        
-   22   1      } 
-   23            
-   24          //电磁采样
-   25          uint16 adc_sample(adc_channel_enum ch)//共采样11次，去掉2个极值，剩余9个求平均
-   26          {
-   27   1        uint16 temp,sum=0;
-   28   1        uint16 max,min;
-   29   1        uint8 i;
-   30   1      //  
-   31   1        temp = adc_convert(ch);
-   32   1        max = temp;
-   33   1        min = temp;
-   34   1        sum += temp;
-   35   1      
-   36   1        for(i=0;i<10;i++)
-   37   1        {
-   38   2          temp = adc_convert(ch);
-   39   2          if(max<temp){max = temp;}
-   40   2          if(min>temp){min = temp;}
-   41   2          sum += temp;
-   42   2        }
-   43   1        
-   44   1        temp = (sum-max-min) / (11-2);
-   45   1        
-   46   1        return temp;
-   47   1      } 
-   48            
-   49          uint16 adc_sample_b(adc_channel_enum ch)//8次复合采样
-   50          {
-   51   1        uint16 temp,sum=0;
-   52   1        uint16 max,min;
-   53   1        uint8 i;
-   54   1        
-   55   1        temp = adc_convert(ch);
-   56   1        max = temp;
-   57   1        min = temp;
-C251 COMPILER V5.60.0,  adc                                                                23/04/26  21:32:03  PAGE 2   
+   17   1        uint16 temp, sum = 0, max_v, min_v;
+   18   1        uint8 i;
+   19   1      
+   20   1        temp = adc_convert(ch);
+   21   1        max_v = temp;
+   22   1        min_v = temp;
+   23   1        sum += temp;
+   24   1      
+   25   1        for (i = 0; i < 10; i++)
+   26   1        {
+   27   2          temp = adc_convert(ch);
+   28   2          if (max_v < temp) max_v = temp;
+   29   2          if (min_v > temp) min_v = temp;
+   30   2          sum += temp;
+   31   2        }
+   32   1      
+   33   1        return (sum - max_v - min_v) / 9;
+   34   1      }
+   35          
+   36          void siai_adc_all_sample(void)
+   37          {
+   38   1        ADC_temp[0] = adc_sample(ADC_L_CH);
+   39   1        ADC_temp[1] = adc_sample(ADC_LM_CH);
+   40   1        ADC_temp[2] = adc_sample(ADC_R_CH);
+   41   1        ADC_temp[3] = adc_sample(ADC_RM_CH);
+   42   1      }
+   43          
+   44          void adc_normalizing(void)
+   45          {
+   46   1        L  = 100.0f * (ADC_temp[0] - 0) / (1000 - 0);
+   47   1        LM = 100.0f * (ADC_temp[1] - 0) / (1000 - 0);
+   48   1        RM = 100.0f * (ADC_temp[3] - 0) / (1000 - 0);
+   49   1        R  = 100.0f * (ADC_temp[2] - 0) / (1000 - 0);
+   50   1      
+   51   1        if (L  > 100) L  = 100;
+   52   1        if (LM > 100) LM = 100;
+   53   1        if (RM > 100) RM = 100;
+   54   1        if (R  > 100) R  = 100;
+   55   1      }
+   56          
+   57          float deviation;
+C251 COMPILER V5.60.0,  adc                                                                06/05/26  21:07:28  PAGE 2   
 
-   58   1        sum += temp;
-   59   1        
-   60   1        for(i=0;i<7;i++)
-   61   1        {
-   62   2          temp = adc_convert(ch);
-   63   2          if(max<temp){max = temp;}
-   64   2          if(min>temp){min = temp;}
-   65   2          sum += temp;  
-   66   2        }
-   67   1        
-   68   1        temp = (sum-max-min) / (8-2);
-   69   1        
-   70   1        return temp;  
+   58          struct ADC adc_set_differ = {1.0f, 2.3f, 1.2f};
+   59          
+   60          void adc_differ(void)
+   61          {
+   62   1        float sub, add;
+   63   1      
+   64   1        sub = adc_set_differ.A * (L - R) + adc_set_differ.B * (LM - RM);
+   65   1        {
+   66   2          float diff = LM - RM;
+   67   2          if (diff < 0) diff = -diff;
+   68   2          add = adc_set_differ.A * (L + R) + adc_set_differ.C * diff;
+   69   2        }
+   70   1        deviation = -(sub * 100.0f) / (add + 1);
    71   1      }
-   72          
-   73          uint16 adc_sample_a(adc_channel_enum ch)//7次排序取中值
-   74          {
-   75   1        uint8 i;
-   76   1        uint16 arr[7];
-   77   1        
-   78   1        for(i=0;i<ADC_Sample_Num;i++)
-   79   1        {
-   80   2          arr[i] = adc_convert(ch);
-   81   2        }
-   82   1        
-   83   1        arr[0] = sort_seven(arr); 
-   84   1        return arr[0];
-   85   1      }
-   86          
-   87          uint16 adc_mid_sample(adc_channel_enum ch)//三次取中值
-   88          {
-   89   1          uint16 i,j,k,tmp;
-   90   1          //sample 3 times
-   91   1          i = adc_convert(ch);
-   92   1          j = adc_convert(ch);
-   93   1          k = adc_convert(ch);
-   94   1          //  select mid value
-   95   1          if(i > j){
-   96   2              tmp = i;
-   97   2              i = j;
-   98   2              j = tmp;
-   99   2          }
-  100   1          if(k > j){
-  101   2              tmp = j;
-  102   2          }
-  103   1          else if(k > i){
-  104   2              tmp = k;
-  105   2          }
-  106   1          else{
-  107   2              tmp = i;
-  108   2          }
-  109   1          return tmp;
-  110   1      }
-  111          
-  112          void siai_adc_all_sample(void)//存储原始采样数据
-  113          {
-  114   1        ADC_temp[0] = adc_sample(ADC_L_CH );
-  115   1        ADC_temp[1] = adc_sample(ADC_LM_CH );
-  116   1        ADC_temp[2] = adc_sample(ADC_R_CH );
-  117   1        ADC_temp[3] = adc_sample(ADC_RM_CH);
-  118   1      }
-  119          
-  120          //归一化
-  121          void adc_normalizing(void)
-  122          {
-  123   1        
-C251 COMPILER V5.60.0,  adc                                                                23/04/26  21:32:03  PAGE 3   
-
-  124   1       
-  125   1        L  = 100*(ADC_temp[0]-0)/(1000-0);//600为待定值，后可取环岛与直道重叠部分所采集到的值
-  126   1        LM = 100*(ADC_temp[1]-0)/(1000-0);
-  127   1        RM = 100*(ADC_temp[3]-0)/(1000-0);
-  128   1        R  = 100*(ADC_temp[2]-0)/(1000-0);
-  129   1        
-  130   1        //输入限幅
-  131   1        if(L >100){L =100;}
-  132   1        if(LM>100){LM=100;}
-  133   1        if(RM>100){RM=100;}
-  134   1        if(R >100){R =100;}
-  135   1      }
-  136          
-  137          
-  138          float deviation;
-  139          struct ADC adc_set_differ = {1,2.3,1.2};  // 
-  140          float add = 0,sub = 0;
-  141          void adc_differ()     //差比和差
-  142          {
-  143   1        sub = adc_set_differ.A*(L - R)+adc_set_differ.B*(LM - RM);
-  144   1        add = adc_set_differ.A*(L + R)+adc_set_differ.C * abs(LM - RM);
-  145   1        deviation = (sub*100) / (add+1);
-  146   1        deviation = -deviation;
-  147   1        
-  148   1      }
-  149          
-  150          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1455     ------
+  code size            =       963     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =       181     ------
+  xdata size           =       127     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -182,7 +101,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =       179     ------
+  hconst size          =       135     ------
 End of Module Information.
 
 

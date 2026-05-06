@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               24/04/26  15:20:24  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               06/05/26  21:07:26  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -37,7 +37,7 @@ stmt  level    source
    22          * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本
              -声明）
    23          *
-   24          * 文件名称          
+   24          * 文件名称
    25          * 公司名称          成都逐飞科技有限公司
    26          * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
    27          * 开发环境          MDK FOR C251
@@ -52,57 +52,33 @@ stmt  level    source
    35          
    36          #include "zf_common_headfile.h"
    37          #include "main.h"
-   38          #define PIT_CH                          (TIM1_PIT ) 
-   39          #include "fuya.h"
+   38          
+   39          #define PIT_CH  (TIM1_PIT)
    40          
-   41          
-   42          
-   43          
-   44          //char buf[50];
-   45          
-   46          void main()
-   47          {
-   48   1          clock_init(SYSTEM_CLOCK_30M);
-   49   1        debug_init();
-   50   1        
-   51   1        // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               24/04/26  15:20:24  PAGE 2   
+   41          void main()
+   42          {
+   43   1        clock_init(SYSTEM_CLOCK_30M);
+   44   1        debug_init();
+   45   1      
+   46   1        System_Init();
+   47   1        pit_ms_init(PIT_CH, 2);
+   48   1        tim1_irq_handler = encoder_update;
+   49   1      
+   50   1        gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
+   51   1        iap_init();
+C251 COMPILER V5.60.0,  main                                                               06/05/26  21:07:26  PAGE 2   
 
-   52   1          System_Init();
-   53   1             pit_ms_init(PIT_CH, 2); 
-   54   1           tim1_irq_handler = encoder_update;
-   55   1            
-   56   1              gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);                                                     
-   57   1      //      expect_gyro = ;
-   58   1            iap_init();
-   59   1            Load_Params_From_EEPROM();
-   60   1        while(1)
-   61   1          {       
-   62   2      //      sprintf(buf,"L:%f,LM:%f,RM:%f,R%f\n",L,LM,RM,R);
-   63   2      //      wireless_uart_send_string(buf);
-   64   2              
-   65   2      //      ips114_show();
-   66   2              if(start_ramp_flag ==0)       
-   67   2              {
-   68   3                    Key_Menu_Adjust();    // 扫描按键并修改参数
-   69   3                    UI_Display_Update();  // 刷新屏幕菜单
-   70   3                    
-   71   3                      
-   72   3              
-   73   3              }   
-   74   2            
-   75   2          
-   76   2      
-   77   2      //        printf("%f\n",deviation);
-   78   2      //      sprintf(buf,"%f,%f,%f\n",expect_gyro,gyro_z_filtered,deviation);
-   79   2      //        sprintf(buf,"%d,%d,%d\n",speed_straight,speed_avl);
-   80   2           
-   81   2      ////      sprintf(buf,"%f\n",angle);//十字250
-   82   2      ////        sprintf(buf,"%f,%f,%f\n",pitch,acc_z_filtered,acc_y_filtered);//十字250
-   83   2                
-   84   2            
-   85   2          }
-   86   1      }
+   52   1        Load_Params_From_EEPROM();
+   53   1      
+   54   1        while (1)
+   55   1        {
+   56   2          if (start_ramp_flag == 0)
+   57   2          {
+   58   3            Key_Menu_Adjust();
+   59   3            UI_Display_Update();
+   60   3          }
+   61   2        }
+   62   1      }
 
 
 Module Information          Static   Overlayable
@@ -112,7 +88,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         4     ------
+  xdata size           =    ------     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------

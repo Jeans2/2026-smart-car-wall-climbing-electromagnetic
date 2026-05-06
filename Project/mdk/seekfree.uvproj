@@ -724,6 +724,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\libraries\zf_device\zf_device_wireless_uart.h</FilePath>
             </File>
+            <File>
+              <FileName>zf_device_imu660rc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Libraries\zf_device\zf_device_imu660rc.c</FilePath>
+            </File>
+            <File>
+              <FileName>zf_device_imu660rc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Libraries\zf_device\zf_device_imu660rc.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
