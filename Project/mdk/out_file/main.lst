@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               06/05/26  21:07:26  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               07/05/26  16:35:48  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -54,31 +54,34 @@ stmt  level    source
    37          #include "main.h"
    38          
    39          #define PIT_CH  (TIM1_PIT)
-   40          
+   40          char dat[64];
    41          void main()
    42          {
    43   1        clock_init(SYSTEM_CLOCK_30M);
    44   1        debug_init();
-   45   1      
-   46   1        System_Init();
-   47   1        pit_ms_init(PIT_CH, 2);
-   48   1        tim1_irq_handler = encoder_update;
-   49   1      
-   50   1        gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
-   51   1        iap_init();
-C251 COMPILER V5.60.0,  main                                                               06/05/26  21:07:26  PAGE 2   
+   45   1        System_Init();
+   46   1        pit_ms_init(PIT_CH, 2);
+   47   1        tim1_irq_handler = encoder_update;
+   48   1        gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
+   49   1        iap_init();
+   50   1        Load_Params_From_EEPROM();
+   51   1      
+C251 COMPILER V5.60.0,  main                                                               07/05/26  16:35:48  PAGE 2   
 
-   52   1        Load_Params_From_EEPROM();
-   53   1      
-   54   1        while (1)
-   55   1        {
-   56   2          if (start_ramp_flag == 0)
-   57   2          {
-   58   3            Key_Menu_Adjust();
-   59   3            UI_Display_Update();
-   60   3          }
-   61   2        }
-   62   1      }
+   52   1        while (1)
+   53   1        {
+   54   2          if (start_ramp_flag == 0)
+   55   2          {
+   56   3            Key_Menu_Adjust();
+   57   3            UI_Display_Update();
+   58   3          }
+   59   2      
+   60   2          // 无线串口发送电感值（%f 不支持，改用整数）
+   61   2          //sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f\r\n",L,LM,RM,R);    
+   62   2          //wireless_uart_send_string(dat);
+   63   2          
+   64   2        }
+   65   1      }
 
 
 Module Information          Static   Overlayable
@@ -88,7 +91,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =    ------     ------
+  xdata size           =        64     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------

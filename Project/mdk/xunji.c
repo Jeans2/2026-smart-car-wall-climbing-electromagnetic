@@ -10,16 +10,17 @@ static uint8 ring_flag_ing = 0;
 static float distance_ringR = 0;
 int16 speed_straight = 230;
 int16 speed_ringR = 215;
+static uint8 ring_data_sent = 0;
 
 void xunji(void)
 {
-	//if (R + RM > 90 && abs(R - RM) < 10 && pitch < 5 && pitch > -5 && ring_flag_ing == 0)
-	//{
-	//	element = 1;
-		//ringR_flag_task = 1;
-		//ring_flag_ing = 200;
-	//	angle_clear();
-	//}           
+	if (L + LM >90&&abs(LM-L)<10&&pitch<40 &&ring_flag_ing == 0)
+	{
+		element = 1;
+		ringR_flag_task = 1;
+		ring_flag_ing = 200;
+		angle_clear();
+	}           
 
 	if (L + LM + RM + R < 30)
 	{
@@ -29,6 +30,7 @@ void xunji(void)
 	switch (element)
 	{
 	case 0:
+		ring_data_sent = 0;
 		speed_target = speed_straight;
 		speed_loop_LR(speed_target + correct_L, speed_target - correct_L);
 		set_pwm_motor_R(out_R);
@@ -41,6 +43,13 @@ void xunji(void)
 		break;
 
 	case 1:
+		if (ring_data_sent == 0)
+		{
+			char buf[64];
+			sprintf(buf, "L:%f,LM:%f,RM:%f,R:%f,pitch:%f\r\n",L,LM,RM,R,pitch);	
+			wireless_uart_send_string(buf);
+			ring_data_sent = 1;
+		}
 		ringR_task();
 		ringR_execute();
 		break;
@@ -60,7 +69,7 @@ static void ringR_task(void)
 	{
 	case 1:
 		angle_get();
-		if (angle_z > 260)
+		if (angle_z < -260)
 		{
 			ringR_flag_task = 4;
 			ringR_flag_execute = 4;
@@ -112,7 +121,7 @@ static void ringR_execute(void)
 		speed_loop_LR(target_L, target_R);
 		set_pwm_motor_R(out_R);
 		set_pwm_motor_L(out_L);
-		if (L + LM + RM + R < 30)
+	if (L + LM + RM + R < 30)
 		{
 			start_ramp_flag = 0;
 		}

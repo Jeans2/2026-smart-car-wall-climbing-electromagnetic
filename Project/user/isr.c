@@ -47,6 +47,12 @@ void DMA_UART1_IRQHandler(void) interrupt 4
         DMA_UR1R_STA &= ~0x01;      // 清标志位
         uart_rx_start_buff(UART_1); // 设置下一次接收，务必保留
 
+        // 串口停车命令
+        if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
+        {
+            start_ramp_flag = 0;
+        }
+
         // 程序自动下载
         if (uart_rx_buff[UART_1][0] == 0x7F)
         {
@@ -129,12 +135,17 @@ void DMA_UART4_IRQHandler(void) interrupt 18
         DMA_UR4R_STA &= ~0x01;      // 清标志位
         uart_rx_start_buff(UART_4); // 设置下一次接收，务必保留
 
+        // 无线串口停车命令
+        if (uart_rx_buff[UART_4][0] == 'S' || uart_rx_buff[UART_4][0] == 's')
+        {
+            start_ramp_flag = 0;
+        }
+
         if (uart4_irq_handler != NULL)
         {
             uart4_irq_handler(uart_rx_buff[UART_4][0]);
         }
     }
-
     if (DMA_UR4R_STA & 0x02) // 数据丢弃
     {
         DMA_UR4R_STA &= ~0x02;      // 清标志位
@@ -175,11 +186,11 @@ void TM1_IRQHandler() interrupt 3
 					adc_differ();	
 					if (element == 1&&ringR_flag_task==1)
 					{
-							deviation = deviation +40;
+							deviation = deviation -40;
 					}
 					if (element == 1&&ringR_flag_task==4)
 					{
-							deviation = deviation -40;
+							deviation = deviation +40;
 					}
           direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度                           // 10ms执行一次的函数
          
@@ -200,17 +211,7 @@ void TM1_IRQHandler() interrupt 3
 				
 				 break;
 					
-			}
-			
-			
-			
-			
-			
-					
-      
-			          
-		
-			
+			}	
     }
 }
 

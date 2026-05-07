@@ -206,7 +206,7 @@ void Key_Menu_Adjust(void)
                         err_speed_R_last = 0; err_speed_R = 0;
                         out_L = 0; out_R = 0;
                         direction_err1[0] = 0; direction_err1[1] = 0; direction_err1[2] = 0;
-                        system_delay_ms(1000);
+                        system_delay_ms(500);
                         start_ramp_flag = 1;
                     }
                     else if(cursor_index == 1) { menu_state = MENU_TUNE_CATE; cursor_index = 0; menu_max_items = 3; }

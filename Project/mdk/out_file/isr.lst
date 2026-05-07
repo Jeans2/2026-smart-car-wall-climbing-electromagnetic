@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
@@ -64,219 +64,220 @@ stmt  level    source
    47   2              DMA_UR1R_STA &= ~0x01;      // 清标志位
    48   2              uart_rx_start_buff(UART_1); // 设置下一次接收，务必保留
    49   2      
-   50   2              // 程序自动下载
-   51   2              if (uart_rx_buff[UART_1][0] == 0x7F)
-C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 2   
+   50   2              // 串口停车命令
+   51   2              if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
+C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 2   
 
    52   2              {
-   53   3                  if (dwon_count++ > 20)
-   54   3                  {
-   55   4                      IAP_CONTR = 0x60;
-   56   4                  }
-   57   3              }
-   58   2              else
-   59   2              {
-   60   3                  dwon_count = 0;
-   61   3              }
-   62   2      
-   63   2              if (uart1_irq_handler != NULL)
-   64   2              {
-   65   3                  uart1_irq_handler(uart_rx_buff[UART_1][0]);
-   66   3              }
-   67   2          }
-   68   1      
-   69   1          if (DMA_UR1R_STA & 0x02) // 数据丢弃
-   70   1          {
-   71   2              DMA_UR1R_STA &= ~0x02;      // 清标志位
-   72   2              uart_rx_start_buff(UART_1); // 设置下一次接收，务必保留
-   73   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   74   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   75   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   76   2          }
-   77   1      }
-   78          
-   79          void DMA_UART2_IRQHandler(void) interrupt 8
-   80          {
-   81   1          if (DMA_UR2R_STA & 0x01) // 接收完成
-   82   1          {
-   83   2              DMA_UR2R_STA &= ~0x01;      // 清标志位
-   84   2              uart_rx_start_buff(UART_2); // 设置下一次接收，务必保留
-   85   2      
-   86   2              if (uart2_irq_handler != NULL)
-   87   2              {
-   88   3                  uart2_irq_handler(uart_rx_buff[UART_2][0]);
-   89   3              }
-   90   2          }
-   91   1      
-   92   1          if (DMA_UR2R_STA & 0x02) // 数据丢弃
-   93   1          {
-   94   2              DMA_UR2R_STA &= ~0x02;      // 清标志位
-   95   2              uart_rx_start_buff(UART_2); // 设置下一次接收，务必保留
-   96   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   97   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   98   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   99   2          }
-  100   1      }
-  101          
-  102          void DMA_UART3_IRQHandler(void) interrupt 17
-  103          {
-  104   1          if (DMA_UR3R_STA & 0x01) // 接收完成
-  105   1          {
-  106   2              DMA_UR3R_STA &= ~0x01;      // 清标志位
-  107   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
-  108   2      
-  109   2              if (uart3_irq_handler != NULL)
-  110   2              {
-  111   3                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
-  112   3              }
-  113   2          }
-  114   1      
-  115   1          if (DMA_UR3R_STA & 0x02) // 数据丢弃
-  116   1          {
-  117   2              DMA_UR3R_STA &= ~0x02;      // 清标志位
-C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 3   
+   53   3                  start_ramp_flag = 0;
+   54   3              }
+   55   2      
+   56   2              // 程序自动下载
+   57   2              if (uart_rx_buff[UART_1][0] == 0x7F)
+   58   2              {
+   59   3                  if (dwon_count++ > 20)
+   60   3                  {
+   61   4                      IAP_CONTR = 0x60;
+   62   4                  }
+   63   3              }
+   64   2              else
+   65   2              {
+   66   3                  dwon_count = 0;
+   67   3              }
+   68   2      
+   69   2              if (uart1_irq_handler != NULL)
+   70   2              {
+   71   3                  uart1_irq_handler(uart_rx_buff[UART_1][0]);
+   72   3              }
+   73   2          }
+   74   1      
+   75   1          if (DMA_UR1R_STA & 0x02) // 数据丢弃
+   76   1          {
+   77   2              DMA_UR1R_STA &= ~0x02;      // 清标志位
+   78   2              uart_rx_start_buff(UART_1); // 设置下一次接收，务必保留
+   79   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+   80   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+   81   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+   82   2          }
+   83   1      }
+   84          
+   85          void DMA_UART2_IRQHandler(void) interrupt 8
+   86          {
+   87   1          if (DMA_UR2R_STA & 0x01) // 接收完成
+   88   1          {
+   89   2              DMA_UR2R_STA &= ~0x01;      // 清标志位
+   90   2              uart_rx_start_buff(UART_2); // 设置下一次接收，务必保留
+   91   2      
+   92   2              if (uart2_irq_handler != NULL)
+   93   2              {
+   94   3                  uart2_irq_handler(uart_rx_buff[UART_2][0]);
+   95   3              }
+   96   2          }
+   97   1      
+   98   1          if (DMA_UR2R_STA & 0x02) // 数据丢弃
+   99   1          {
+  100   2              DMA_UR2R_STA &= ~0x02;      // 清标志位
+  101   2              uart_rx_start_buff(UART_2); // 设置下一次接收，务必保留
+  102   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  103   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  104   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  105   2          }
+  106   1      }
+  107          
+  108          void DMA_UART3_IRQHandler(void) interrupt 17
+  109          {
+  110   1          if (DMA_UR3R_STA & 0x01) // 接收完成
+  111   1          {
+  112   2              DMA_UR3R_STA &= ~0x01;      // 清标志位
+  113   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
+  114   2      
+  115   2              if (uart3_irq_handler != NULL)
+  116   2              {
+  117   3                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
+C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 3   
 
-  118   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
-  119   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  120   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  121   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  122   2          }
-  123   1      }
-  124          
-  125          void DMA_UART4_IRQHandler(void) interrupt 18
-  126          {
-  127   1          if (DMA_UR4R_STA & 0x01) // 接收完成
-  128   1          {
-  129   2              DMA_UR4R_STA &= ~0x01;      // 清标志位
-  130   2              uart_rx_start_buff(UART_4); // 设置下一次接收，务必保留
-  131   2      
-  132   2              if (uart4_irq_handler != NULL)
-  133   2              {
-  134   3                  uart4_irq_handler(uart_rx_buff[UART_4][0]);
-  135   3              }
-  136   2          }
-  137   1      
-  138   1          if (DMA_UR4R_STA & 0x02) // 数据丢弃
-  139   1          {
-  140   2              DMA_UR4R_STA &= ~0x02;      // 清标志位
-  141   2              uart_rx_start_buff(UART_4); // 设置下一次接收，务必保留
-  142   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  143   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  144   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  145   2          }
-  146   1      }
-  147          
-  148          void TM0_IRQHandler() interrupt 1
-  149          {
-  150   1          TIM0_CLEAR_FLAG;
-  151   1      
-  152   1          if (tim0_irq_handler != NULL)
-  153   1          {
-  154   2              tim0_irq_handler();
-  155   2          }
-  156   1      }
-  157          
-  158          void TM1_IRQHandler() interrupt 3
-  159          {
-  160   1          TIM1_CLEAR_FLAG;
-  161   1      
-  162   1          if (tim1_irq_handler != NULL)
-  163   1          {                 
-  164   2              encoder_update();
-  165   2              angle_get();
-  166   2            
-  167   2              
-  168   2      //        gyro_loop(expect_gyro,0);//获取correctL 
-  169   2              timer_10ms_count++;// 计数器累加                   
-  170   2      
-  171   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
-  172   2              {
-  173   3                  timer_10ms_count = 0;  // 计数器清零
-  174   3                  caiyang();      
-  175   3                adc_differ(); 
-  176   3                if (element == 1&&ringR_flag_task==1)
-  177   3                {
-  178   4                    deviation = deviation +40;
-  179   4                }
-  180   3                if (element == 1&&ringR_flag_task==4)
-  181   3                {
-  182   4                    deviation = deviation -40;
-  183   4                }
-C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 4   
+  118   3              }
+  119   2          }
+  120   1      
+  121   1          if (DMA_UR3R_STA & 0x02) // 数据丢弃
+  122   1          {
+  123   2              DMA_UR3R_STA &= ~0x02;      // 清标志位
+  124   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
+  125   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  126   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  127   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  128   2          }
+  129   1      }
+  130          
+  131          void DMA_UART4_IRQHandler(void) interrupt 18
+  132          {
+  133   1          if (DMA_UR4R_STA & 0x01) // 接收完成
+  134   1          {
+  135   2              DMA_UR4R_STA &= ~0x01;      // 清标志位
+  136   2              uart_rx_start_buff(UART_4); // 设置下一次接收，务必保留
+  137   2      
+  138   2              // 无线串口停车命令
+  139   2              if (uart_rx_buff[UART_4][0] == 'S' || uart_rx_buff[UART_4][0] == 's')
+  140   2              {
+  141   3                  start_ramp_flag = 0;
+  142   3              }
+  143   2      
+  144   2              if (uart4_irq_handler != NULL)
+  145   2              {
+  146   3                  uart4_irq_handler(uart_rx_buff[UART_4][0]);
+  147   3              }
+  148   2          }
+  149   1          if (DMA_UR4R_STA & 0x02) // 数据丢弃
+  150   1          {
+  151   2              DMA_UR4R_STA &= ~0x02;      // 清标志位
+  152   2              uart_rx_start_buff(UART_4); // 设置下一次接收，务必保留
+  153   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  154   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  155   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
+  156   2          }
+  157   1      }
+  158          
+  159          void TM0_IRQHandler() interrupt 1
+  160          {
+  161   1          TIM0_CLEAR_FLAG;
+  162   1      
+  163   1          if (tim0_irq_handler != NULL)
+  164   1          {
+  165   2              tim0_irq_handler();
+  166   2          }
+  167   1      }
+  168          
+  169          void TM1_IRQHandler() interrupt 3
+  170          {
+  171   1          TIM1_CLEAR_FLAG;
+  172   1      
+  173   1          if (tim1_irq_handler != NULL)
+  174   1          {                 
+  175   2              encoder_update();
+  176   2              angle_get();
+  177   2            
+  178   2              
+  179   2      //        gyro_loop(expect_gyro,0);//获取correctL 
+  180   2              timer_10ms_count++;// 计数器累加                   
+  181   2      
+  182   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
+  183   2              {
+C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 4   
 
-  184   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
+  184   3                  timer_10ms_count = 0;  // 计数器清零
+  185   3                  caiyang();      
+  186   3                adc_differ(); 
+  187   3                if (element == 1&&ringR_flag_task==1)
+  188   3                {
+  189   4                    deviation = deviation -40;
+  190   4                }
+  191   3                if (element == 1&&ringR_flag_task==4)
+  192   3                {
+  193   4                    deviation = deviation +40;
+  194   4                }
+  195   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
              -                   // 10ms执行一次的函数
-  185   3               
-  186   3              }
-  187   2            switch (start_ramp_flag)
-  188   2            {
-  189   3              case 1:
-  190   3                fuya_set_duty(7000);
-  191   3                xunji();
-  192   3      
-  193   3               break;   
-  194   3             
-  195   3              case 0:
-  196   3              
-  197   3                set_pwm_motor_R(0);
-  198   3                set_pwm_motor_L(0);
-  199   3                fuya_set_duty(0);
-  200   3              
-  201   3               break;
-  202   3                
-  203   3            }
-  204   2            
-  205   2            
-  206   2            
-  207   2            
-  208   2            
-  209   2                
-  210   2            
-  211   2                      
-  212   2          
-  213   2            
-  214   2          }
-  215   1      }
-  216          
+  196   3               
+  197   3              }
+  198   2            switch (start_ramp_flag)
+  199   2            {
+  200   3              case 1:
+  201   3                fuya_set_duty(7000);
+  202   3                xunji();
+  203   3      
+  204   3               break;   
+  205   3             
+  206   3              case 0:
+  207   3              
+  208   3                set_pwm_motor_R(0);
+  209   3                set_pwm_motor_L(0);
+  210   3                fuya_set_duty(0);
+  211   3              
+  212   3               break;
+  213   3                
+  214   3            } 
+  215   2          }
+  216   1      }
   217          
-  218          void TM2_IRQHandler() interrupt 12
-  219          {
-  220   1          TIM2_CLEAR_FLAG;
-  221   1      
-  222   1          if (tim2_irq_handler != NULL)
-  223   1          {
-  224   2              tim2_irq_handler();
-  225   2          }
-  226   1      }
-  227          
-  228          void TM3_IRQHandler() interrupt 19
-  229          {
-  230   1          TIM3_CLEAR_FLAG;
-  231   1      
-  232   1          if (tim3_irq_handler != NULL)
-  233   1          {
-  234   2              tim3_irq_handler();
-  235   2          }
-  236   1      }
-  237          
-  238          void TM4_IRQHandler() interrupt 20
-  239          {
-  240   1          TIM4_CLEAR_FLAG;
-  241   1      
-  242   1          if (tim4_irq_handler != NULL)
-  243   1          {
-  244   2              tim4_irq_handler();
-  245   2          }
-  246   1      }
-  247          
+  218          
+  219          void TM2_IRQHandler() interrupt 12
+  220          {
+  221   1          TIM2_CLEAR_FLAG;
+  222   1      
+  223   1          if (tim2_irq_handler != NULL)
+  224   1          {
+  225   2              tim2_irq_handler();
+  226   2          }
+  227   1      }
+  228          
+  229          void TM3_IRQHandler() interrupt 19
+  230          {
+  231   1          TIM3_CLEAR_FLAG;
+  232   1      
+  233   1          if (tim3_irq_handler != NULL)
+  234   1          {
+  235   2              tim3_irq_handler();
+  236   2          }
+  237   1      }
+  238          
+  239          void TM4_IRQHandler() interrupt 20
+  240          {
+  241   1          TIM4_CLEAR_FLAG;
+  242   1      
+  243   1          if (tim4_irq_handler != NULL)
+  244   1          {
+  245   2              tim4_irq_handler();
+  246   2          }
+  247   1      }
   248          
-C251 COMPILER V5.60.0,  isr                                                                06/05/26  21:07:26  PAGE 5   
+C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 5   
 
+  249          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1132     ------
+  code size            =      1178     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

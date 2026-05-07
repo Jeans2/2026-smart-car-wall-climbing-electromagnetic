@@ -37,16 +37,14 @@
 #include "main.h"
 
 #define PIT_CH  (TIM1_PIT)
-
+char dat[64];
 void main()
 {
 	clock_init(SYSTEM_CLOCK_30M);
 	debug_init();
-
 	System_Init();
 	pit_ms_init(PIT_CH, 2);
 	tim1_irq_handler = encoder_update;
-
 	gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
 	iap_init();
 	Load_Params_From_EEPROM();
@@ -58,5 +56,10 @@ void main()
 			Key_Menu_Adjust();
 			UI_Display_Update();
 		}
+
+		// 无线串口发送电感值（%f 不支持，改用整数）
+		//sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f\r\n",L,LM,RM,R);		
+		//wireless_uart_send_string(dat);
+		
 	}
 }
