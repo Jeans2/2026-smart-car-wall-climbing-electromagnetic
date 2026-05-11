@@ -174,7 +174,7 @@ void TM1_IRQHandler() interrupt 3
     {									
 				encoder_update();
 				angle_get();
-			
+			 //dl1a_get_distance();
 				
 //			  gyro_loop(expect_gyro,0);//获取correctL 
         timer_10ms_count++;// 计数器累加										

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               07/05/26  16:35:48  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               11/05/26  17:48:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    49   1        iap_init();
    50   1        Load_Params_From_EEPROM();
    51   1      
-C251 COMPILER V5.60.0,  main                                                               07/05/26  16:35:48  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               11/05/26  17:48:12  PAGE 2   
 
    52   1        while (1)
    53   1        {
@@ -75,18 +75,20 @@ stmt  level    source
    56   3            Key_Menu_Adjust();
    57   3            UI_Display_Update();
    58   3          }
-   59   2      
-   60   2          // 无线串口发送电感值（%f 不支持，改用整数）
-   61   2          //sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f\r\n",L,LM,RM,R);    
-   62   2          //wireless_uart_send_string(dat);
-   63   2          
-   64   2        }
-   65   1      }
+   59   2          dl1a_get_distance();
+   60   2          printf("\r\nDL1A distance data: %5d", dl1a_distance_mm);
+   61   2          system_delay_ms(35);
+   62   2          // 无线串口发送电感值（%f 不支持，改用整数）
+   63   2          //sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f\r\n",L,LM,RM,R);    
+   64   2          //wireless_uart_send_string(dat);
+   65   2          
+   66   2        }
+   67   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       144     ------
+  code size            =       177     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -101,7 +103,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         2     ------
+  hconst size          =        28     ------
 End of Module Information.
 
 

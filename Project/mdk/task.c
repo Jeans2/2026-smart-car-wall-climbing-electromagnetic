@@ -5,7 +5,6 @@
 
 
 
-
 void System_Init(void)
 {
      key_init();
@@ -15,8 +14,9 @@ void System_Init(void)
 		ips114_init();
 		imu660rc_init(IMU660RC_QUARTERNION_DISABLE);
 	  fuya_init();
-	wireless_uart_init();
+	//wireless_uart_init();
 		gyro_init_calibration();
+		dl1a_init();
 }
 
 void caiyang(void)

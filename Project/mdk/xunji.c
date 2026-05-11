@@ -14,7 +14,7 @@ static uint8 ring_data_sent = 0;
 
 void xunji(void)
 {
-	if (L + LM >90&&abs(LM-L)<10&&pitch<40 &&ring_flag_ing == 0)
+	if (L + LM >100&&abs(LM-L)<10&&pitch<40 &&ring_flag_ing == 0)
 	{
 		element = 1;
 		ringR_flag_task = 1;
@@ -45,9 +45,9 @@ void xunji(void)
 	case 1:
 		if (ring_data_sent == 0)
 		{
-			char buf[64];
-			sprintf(buf, "L:%f,LM:%f,RM:%f,R:%f,pitch:%f\r\n",L,LM,RM,R,pitch);	
-			wireless_uart_send_string(buf);
+//			char buf[64];
+//			sprintf(buf, "L:%f,LM:%f,RM:%f,R:%f,pitch:%f\r\n",L,LM,RM,R,pitch);	
+//			wireless_uart_send_string(buf);
 			ring_data_sent = 1;
 		}
 		ringR_task();

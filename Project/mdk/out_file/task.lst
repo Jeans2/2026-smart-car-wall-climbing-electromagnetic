@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  task                                                               07/05/26  16:17:13  PAGE 1   
+C251 COMPILER V5.60.0,  task                                                               11/05/26  17:39:45  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE task
@@ -16,18 +16,18 @@ stmt  level    source
     5          
     6          
     7          
-    8          
-    9          void System_Init(void)
-   10          {
-   11   1           key_init();
-   12   1          my_adc_init();
-   13   1          encoder_init();       
-   14   1          motor_init();       
-   15   1          ips114_init();
-   16   1          imu660rc_init(IMU660RC_QUARTERNION_DISABLE);
-   17   1          fuya_init();
-   18   1        wireless_uart_init();
-   19   1          gyro_init_calibration();
+    8          void System_Init(void)
+    9          {
+   10   1           key_init();
+   11   1          my_adc_init();
+   12   1          encoder_init();       
+   13   1          motor_init();       
+   14   1          ips114_init();
+   15   1          imu660rc_init(IMU660RC_QUARTERNION_DISABLE);
+   16   1          fuya_init();
+   17   1        //wireless_uart_init();
+   18   1          gyro_init_calibration();
+   19   1          dl1a_init();
    20   1      }
    21          
    22          void caiyang(void)

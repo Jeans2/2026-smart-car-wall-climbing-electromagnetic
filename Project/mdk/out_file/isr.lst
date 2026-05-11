@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
@@ -66,7 +66,7 @@ stmt  level    source
    49   2      
    50   2              // 串口停车命令
    51   2              if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
-C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 2   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 2   
 
    52   2              {
    53   3                  start_ramp_flag = 0;
@@ -134,7 +134,7 @@ stmt  level    source
   115   2              if (uart3_irq_handler != NULL)
   116   2              {
   117   3                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
-C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 3   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 3   
 
   118   3              }
   119   2          }
@@ -195,14 +195,14 @@ stmt  level    source
   174   1          {                 
   175   2              encoder_update();
   176   2              angle_get();
-  177   2            
+  177   2             //dl1a_get_distance();
   178   2              
   179   2      //        gyro_loop(expect_gyro,0);//获取correctL 
   180   2              timer_10ms_count++;// 计数器累加                   
   181   2      
   182   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
   183   2              {
-C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 4   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 4   
 
   184   3                  timer_10ms_count = 0;  // 计数器清零
   185   3                  caiyang();      
@@ -270,7 +270,7 @@ stmt  level    source
   246   2          }
   247   1      }
   248          
-C251 COMPILER V5.60.0,  isr                                                                07/05/26  16:13:11  PAGE 5   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 5   
 
   249          
 

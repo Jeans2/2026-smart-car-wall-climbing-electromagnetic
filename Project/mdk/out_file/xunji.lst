@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  xunji                                                              07/05/26  16:53:25  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              11/05/26  17:41:47  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
@@ -25,7 +25,7 @@ stmt  level    source
    14          
    15          void xunji(void)
    16          {
-   17   1        if (L + LM >90&&abs(LM-L)<10&&pitch<40 &&ring_flag_ing == 0)
+   17   1        if (L + LM >100&&abs(LM-L)<10&&pitch<40 &&ring_flag_ing == 0)
    18   1        {
    19   2          element = 1;
    20   2          ringR_flag_task = 1;
@@ -56,9 +56,9 @@ stmt  level    source
    45   2        case 1:
    46   2          if (ring_data_sent == 0)
    47   2          {
-   48   3            char buf[64];
-   49   3            sprintf(buf, "L:%f,LM:%f,RM:%f,R:%f,pitch:%f\r\n",L,LM,RM,R,pitch); 
-   50   3            wireless_uart_send_string(buf);
+   48   3      //      char buf[64];
+   49   3      //      sprintf(buf, "L:%f,LM:%f,RM:%f,R:%f,pitch:%f\r\n",L,LM,RM,R,pitch); 
+   50   3      //      wireless_uart_send_string(buf);
    51   3            ring_data_sent = 1;
    52   3          }
    53   2          ringR_task();
@@ -66,7 +66,7 @@ stmt  level    source
    55   2          break;
    56   2      
    57   2        case 9:
-C251 COMPILER V5.60.0,  xunji                                                              07/05/26  16:53:25  PAGE 2   
+C251 COMPILER V5.60.0,  xunji                                                              11/05/26  17:41:47  PAGE 2   
 
    58   2          start_ramp_flag = 0;
    59   2          break;
@@ -134,7 +134,7 @@ stmt  level    source
   121   2          speed_loop_LR(target_L, target_R);
   122   2          set_pwm_motor_R(out_R);
   123   2          set_pwm_motor_L(out_L);
-C251 COMPILER V5.60.0,  xunji                                                              07/05/26  16:53:25  PAGE 3   
+C251 COMPILER V5.60.0,  xunji                                                              11/05/26  17:41:47  PAGE 3   
 
   124   2        if (L + LM + RM + R < 30)
   125   2          {
@@ -146,12 +146,12 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1012     ------
+  code size            =       875     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        85     ------
+  xdata size           =        21     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -161,7 +161,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        86     ------
+  hconst size          =        53     ------
 End of Module Information.
 
 

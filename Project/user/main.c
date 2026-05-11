@@ -56,7 +56,9 @@ void main()
 			Key_Menu_Adjust();
 			UI_Display_Update();
 		}
-
+		dl1a_get_distance();
+		printf("\r\nDL1A distance data: %5d", dl1a_distance_mm);
+		system_delay_ms(35);
 		// 无线串口发送电感值（%f 不支持，改用整数）
 		//sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f\r\n",L,LM,RM,R);		
 		//wireless_uart_send_string(dat);

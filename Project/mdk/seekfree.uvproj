@@ -605,26 +605,6 @@
               <FilePath>..\..\libraries\zf_device\zf_device_dl1b.h</FilePath>
             </File>
             <File>
-              <FileName>zf_device_gps_tau1201.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_gps_tau1201.c</FilePath>
-            </File>
-            <File>
-              <FileName>zf_device_gps_tau1201.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_gps_tau1201.h</FilePath>
-            </File>
-            <File>
-              <FileName>zf_device_icm20602.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_icm20602.c</FilePath>
-            </File>
-            <File>
-              <FileName>zf_device_icm20602.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_icm20602.h</FilePath>
-            </File>
-            <File>
               <FileName>zf_device_imu660ra.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\zf_device\zf_device_imu660ra.c</FilePath>
@@ -645,16 +625,6 @@
               <FilePath>..\..\libraries\zf_device\zf_device_imu660rb.h</FilePath>
             </File>
             <File>
-              <FileName>zf_device_imu963ra.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_imu963ra.c</FilePath>
-            </File>
-            <File>
-              <FileName>zf_device_imu963ra.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_imu963ra.h</FilePath>
-            </File>
-            <File>
               <FileName>zf_device_ips114.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\zf_device\zf_device_ips114.c</FilePath>
@@ -665,16 +635,6 @@
               <FilePath>..\..\libraries\zf_device\zf_device_ips114.h</FilePath>
             </File>
             <File>
-              <FileName>zf_device_ips200.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_ips200.c</FilePath>
-            </File>
-            <File>
-              <FileName>zf_device_ips200.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_ips200.h</FilePath>
-            </File>
-            <File>
               <FileName>zf_device_ips200pro.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Libraries\zf_device\zf_device_ips200pro.c</FilePath>
@@ -683,16 +643,6 @@
               <FileName>zf_device_ips200pro.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Libraries\zf_device\zf_device_ips200pro.h</FilePath>
-            </File>
-            <File>
-              <FileName>zf_device_tft180.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_tft180.c</FilePath>
-            </File>
-            <File>
-              <FileName>zf_device_tft180.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\zf_device\zf_device_tft180.h</FilePath>
             </File>
             <File>
               <FileName>zf_device_tsl1401.c</FileName>
