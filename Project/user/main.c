@@ -37,31 +37,40 @@
 #include "main.h"
 
 #define PIT_CH  (TIM1_PIT)
-char dat[64];
+
 void main()
 {
-	clock_init(SYSTEM_CLOCK_30M);
-	debug_init();
-	System_Init();
-	pit_ms_init(PIT_CH, 2);
-	tim1_irq_handler = encoder_update;
-	gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
-	iap_init();
-	Load_Params_From_EEPROM();
+    clock_init(SYSTEM_CLOCK_30M);
+    debug_init();
+    System_Init();
+    
+    
+    //gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
+    iap_init();
+    Load_Params_From_EEPROM();
+		pit_ms_init(PIT_CH, 2);
+		tim1_irq_handler = encoder_update;
+//    while (1)
+//    {
+//        if (dl1a_init())
+//        {
+//            printf("\r\nDL1A init error.");
+//        }
+//        else
+//        {
+//            break;
+//        }
+//    }
 
-	while (1)
-	{
-		if (start_ramp_flag == 0)
-		{
-			Key_Menu_Adjust();
-			UI_Display_Update();
-		}
-		dl1a_get_distance();
-		printf("\r\nDL1A distance data: %5d", dl1a_distance_mm);
-		system_delay_ms(35);
-		// 无线串口发送电感值（%f 不支持，改用整数）
-		//sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f\r\n",L,LM,RM,R);		
-		//wireless_uart_send_string(dat);
+    while (1)
+    {
+//        if (start_ramp_flag == 0)
+//        {
+//            Key_Menu_Adjust();
+//            UI_Display_Update();
+//        }
+				
+        printf("\r\nDL1A distance data: %5d", dl1a_distance_mm);
+    }
 		
-	}
 }

@@ -14,7 +14,9 @@ static uint8 ring_data_sent = 0;
 
 void xunji(void)
 {
-	if (L + LM >100&&abs(LM-L)<10&&pitch<40 &&ring_flag_ing == 0)
+	
+
+	if (L + LM > 100 && dl1a_distance_mm > 4000 && ring_flag_ing == 0)
 	{
 		element = 1;
 		ringR_flag_task = 1;

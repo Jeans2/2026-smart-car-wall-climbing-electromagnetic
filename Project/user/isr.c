@@ -174,16 +174,19 @@ void TM1_IRQHandler() interrupt 3
     {									
 				encoder_update();
 				angle_get();
-			 //dl1a_get_distance();
+			 
 				
 //			  gyro_loop(expect_gyro,0);//获取correctL 
-        timer_10ms_count++;// 计数器累加										
+ 
+
+	        timer_10ms_count++;// 计数器累加										
 
 			if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
         {
             timer_10ms_count = 0;  // 计数器清零
 					  caiyang();      
-					adc_differ();	
+					  adc_differ();	
+						dl1a_get_distance();	
 					if (element == 1&&ringR_flag_task==1)
 					{
 							deviation = deviation -40;
@@ -211,7 +214,7 @@ void TM1_IRQHandler() interrupt 3
 				
 				 break;
 					
-			}	
+			 }	
     }
 }
 

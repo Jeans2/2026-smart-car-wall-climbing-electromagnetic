@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  imu660rb                                                           11/05/26  17:37:27  PAGE 1   
+C251 COMPILER V5.60.0,  imu660rb                                                           11/05/26  21:31:10  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE imu660rb
@@ -66,7 +66,7 @@ stmt  level    source
    55   1      
    56   1        if (gyro_z > -0.5f && gyro_z < 0.5f) gyro_z = 0;
    57   1      
-C251 COMPILER V5.60.0,  imu660rb                                                           11/05/26  17:37:27  PAGE 2   
+C251 COMPILER V5.60.0,  imu660rb                                                           11/05/26  21:31:10  PAGE 2   
 
    58   1        avl_gyro_z = gyro_z;
    59   1        gyro_z_filtered = alpha * gyro_z_filtered + (1.0f - alpha) * avl_gyro_z;
@@ -135,7 +135,7 @@ Module Information          Static   Overlayable
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-C251 COMPILER V5.60.0,  imu660rb                                                           11/05/26  17:37:27  PAGE 3   
+C251 COMPILER V5.60.0,  imu660rb                                                           11/05/26  21:31:10  PAGE 3   
 
   xdata size           =        90     ------
   xdata-const size     =    ------     ------

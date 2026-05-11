@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
@@ -66,7 +66,7 @@ stmt  level    source
    49   2      
    50   2              // 串口停车命令
    51   2              if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 2   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 2   
 
    52   2              {
    53   3                  start_ramp_flag = 0;
@@ -134,7 +134,7 @@ stmt  level    source
   115   2              if (uart3_irq_handler != NULL)
   116   2              {
   117   3                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 3   
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 3   
 
   118   3              }
   119   2          }
@@ -195,89 +195,92 @@ stmt  level    source
   174   1          {                 
   175   2              encoder_update();
   176   2              angle_get();
-  177   2             //dl1a_get_distance();
+  177   2             
   178   2              
   179   2      //        gyro_loop(expect_gyro,0);//获取correctL 
-  180   2              timer_10ms_count++;// 计数器累加                   
+  180   2       
   181   2      
-  182   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
-  183   2              {
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 4   
+  182   2                timer_10ms_count++;// 计数器累加                   
+  183   2      
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 4   
 
-  184   3                  timer_10ms_count = 0;  // 计数器清零
-  185   3                  caiyang();      
-  186   3                adc_differ(); 
-  187   3                if (element == 1&&ringR_flag_task==1)
-  188   3                {
-  189   4                    deviation = deviation -40;
-  190   4                }
-  191   3                if (element == 1&&ringR_flag_task==4)
-  192   3                {
-  193   4                    deviation = deviation +40;
-  194   4                }
-  195   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
+  184   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
+  185   2              {
+  186   3                  timer_10ms_count = 0;  // 计数器清零
+  187   3                  caiyang();      
+  188   3                  adc_differ(); 
+  189   3                  dl1a_get_distance();  
+  190   3                if (element == 1&&ringR_flag_task==1)
+  191   3                {
+  192   4                    deviation = deviation -40;
+  193   4                }
+  194   3                if (element == 1&&ringR_flag_task==4)
+  195   3                {
+  196   4                    deviation = deviation +40;
+  197   4                }
+  198   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
              -                   // 10ms执行一次的函数
-  196   3               
-  197   3              }
-  198   2            switch (start_ramp_flag)
-  199   2            {
-  200   3              case 1:
-  201   3                fuya_set_duty(7000);
-  202   3                xunji();
-  203   3      
-  204   3               break;   
-  205   3             
-  206   3              case 0:
-  207   3              
-  208   3                set_pwm_motor_R(0);
-  209   3                set_pwm_motor_L(0);
-  210   3                fuya_set_duty(0);
-  211   3              
-  212   3               break;
-  213   3                
-  214   3            } 
-  215   2          }
-  216   1      }
-  217          
-  218          
-  219          void TM2_IRQHandler() interrupt 12
-  220          {
-  221   1          TIM2_CLEAR_FLAG;
-  222   1      
-  223   1          if (tim2_irq_handler != NULL)
-  224   1          {
-  225   2              tim2_irq_handler();
-  226   2          }
-  227   1      }
-  228          
-  229          void TM3_IRQHandler() interrupt 19
-  230          {
-  231   1          TIM3_CLEAR_FLAG;
-  232   1      
-  233   1          if (tim3_irq_handler != NULL)
-  234   1          {
-  235   2              tim3_irq_handler();
-  236   2          }
-  237   1      }
-  238          
-  239          void TM4_IRQHandler() interrupt 20
-  240          {
-  241   1          TIM4_CLEAR_FLAG;
-  242   1      
-  243   1          if (tim4_irq_handler != NULL)
-  244   1          {
-  245   2              tim4_irq_handler();
-  246   2          }
-  247   1      }
-  248          
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  17:49:30  PAGE 5   
+  199   3               
+  200   3              }
+  201   2            switch (start_ramp_flag)
+  202   2            {
+  203   3              case 1:
+  204   3                fuya_set_duty(7000);
+  205   3                xunji();
+  206   3      
+  207   3               break;   
+  208   3             
+  209   3              case 0:
+  210   3              
+  211   3                set_pwm_motor_R(0);
+  212   3                set_pwm_motor_L(0);
+  213   3                fuya_set_duty(0);
+  214   3              
+  215   3               break;
+  216   3                
+  217   3             }  
+  218   2          }
+  219   1      }
+  220          
+  221          
+  222          void TM2_IRQHandler() interrupt 12
+  223          {
+  224   1          TIM2_CLEAR_FLAG;
+  225   1      
+  226   1          if (tim2_irq_handler != NULL)
+  227   1          {
+  228   2              tim2_irq_handler();
+  229   2          }
+  230   1      }
+  231          
+  232          void TM3_IRQHandler() interrupt 19
+  233          {
+  234   1          TIM3_CLEAR_FLAG;
+  235   1      
+  236   1          if (tim3_irq_handler != NULL)
+  237   1          {
+  238   2              tim3_irq_handler();
+  239   2          }
+  240   1      }
+  241          
+  242          void TM4_IRQHandler() interrupt 20
+  243          {
+  244   1          TIM4_CLEAR_FLAG;
+  245   1      
+  246   1          if (tim4_irq_handler != NULL)
+  247   1          {
+  248   2              tim4_irq_handler();
+C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 5   
 
-  249          
+  249   2          }
+  250   1      }
+  251          
+  252          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1178     ------
+  code size            =      1181     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
