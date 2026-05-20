@@ -296,15 +296,17 @@ void UI_Display_Update(void)
             ips114_show_string(10, 16*1, "LM:                ");
             ips114_show_string(10, 16*2, "RM:                ");
             ips114_show_string(10, 16*3, "R :                ");
-            ips114_show_string(10, 16*4, "P :                ");
+            ips114_show_string(10, 16*4, "Y :                ");
+            ips114_show_string(10, 16*5, "R :                ");
 
             ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
             ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
             ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
             ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
-            ips114_show_float(40, 16*4, pitch, 3, 1);
+            ips114_show_float(40, 16*4, imu660rc_yaw, 4, 1);
+            ips114_show_float(40, 16*5, imu660rc_roll, 4, 1);
 
-            ips114_show_string(0, 16*5, " KEY4: Back        ");
+            ips114_show_string(0, 16*6, " KEY4: Back        ");
             break;
     }
 }

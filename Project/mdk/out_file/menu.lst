@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  menu                                                               11/05/26  21:31:09  PAGE 1   
+C251 COMPILER V5.60.0,  menu                                                               15/05/26  22:04:31  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE menu
@@ -66,7 +66,7 @@ stmt  level    source
    55   2              memcpy(&adc_set_differ.B,  &read_buf[20], 4);
    56   2              memcpy(&adc_set_differ.C,  &read_buf[24], 4);
    57   2          }
-C251 COMPILER V5.60.0,  menu                                                               11/05/26  21:31:09  PAGE 2   
+C251 COMPILER V5.60.0,  menu                                                               15/05/26  22:04:31  PAGE 2   
 
    58   1          else
    59   1          {
@@ -134,7 +134,7 @@ stmt  level    source
   121   4      
   122   4                      case MENU_SPEED:
   123   4                          Save_Params_To_EEPROM();
-C251 COMPILER V5.60.0,  menu                                                               11/05/26  21:31:09  PAGE 3   
+C251 COMPILER V5.60.0,  menu                                                               15/05/26  22:04:31  PAGE 3   
 
   124   4                          menu_state = MENU_TUNE_CATE;
   125   4                          cursor_index = 0;
@@ -202,7 +202,7 @@ stmt  level    source
   184   4                      if(cursor_index == 1) { pid_motor_run.Kd -= 0.1f; if(pid_motor_run.Kd < 0) pid_motor_run.
              -Kd = 0; }
   185   4                  }
-C251 COMPILER V5.60.0,  menu                                                               11/05/26  21:31:09  PAGE 4   
+C251 COMPILER V5.60.0,  menu                                                               15/05/26  22:04:31  PAGE 4   
 
   186   3                  else if(menu_state == MENU_FORM) {
   187   4                      if(cursor_index == 0) { adc_set_differ.A -= 0.1f; if(adc_set_differ.A < 0) adc_set_differ
@@ -270,7 +270,7 @@ stmt  level    source
   240   1      
   241   1          if (start_ramp_flag == 1) {
   242   2              ips114_show_string(0, 3*16, "                  ");
-C251 COMPILER V5.60.0,  menu                                                               11/05/26  21:31:09  PAGE 5   
+C251 COMPILER V5.60.0,  menu                                                               15/05/26  22:04:31  PAGE 5   
 
   243   2              ips114_show_string(0, 4*16, " >>> RUNNING! >>> ");
   244   2              ips114_show_string(0, 5*16, " PRESS KEY5 STOP  ");
@@ -335,25 +335,27 @@ stmt  level    source
   296   2                  ips114_show_string(10, 16*1, "LM:                ");
   297   2                  ips114_show_string(10, 16*2, "RM:                ");
   298   2                  ips114_show_string(10, 16*3, "R :                ");
-  299   2                  ips114_show_string(10, 16*4, "P :                ");
-  300   2      
-  301   2                  ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
-C251 COMPILER V5.60.0,  menu                                                               11/05/26  21:31:09  PAGE 6   
+  299   2                  ips114_show_string(10, 16*4, "Y :                ");
+  300   2                  ips114_show_string(10, 16*5, "R :                ");
+  301   2      
+C251 COMPILER V5.60.0,  menu                                                               15/05/26  22:04:31  PAGE 6   
 
-  302   2                  ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
-  303   2                  ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
-  304   2                  ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
-  305   2                  ips114_show_float(40, 16*4, pitch, 3, 1);
-  306   2      
-  307   2                  ips114_show_string(0, 16*5, " KEY4: Back        ");
-  308   2                  break;
-  309   2          }
-  310   1      }
+  302   2                  ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
+  303   2                  ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
+  304   2                  ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
+  305   2                  ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
+  306   2                  ips114_show_float(40, 16*4, imu660rc_yaw, 4, 1);
+  307   2                  ips114_show_float(40, 16*5, imu660rc_roll, 4, 1);
+  308   2      
+  309   2                  ips114_show_string(0, 16*6, " KEY4: Back        ");
+  310   2                  break;
+  311   2          }
+  312   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      3537     ------
+  code size            =      3585     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

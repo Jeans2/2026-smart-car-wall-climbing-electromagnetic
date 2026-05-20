@@ -12,9 +12,9 @@ void System_Init(void)
     encoder_init();       
     motor_init();       
 		ips114_init();
-		imu660rc_init(IMU660RC_QUARTERNION_DISABLE);
+		imu660rc_init(IMU660RC_QUARTERNION_120HZ);
 	  fuya_init();
-	//wireless_uart_init();
+	wireless_uart_init();
 		gyro_init_calibration();
 		dl1a_init();
 }

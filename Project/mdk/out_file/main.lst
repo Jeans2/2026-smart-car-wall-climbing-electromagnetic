@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               11/05/26  22:58:11  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               15/05/26  23:07:14  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -54,7 +54,7 @@ stmt  level    source
    37          #include "main.h"
    38          
    39          #define PIT_CH  (TIM1_PIT)
-   40          
+   40          char dat[64];
    41          void main()
    42          {
    43   1          clock_init(SYSTEM_CLOCK_30M);
@@ -62,47 +62,40 @@ stmt  level    source
    45   1          System_Init();
    46   1          
    47   1          
-   48   1          //gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
+   48   1          gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
    49   1          iap_init();
    50   1          Load_Params_From_EEPROM();
    51   1          pit_ms_init(PIT_CH, 2);
-C251 COMPILER V5.60.0,  main                                                               11/05/26  22:58:11  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               15/05/26  23:07:14  PAGE 2   
 
-   52   1          tim1_irq_handler = encoder_update;
-   53   1      //    while (1)
-   54   1      //    {
-   55   1      //        if (dl1a_init())
-   56   1      //        {
-   57   1      //            printf("\r\nDL1A init error.");
-   58   1      //        }
-   59   1      //        else
-   60   1      //        {
-   61   1      //            break;
-   62   1      //        }
-   63   1      //    }
-   64   1      
-   65   1          while (1)
-   66   1          {
-   67   2      //        if (start_ramp_flag == 0)
-   68   2      //        {
-   69   2      //            Key_Menu_Adjust();
-   70   2      //            UI_Display_Update();
-   71   2      //        }
-   72   2              
-   73   2              printf("\r\nDL1A distance data: %5d", dl1a_distance_mm);
-   74   2          }
-   75   1          
-   76   1      }
+   52   1          interrupt_set_priority(TIMER1_IRQn, 3);  // TM1 最高优先级，不被 INT0 打断
+   53   1          tim1_irq_handler = encoder_update;
+   54   1      
+   55   1      
+   56   1          while (1)
+   57   1          {
+   58   2              if (start_ramp_flag == 0)
+   59   2              {
+   60   3                  Key_Menu_Adjust();
+   61   3                  UI_Display_Update();
+   62   3              }
+   63   2            
+   64   2                //sprintf(dat, "%d,%d,%d\r\n", speed_L,speed_R,230);
+   65   2                  //wireless_uart_send_string(dat);
+   66   2              //printf("speed_L:%d,speed_R:%d,%d\r\n", speed_L,speed_R,230);
+   67   2          }
+   68   1          
+   69   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       135     ------
+  code size            =       153     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =    ------     ------
+  xdata size           =        64     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -112,7 +105,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        28     ------
+  hconst size          =         2     ------
 End of Module Information.
 
 

@@ -8,6 +8,7 @@ extern int8 ringR_flag_task;
 extern int16 speed_straight;
 extern int16 speed_ringR;
 extern uint8 start_ramp_flag;
+extern float ring_entry_dist;
 
 void xunji(void);
 

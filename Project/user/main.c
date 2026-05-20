@@ -37,7 +37,7 @@
 #include "main.h"
 
 #define PIT_CH  (TIM1_PIT)
-
+char dat[64];
 void main()
 {
     clock_init(SYSTEM_CLOCK_30M);
@@ -45,32 +45,25 @@ void main()
     System_Init();
     
     
-    //gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
+    gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
     iap_init();
     Load_Params_From_EEPROM();
 		pit_ms_init(PIT_CH, 2);
+		interrupt_set_priority(TIMER1_IRQn, 3);  // TM1 最高优先级，不被 INT0 打断
 		tim1_irq_handler = encoder_update;
-//    while (1)
-//    {
-//        if (dl1a_init())
-//        {
-//            printf("\r\nDL1A init error.");
-//        }
-//        else
-//        {
-//            break;
-//        }
-//    }
+
 
     while (1)
     {
-//        if (start_ramp_flag == 0)
-//        {
-//            Key_Menu_Adjust();
-//            UI_Display_Update();
-//        }
-				
-        printf("\r\nDL1A distance data: %5d", dl1a_distance_mm);
+        if (start_ramp_flag == 0)
+        {
+            Key_Menu_Adjust();
+            UI_Display_Update();
+        }
+			
+					//sprintf(dat, "%d,%d,%d\r\n", speed_L,speed_R,230);
+            //wireless_uart_send_string(dat);
+        //printf("speed_L:%d,speed_R:%d,%d\r\n", speed_L,speed_R,230);
     }
 		
 }

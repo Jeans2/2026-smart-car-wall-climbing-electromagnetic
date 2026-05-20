@@ -55,7 +55,7 @@ void adc_normalizing(void)
 }
 
 float deviation;
-struct ADC adc_set_differ = {1.0f, 2.3f, 1.2f};
+struct ADC adc_set_differ = {1.0f, 2.0f, 1.2f};
 
 void adc_differ(void)
 {

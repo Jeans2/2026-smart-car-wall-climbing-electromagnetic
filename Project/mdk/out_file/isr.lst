@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                16/05/26  21:50:39  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
@@ -51,241 +51,210 @@ stmt  level    source
              -************/
    35          
    36          #include "zf_common_headfile.h"
-   37          //#define large_t (0.02*1)
-   38          //#define small_t (0.02*0.5)
-   39          static unsigned char timer_10ms_count = 0;
-   40          
-   41          void DMA_UART1_IRQHandler(void) interrupt 4
-   42          {
-   43   1          static vuint8 dwon_count = 0;
-   44   1      
-   45   1          if (DMA_UR1R_STA & 0x01) // 接收完成
-   46   1          {
-   47   2              DMA_UR1R_STA &= ~0x01;      // 清标志位
-   48   2              uart_rx_start_buff(UART_1); // 设置下一次接收，务必保留
-   49   2      
-   50   2              // 串口停车命令
-   51   2              if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 2   
+   37          static unsigned char timer_10ms_count = 0;
+   38          
+   39          void DMA_UART1_IRQHandler(void) interrupt 4
+   40          {
+   41   1          static vuint8 dwon_count = 0;
+   42   1      
+   43   1          if (DMA_UR1R_STA & 0x01)
+   44   1          {
+   45   2              DMA_UR1R_STA &= ~0x01;
+   46   2              uart_rx_start_buff(UART_1);
+   47   2      
+   48   2              // 串口停车命令
+   49   2              if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
+   50   2              {
+   51   3                  start_ramp_flag = 0;
+C251 COMPILER V5.60.0,  isr                                                                16/05/26  21:50:39  PAGE 2   
 
-   52   2              {
-   53   3                  start_ramp_flag = 0;
-   54   3              }
-   55   2      
-   56   2              // 程序自动下载
-   57   2              if (uart_rx_buff[UART_1][0] == 0x7F)
-   58   2              {
-   59   3                  if (dwon_count++ > 20)
-   60   3                  {
-   61   4                      IAP_CONTR = 0x60;
-   62   4                  }
-   63   3              }
-   64   2              else
-   65   2              {
-   66   3                  dwon_count = 0;
-   67   3              }
-   68   2      
-   69   2              if (uart1_irq_handler != NULL)
-   70   2              {
-   71   3                  uart1_irq_handler(uart_rx_buff[UART_1][0]);
-   72   3              }
-   73   2          }
-   74   1      
-   75   1          if (DMA_UR1R_STA & 0x02) // 数据丢弃
-   76   1          {
-   77   2              DMA_UR1R_STA &= ~0x02;      // 清标志位
-   78   2              uart_rx_start_buff(UART_1); // 设置下一次接收，务必保留
-   79   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   80   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   81   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-   82   2          }
-   83   1      }
-   84          
-   85          void DMA_UART2_IRQHandler(void) interrupt 8
-   86          {
-   87   1          if (DMA_UR2R_STA & 0x01) // 接收完成
-   88   1          {
-   89   2              DMA_UR2R_STA &= ~0x01;      // 清标志位
-   90   2              uart_rx_start_buff(UART_2); // 设置下一次接收，务必保留
-   91   2      
-   92   2              if (uart2_irq_handler != NULL)
-   93   2              {
-   94   3                  uart2_irq_handler(uart_rx_buff[UART_2][0]);
-   95   3              }
-   96   2          }
-   97   1      
-   98   1          if (DMA_UR2R_STA & 0x02) // 数据丢弃
+   52   3              }
+   53   2      
+   54   2              // 程序自动下载
+   55   2              if (uart_rx_buff[UART_1][0] == 0x7F)
+   56   2              {
+   57   3                  if (dwon_count++ > 20)
+   58   3                  {
+   59   4                      IAP_CONTR = 0x60;
+   60   4                  }
+   61   3              }
+   62   2              else
+   63   2              {
+   64   3                  dwon_count = 0;
+   65   3              }
+   66   2      
+   67   2              if (uart1_irq_handler != NULL)
+   68   2              {
+   69   3                  uart1_irq_handler(uart_rx_buff[UART_1][0]);
+   70   3              }
+   71   2          }
+   72   1      
+   73   1          if (DMA_UR1R_STA & 0x02)
+   74   1          {
+   75   2              DMA_UR1R_STA &= ~0x02;
+   76   2              uart_rx_start_buff(UART_1);
+   77   2          }
+   78   1      }
+   79          
+   80          void DMA_UART2_IRQHandler(void) interrupt 8
+   81          {
+   82   1          if (DMA_UR2R_STA & 0x01)
+   83   1          {
+   84   2              DMA_UR2R_STA &= ~0x01;
+   85   2              uart_rx_start_buff(UART_2);
+   86   2              if (uart2_irq_handler != NULL)
+   87   2                  uart2_irq_handler(uart_rx_buff[UART_2][0]);
+   88   2          }
+   89   1          if (DMA_UR2R_STA & 0x02)
+   90   1          {
+   91   2              DMA_UR2R_STA &= ~0x02;
+   92   2              uart_rx_start_buff(UART_2);
+   93   2          }
+   94   1      }
+   95          
+   96          void DMA_UART3_IRQHandler(void) interrupt 17
+   97          {
+   98   1          if (DMA_UR3R_STA & 0x01)
    99   1          {
-  100   2              DMA_UR2R_STA &= ~0x02;      // 清标志位
-  101   2              uart_rx_start_buff(UART_2); // 设置下一次接收，务必保留
-  102   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  103   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  104   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  105   2          }
-  106   1      }
-  107          
-  108          void DMA_UART3_IRQHandler(void) interrupt 17
-  109          {
-  110   1          if (DMA_UR3R_STA & 0x01) // 接收完成
-  111   1          {
-  112   2              DMA_UR3R_STA &= ~0x01;      // 清标志位
-  113   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
-  114   2      
-  115   2              if (uart3_irq_handler != NULL)
-  116   2              {
-  117   3                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 3   
+  100   2              DMA_UR3R_STA &= ~0x01;
+  101   2              uart_rx_start_buff(UART_3);
+  102   2              if (uart3_irq_handler != NULL)
+  103   2                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
+  104   2          }
+  105   1          if (DMA_UR3R_STA & 0x02)
+  106   1          {
+  107   2              DMA_UR3R_STA &= ~0x02;
+  108   2              uart_rx_start_buff(UART_3);
+  109   2          }
+  110   1      }
+  111          
+  112          void DMA_UART4_IRQHandler(void) interrupt 18
+  113          {
+  114   1          if (DMA_UR4R_STA & 0x01)
+  115   1          {
+  116   2              DMA_UR4R_STA &= ~0x01;
+  117   2              uart_rx_start_buff(UART_4);
+C251 COMPILER V5.60.0,  isr                                                                16/05/26  21:50:39  PAGE 3   
 
-  118   3              }
-  119   2          }
-  120   1      
-  121   1          if (DMA_UR3R_STA & 0x02) // 数据丢弃
-  122   1          {
-  123   2              DMA_UR3R_STA &= ~0x02;      // 清标志位
-  124   2              uart_rx_start_buff(UART_3); // 设置下一次接收，务必保留
-  125   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  126   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  127   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  128   2          }
-  129   1      }
-  130          
-  131          void DMA_UART4_IRQHandler(void) interrupt 18
-  132          {
-  133   1          if (DMA_UR4R_STA & 0x01) // 接收完成
-  134   1          {
-  135   2              DMA_UR4R_STA &= ~0x01;      // 清标志位
-  136   2              uart_rx_start_buff(UART_4); // 设置下一次接收，务必保留
-  137   2      
-  138   2              // 无线串口停车命令
-  139   2              if (uart_rx_buff[UART_4][0] == 'S' || uart_rx_buff[UART_4][0] == 's')
-  140   2              {
-  141   3                  start_ramp_flag = 0;
-  142   3              }
-  143   2      
-  144   2              if (uart4_irq_handler != NULL)
-  145   2              {
-  146   3                  uart4_irq_handler(uart_rx_buff[UART_4][0]);
-  147   3              }
-  148   2          }
-  149   1          if (DMA_UR4R_STA & 0x02) // 数据丢弃
-  150   1          {
-  151   2              DMA_UR4R_STA &= ~0x02;      // 清标志位
-  152   2              uart_rx_start_buff(UART_4); // 设置下一次接收，务必保留
-  153   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  154   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  155   2              // 如果进入了这个中断，则代表UART的数据在没有取走之前被覆盖!
-  156   2          }
-  157   1      }
-  158          
-  159          void TM0_IRQHandler() interrupt 1
-  160          {
-  161   1          TIM0_CLEAR_FLAG;
-  162   1      
-  163   1          if (tim0_irq_handler != NULL)
-  164   1          {
-  165   2              tim0_irq_handler();
-  166   2          }
-  167   1      }
-  168          
-  169          void TM1_IRQHandler() interrupt 3
-  170          {
-  171   1          TIM1_CLEAR_FLAG;
-  172   1      
-  173   1          if (tim1_irq_handler != NULL)
-  174   1          {                 
-  175   2              encoder_update();
-  176   2              angle_get();
-  177   2             
-  178   2              
-  179   2      //        gyro_loop(expect_gyro,0);//获取correctL 
-  180   2       
-  181   2      
-  182   2                timer_10ms_count++;// 计数器累加                   
-  183   2      
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 4   
+  118   2      
+  119   2              // 无线串口停车命令
+  120   2              if (uart_rx_buff[UART_4][0] == 'S' || uart_rx_buff[UART_4][0] == 's')
+  121   2              {
+  122   3                  start_ramp_flag = 0;
+  123   3              }
+  124   2      
+  125   2              if (uart4_irq_handler != NULL)
+  126   2                  uart4_irq_handler(uart_rx_buff[UART_4][0]);
+  127   2          }
+  128   1          if (DMA_UR4R_STA & 0x02)
+  129   1          {
+  130   2              DMA_UR4R_STA &= ~0x02;
+  131   2              uart_rx_start_buff(UART_4);
+  132   2          }
+  133   1      }
+  134          
+  135          void INT0_IRQHandler() interrupt 0
+  136          {
+  137   1          INT0_CLEAR_FLAG;
+  138   1          if (int0_irq_handler != NULL)
+  139   1              int0_irq_handler();
+  140   1      }
+  141          
+  142          void TM0_IRQHandler() interrupt 1
+  143          {
+  144   1          TIM0_CLEAR_FLAG;
+  145   1          if (tim0_irq_handler != NULL)
+  146   1              tim0_irq_handler();
+  147   1      }
+  148          
+  149          void TM1_IRQHandler() interrupt 3
+  150          {
+  151   1          TIM1_CLEAR_FLAG;
+  152   1      
+  153   1          if (tim1_irq_handler != NULL)
+  154   1          {
+  155   2              encoder_update();
+  156   2              angle_get();
+  157   2      
+  158   2              // 环岛入环直行距离累积
+  159   2              if (element == 1 && ringR_flag_task == 1)
+  160   2                  ring_entry_dist += speed_avl;
+  161   2      
+  162   2              timer_10ms_count++;
+  163   2      
+  164   2              if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
+  165   2              {
+  166   3                  timer_10ms_count = 0;
+  167   3                  caiyang();
+  168   3                  adc_differ();
+  169   3      
+  170   3                  if (element == 1 && ringR_flag_task == 1 && ring_entry_dist >= 1000)
+  171   3                      deviation = deviation + 35;
+  172   3                  if (element == 1 && ringR_flag_task == 4)
+  173   3                      deviation = deviation - 40;
+  174   3      
+  175   3                  direction_loop(deviation);
+  176   3              }
+  177   2      
+  178   2              {
+  179   3                  static uint16 ramp_cnt = 0;
+  180   3      
+  181   3                  switch (start_ramp_flag)
+  182   3                  {
+  183   4                      case 1:
+C251 COMPILER V5.60.0,  isr                                                                16/05/26  21:50:39  PAGE 4   
 
-  184   2            if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
-  185   2              {
-  186   3                  timer_10ms_count = 0;  // 计数器清零
-  187   3                  caiyang();      
-  188   3                  adc_differ(); 
-  189   3                  dl1a_get_distance();  
-  190   3                if (element == 1&&ringR_flag_task==1)
-  191   3                {
-  192   4                    deviation = deviation -40;
-  193   4                }
-  194   3                if (element == 1&&ringR_flag_task==4)
-  195   3                {
-  196   4                    deviation = deviation +40;
-  197   4                }
-  198   3                direction_loop(deviation);  //外环 转向环 输入电磁误差 输出期望角速度        
-             -                   // 10ms执行一次的函数
-  199   3               
-  200   3              }
-  201   2            switch (start_ramp_flag)
-  202   2            {
-  203   3              case 1:
-  204   3                fuya_set_duty(7000);
-  205   3                xunji();
-  206   3      
-  207   3               break;   
-  208   3             
-  209   3              case 0:
-  210   3              
-  211   3                set_pwm_motor_R(0);
-  212   3                set_pwm_motor_L(0);
-  213   3                fuya_set_duty(0);
-  214   3              
-  215   3               break;
-  216   3                
-  217   3             }  
-  218   2          }
-  219   1      }
-  220          
-  221          
-  222          void TM2_IRQHandler() interrupt 12
-  223          {
-  224   1          TIM2_CLEAR_FLAG;
-  225   1      
-  226   1          if (tim2_irq_handler != NULL)
-  227   1          {
-  228   2              tim2_irq_handler();
-  229   2          }
-  230   1      }
-  231          
-  232          void TM3_IRQHandler() interrupt 19
-  233          {
-  234   1          TIM3_CLEAR_FLAG;
-  235   1      
-  236   1          if (tim3_irq_handler != NULL)
-  237   1          {
-  238   2              tim3_irq_handler();
-  239   2          }
-  240   1      }
-  241          
-  242          void TM4_IRQHandler() interrupt 20
-  243          {
-  244   1          TIM4_CLEAR_FLAG;
-  245   1      
-  246   1          if (tim4_irq_handler != NULL)
-  247   1          {
-  248   2              tim4_irq_handler();
-C251 COMPILER V5.60.0,  isr                                                                11/05/26  22:54:59  PAGE 5   
-
-  249   2          }
-  250   1      }
-  251          
-  252          
+  184   4                          fuya_set_duty(7000);
+  185   4                          if (ramp_cnt == 0) ips114_clear(0x0000);  // 发车时关屏
+  186   4                          if (ramp_cnt < 250)  // 2ms * 250 = 500ms
+  187   4                              ramp_cnt++;
+  188   4                          else
+  189   4                              xunji();
+  190   4                          break;
+  191   4      
+  192   4                      case 0:
+  193   4                          ramp_cnt = 0;
+  194   4                          set_pwm_motor_R(0);
+  195   4                          set_pwm_motor_L(0);
+  196   4                          fuya_set_duty(0);
+  197   4                          break;
+  198   4                  }
+  199   3              }
+  200   2      
+  201   2          }
+  202   1          
+  203   1      }
+  204          
+  205          void TM2_IRQHandler() interrupt 12
+  206          {
+  207   1          TIM2_CLEAR_FLAG;
+  208   1          if (tim2_irq_handler != NULL)
+  209   1              tim2_irq_handler();
+  210   1      }
+  211          
+  212          void TM3_IRQHandler() interrupt 19
+  213          {
+  214   1          TIM3_CLEAR_FLAG;
+  215   1          if (tim3_irq_handler != NULL)
+  216   1              tim3_irq_handler();
+  217   1      }
+  218          
+  219          void TM4_IRQHandler() interrupt 20
+  220          {
+  221   1          TIM4_CLEAR_FLAG;
+  222   1          if (tim4_irq_handler != NULL)
+  223   1              tim4_irq_handler();
+  224   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1181     ------
+  code size            =      1376     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         2     ------
+  xdata size           =         4     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -295,7 +264,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        12     ------
+  hconst size          =        19     ------
 End of Module Information.
 
 

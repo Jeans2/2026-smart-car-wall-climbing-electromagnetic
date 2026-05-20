@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  adc                                                                11/05/26  21:31:09  PAGE 1   
+C251 COMPILER V5.60.0,  adc                                                                15/05/26  23:06:56  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE adc
@@ -66,9 +66,9 @@ stmt  level    source
    55   1      }
    56          
    57          float deviation;
-C251 COMPILER V5.60.0,  adc                                                                11/05/26  21:31:09  PAGE 2   
+C251 COMPILER V5.60.0,  adc                                                                15/05/26  23:06:56  PAGE 2   
 
-   58          struct ADC adc_set_differ = {1.0f, 2.3f, 1.2f};
+   58          struct ADC adc_set_differ = {1.0f, 2.0f, 1.2f};
    59          
    60          void adc_differ(void)
    61          {

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  task                                                               11/05/26  22:58:11  PAGE 1   
+C251 COMPILER V5.60.0,  task                                                               15/05/26  22:04:31  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE task
@@ -23,9 +23,9 @@ stmt  level    source
    12   1          encoder_init();       
    13   1          motor_init();       
    14   1          ips114_init();
-   15   1          imu660rc_init(IMU660RC_QUARTERNION_DISABLE);
+   15   1          imu660rc_init(IMU660RC_QUARTERNION_120HZ);
    16   1          fuya_init();
-   17   1        //wireless_uart_init();
+   17   1        wireless_uart_init();
    18   1          gyro_init_calibration();
    19   1          dl1a_init();
    20   1      }
@@ -41,7 +41,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =        39     ------
+  code size            =        42     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
