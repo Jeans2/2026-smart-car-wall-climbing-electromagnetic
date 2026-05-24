@@ -60,10 +60,13 @@ void main()
             Key_Menu_Adjust();
             UI_Display_Update();
         }
-			
+			//dl1a_get_distance();
 					//sprintf(dat, "%d,%d,%d\r\n", speed_L,speed_R,230);
             //wireless_uart_send_string(dat);
         //printf("speed_L:%d,speed_R:%d,%d\r\n", speed_L,speed_R,230);
+				//sprintf(dat, "%f,%f,%f,%f\r\n",L ,LM,RM,R);
+				//sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f,distance:%d\r\n", L, LM, RM, R, dl1a_distance_mm);
+			//wireless_uart_send_string(dat);
     }
 		
 }

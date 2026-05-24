@@ -170,7 +170,7 @@ void TM1_IRQHandler() interrupt 3
             if (element == 1 && ringR_flag_task == 1 && ring_entry_dist >= 1000)
                 deviation = deviation + 35;
             if (element == 1 && ringR_flag_task == 4)
-                deviation = deviation - 40;
+                deviation = deviation - 45;
 
             direction_loop(deviation);
         }

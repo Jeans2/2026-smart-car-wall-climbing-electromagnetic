@@ -16,6 +16,13 @@ static float yaw_last  = 0;
 static float yaw_sum   = 0;
 float ring_entry_dist = 0;
 
+#define SEESAW_SLOW_START_DIST 75000.0f
+#define SEESAW_SLOW_END_DIST   90000.0f
+
+static uint8 seesaw_after_ring_enable = 0;
+static uint8 seesaw_dist_sent = 0;
+static float seesaw_after_ring_dist = 0;
+
 void xunji(void)
 {
     if (L + R > 110 && ring_flag_ing == 0)
@@ -43,15 +50,35 @@ void xunji(void)
     case 0:
         ring_data_sent = 0;
 
-        // 跷跷板检测：电感总和骤降 → 降速防飞
         {
-            static float sum_last = 0;
-            float sum_now = L + LM + RM + R;
-            if (sum_now < sum_last - 80 && sum_now > 10)
-                speed_target = 120;
+            if (seesaw_after_ring_enable)
+            {
+                if (speed_avl > 0)
+                    seesaw_after_ring_dist += speed_avl;
+
+                if (seesaw_after_ring_dist >= SEESAW_SLOW_START_DIST &&
+                    seesaw_after_ring_dist <= SEESAW_SLOW_END_DIST)
+                {
+                    if (seesaw_dist_sent == 0)
+                    {
+                        char buf[40];
+                        sprintf(buf, "seesaw_dist:%.0f\r\n", seesaw_after_ring_dist);
+                        wireless_uart_send_string(buf);
+                        seesaw_dist_sent = 1;
+                    }
+                    speed_target = 180;
+                }
+                else
+                {
+                    speed_target = speed_straight;
+                    if (seesaw_after_ring_dist > SEESAW_SLOW_END_DIST)
+                        seesaw_after_ring_enable = 0;
+                }
+            }
             else
+            {
                 speed_target = speed_straight;
-            sum_last = sum_now;
+            }
         }
         speed_loop_LR(speed_target + correct_L, speed_target - correct_L);
         set_pwm_motor_R(out_R);
@@ -93,7 +120,7 @@ static void ringR_task(void)
             if (dyaw >  180) dyaw -= 360;
             if (dyaw < -180) dyaw += 360;
             yaw_sum += fabs(dyaw);
-            if (yaw_sum > 340)
+            if (yaw_sum > 300)
             {
                 ringR_flag_task = 4;
                 ringR_flag_execute = 4;
@@ -106,11 +133,14 @@ static void ringR_task(void)
 
     case 4:
         distance_ringR += speed_avl;
-        if (distance_ringR > 30000)
+        if (distance_ringR > 40000)
         {
             distance_ringR = 0;
             ringR_flag_task = 0;
             ringR_flag_execute = 1;
+            seesaw_after_ring_enable = 1;
+            seesaw_after_ring_dist = 0;
+            seesaw_dist_sent = 0;
             element = 0;
         }
         break;

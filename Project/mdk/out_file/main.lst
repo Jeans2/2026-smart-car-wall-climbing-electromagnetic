@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               15/05/26  23:07:14  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               23/05/26  18:48:43  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,7 +66,7 @@ stmt  level    source
    49   1          iap_init();
    50   1          Load_Params_From_EEPROM();
    51   1          pit_ms_init(PIT_CH, 2);
-C251 COMPILER V5.60.0,  main                                                               15/05/26  23:07:14  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               23/05/26  18:48:43  PAGE 2   
 
    52   1          interrupt_set_priority(TIMER1_IRQn, 3);  // TM1 最高优先级，不被 INT0 打断
    53   1          tim1_irq_handler = encoder_update;
@@ -79,13 +79,16 @@ stmt  level    source
    60   3                  Key_Menu_Adjust();
    61   3                  UI_Display_Update();
    62   3              }
-   63   2            
+   63   2            //dl1a_get_distance();
    64   2                //sprintf(dat, "%d,%d,%d\r\n", speed_L,speed_R,230);
    65   2                  //wireless_uart_send_string(dat);
    66   2              //printf("speed_L:%d,speed_R:%d,%d\r\n", speed_L,speed_R,230);
-   67   2          }
-   68   1          
-   69   1      }
+   67   2              //sprintf(dat, "%f,%f,%f,%f\r\n",L ,LM,RM,R);
+   68   2              //sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f,distance:%d\r\n", L, LM, RM, R, dl1a_distance_mm);
+   69   2            //wireless_uart_send_string(dat);
+   70   2          }
+   71   1          
+   72   1      }
 
 
 Module Information          Static   Overlayable
