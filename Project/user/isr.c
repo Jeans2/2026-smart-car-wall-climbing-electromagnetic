@@ -35,7 +35,6 @@
 
 #include "zf_common_headfile.h"
 static unsigned char timer_10ms_count = 0;
-static unsigned char timer_40ms_count = 0;
 void DMA_UART1_IRQHandler(void) interrupt 4
 {
     static vuint8 dwon_count = 0;
@@ -162,13 +161,6 @@ void TM1_IRQHandler() interrupt 3
         if (element == 1 && ringR_flag_task == 1)
             ring_entry_dist += speed_avl;
 
-        timer_40ms_count++;
-        if (timer_40ms_count >= 40)  // 2ms * 20 = 40ms
-        {
-            timer_40ms_count = 0;
-            tof_update_flag = 1;
-        }
-													
         timer_10ms_count++;
 
         if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
@@ -184,10 +176,10 @@ void TM1_IRQHandler() interrupt 3
 
             direction_loop(deviation);
         }
-//				speed_loop_LR(speed_straight,speed_straight);//�ٶȻ���ʱ���?
+//				speed_loop_LR(speed_straight,speed_straight);
 //        set_pwm_motor_R(out_R);
 //        set_pwm_motor_L(out_L);
-//				
+			
        {
             static uint16 ramp_cnt = 0;
             static uint8 ramp_output_state = 0;

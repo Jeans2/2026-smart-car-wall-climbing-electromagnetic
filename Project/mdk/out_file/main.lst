@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               27/05/26  16:27:39  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               27/05/26  22:03:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,50 +66,46 @@ stmt  level    source
    47   1          Load_Params_From_EEPROM();
    48   1          pit_ms_init(PIT_CH, 2);
    49   1          interrupt_set_priority(TIMER1_IRQn, 3);
-C251 COMPILER V5.60.0,  main                                                               27/05/26  16:27:39  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               27/05/26  22:03:23  PAGE 2   
 
    50   1          tim1_irq_handler = encoder_update;
    51   1      
    52   1          while (1)
    53   1          {
-   54   2              if (tof_update_flag)
-   55   2              {
-   56   3                  tof_update_flag = 0;
-   57   3                  dl1a_get_distance();
-   58   3              }
-   59   2      
-   60   2              if (ips114_clear_request)
-   61   2              {
-   62   3                  ips114_clear_request = 0;
-   63   3                  ips114_clear(0x0000);
-   64   3              }
-   65   2      
-   66   2              if (motor_stop_request)
-   67   2              {
-   68   3                  motor_stop_request = 0;
-   69   3                  set_pwm_motor_R(0);
-   70   3                  set_pwm_motor_L(0);
-   71   3                  fuya_set_duty(0);
-   72   3              }
-   73   2      
-   74   2              if (fuya_start_request)
-   75   2              {
-   76   3                  fuya_start_request = 0;
-   77   3                  fuya_set_duty(7000);
-   78   3              }
-   79   2              debug_uart_send();
-   80   2              if (start_ramp_flag == 0)
-   81   2              {
-   82   3                  Key_Menu_Adjust();
-   83   3                  UI_Display_Update();
-   84   3              }
-   85   2          }
-   86   1      }
+   54   2            
+   55   2              if (ips114_clear_request)
+   56   2              {
+   57   3                  ips114_clear_request = 0;
+   58   3                  ips114_clear(0x0000);
+   59   3              }
+   60   2      
+   61   2              if (motor_stop_request)
+   62   2              {
+   63   3                  motor_stop_request = 0;
+   64   3                  set_pwm_motor_R(0);
+   65   3                  set_pwm_motor_L(0);
+   66   3                  fuya_set_duty(0);
+   67   3              }
+   68   2      
+   69   2              if (fuya_start_request)
+   70   2              {
+   71   3                  fuya_start_request = 0;
+   72   3                  fuya_set_duty(7000);
+   73   3              }
+   74   2      
+   75   2              debug_uart_send();
+   76   2              if (start_ramp_flag == 0)
+   77   2              {
+   78   3                  Key_Menu_Adjust();
+   79   3                  UI_Display_Update();
+   80   3              }
+   81   2          }
+   82   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       242     ------
+  code size            =       225     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

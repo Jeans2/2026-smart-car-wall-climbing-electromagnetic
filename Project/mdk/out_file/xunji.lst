@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  20:13:58  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
@@ -19,8 +19,8 @@ stmt  level    source
     8          static int8 ringR_flag_execute = 1;
     9          static uint8 ring_flag_ing = 0;
    10          static float distance_ringR = 0;
-   11          int16 speed_straight = 200;
-   12          int16 speed_ringR = 185;
+   11          int16 speed_straight =180;
+   12          int16 speed_ringR = 180;
    13          static uint8 ring_data_sent = 0;
    14          static float yaw_start = 0;
    15          static float yaw_last  = 0;
@@ -66,158 +66,161 @@ stmt  level    source
    55   3                  xunji_debug_event = 5;
    56   3                  return;
    57   3              }
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  20:13:58  PAGE 2   
+C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 2   
 
    58   2          }
-   59   1      if (element == 0 && imu660rc_roll < ring_roll_max_angle && imu660rc_roll> 0 && L + R > 115 && LM+RM<30 &&
-             - dl1a_distance_mm > 5000 && dl1a_distance_mm < 8500 && ring_flag_ing == 0)//环岛判断
+   59   1      if (element == 0&& L + R > 115 && LM+RM<30 && ring_flag_ing == 0)//环岛判断
    60   1          {
-   61   2                  element = 1;
-   62   2                  ringR_flag_task = 1;
-   63   2                  ringR_flag_execute = 1;
-   64   2                  ring_flag_ing = 200;
-   65   2                  yaw_start = imu660rc_yaw;
-   66   2                  yaw_last  = imu660rc_yaw;
-   67   2                  yaw_sum   = 0;
-   68   2                  ring_entry_dist = 0;
-   69   2          }
-   70   1      
-   71   1          if (L + LM + RM + R < 10)//出街保护
-   72   1          {
-   73   2              element = 9;
-   74   2          }
-   75   1      
-   76   1          switch (element)
-   77   1          {
-   78   2          case 0:
-   79   2              ring_data_sent = 0;
-   80   2              speed_target = speed_straight;
-   81   2              speed_loop_LR(speed_target + correct_L, speed_target - correct_L);
-   82   2              set_pwm_motor_R(out_R);
-   83   2              set_pwm_motor_L(out_L);
-   84   2      
-   85   2              if (ring_flag_ing > 0)
-   86   2                  ring_flag_ing--;
-   87   2              break;
+   61   2            dl1a_get_distance();
+   62   2            if(dl1a_distance_mm >4000&&dl1a_distance_mm <8500)
+   63   2            {
+   64   3                  element = 1;
+   65   3                  ringR_flag_task = 1;
+   66   3                  ringR_flag_execute = 1;
+   67   3                  ring_flag_ing = 200;
+   68   3                  yaw_start = imu660rc_yaw;
+   69   3                  yaw_last  = imu660rc_yaw;
+   70   3                  yaw_sum   = 0;
+   71   3                  ring_entry_dist = 0;
+   72   3            }
+   73   2          }
+   74   1      
+   75   1          if (L + LM + RM + R < 10)//出街保护
+   76   1          {
+   77   2              element = 9;
+   78   2          }
+   79   1      
+   80   1          switch (element)
+   81   1          {
+   82   2          case 0:
+   83   2              ring_data_sent = 0;
+   84   2              speed_target = speed_straight;
+   85   2              speed_loop_LR(speed_target + correct_L, speed_target - correct_L);
+   86   2              set_pwm_motor_R(out_R);
+   87   2              set_pwm_motor_L(out_L);
    88   2      
-   89   2          case 1:
-   90   2              if (ring_data_sent == 0)
-   91   2              {
-   92   3                  xunji_debug_L = L;
-   93   3                  xunji_debug_LM = LM;
-   94   3                  xunji_debug_RM = RM;
-   95   3                  xunji_debug_R = R;
-   96   3                  xunji_debug_roll = imu660rc_roll;
-   97   3                  xunji_debug_distance = dl1a_distance_mm;
-   98   3                  xunji_debug_event = 2;
-   99   3                  ring_data_sent = 1;
-  100   3              }
-  101   2              ringR_task();
-  102   2              ringR_execute();
-  103   2              break;
-  104   2      
-  105   2          case 2:
-  106   2              speed_target = QQB_speed;
-  107   2              speed_loop_LR(speed_target + correct_L, speed_target - correct_L);
-  108   2              set_pwm_motor_R(out_R);
-  109   2              set_pwm_motor_L(out_L);
-  110   2      
-  111   2              QQB_slow_dist += speed_avl;
-  112   2              if (QQB_slow_dist >= QQB_slow_dist_target)//减速一段距离后回归循迹
-  113   2              {
-  114   3                  QQB_slow_dist = 0;
-  115   3                  element = 0;
-  116   3              }
-  117   2              break;
-  118   2      
-  119   2          case 9:
-  120   2              start_ramp_flag = 0;
+   89   2              if (ring_flag_ing > 0)
+   90   2                  ring_flag_ing--;
+   91   2              break;
+   92   2      
+   93   2          case 1:
+   94   2              if (ring_data_sent == 0)
+   95   2              {
+   96   3                  xunji_debug_L = L;
+   97   3                  xunji_debug_LM = LM;
+   98   3                  xunji_debug_RM = RM;
+   99   3                  xunji_debug_R = R;
+  100   3                  xunji_debug_roll = imu660rc_roll;
+  101   3                  xunji_debug_distance = dl1a_distance_mm;
+  102   3                  xunji_debug_event = 2;
+  103   3                  ring_data_sent = 1;
+  104   3              }
+  105   2              ringR_task();
+  106   2              ringR_execute();
+  107   2              break;
+  108   2      
+  109   2          case 2:
+  110   2              speed_target = QQB_speed;
+  111   2              speed_loop_LR(speed_target + correct_L, speed_target - correct_L);
+  112   2              set_pwm_motor_R(out_R);
+  113   2              set_pwm_motor_L(out_L);
+  114   2      
+  115   2              QQB_slow_dist += speed_avl;
+  116   2              if (QQB_slow_dist >= QQB_slow_dist_target)//减速一段距离后回归循迹
+  117   2              {
+  118   3                  QQB_slow_dist = 0;
+  119   3                  element = 0;
+  120   3              }
   121   2              break;
   122   2      
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  20:13:58  PAGE 3   
+  123   2          case 9:
+C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 3   
 
-  123   2          default:
-  124   2              break;
-  125   2          }
-  126   1      }
-  127          
-  128          static void ringR_task(void)
-  129          {
-  130   1          switch (ringR_flag_task)
-  131   1          {
-  132   2          case 1:
-  133   2              {
-  134   3                  float dyaw = imu660rc_yaw - yaw_last;
-  135   3                  yaw_last = imu660rc_yaw;
-  136   3                  if (dyaw >  180) dyaw -= 360;
-  137   3                  if (dyaw < -180) dyaw += 360;
-  138   3                  yaw_sum += fabs(dyaw);
-  139   3                  if (yaw_sum > 270)
-  140   3                  {
-  141   4                      ringR_flag_task = 4;
-  142   4                      ringR_flag_execute = 4;
-  143   4                      distance_ringR = 0;
-  144   4                      yaw_sum = 0;
-  145   4                      gpio_set_level(IO_P52, 0);
-  146   4                  }
-  147   3              }
-  148   2              break;
-  149   2      
-  150   2          case 4:
-  151   2              distance_ringR += speed_avl;
-  152   2              if (distance_ringR > 45000)
-  153   2              {
-  154   3                  distance_ringR = 0;
-  155   3                  ringR_flag_task = 0;
-  156   3                  ringR_flag_execute = 1;
-  157   3                  element = 0;
-  158   3              }
-  159   2              break;
-  160   2      
-  161   2          default:
-  162   2              break;
-  163   2          }
-  164   1      }
-  165          
-  166          static void ringR_execute(void)
-  167          {
-  168   1          float target_L = 0;
-  169   1          float target_R = 0;
-  170   1      
-  171   1          switch (ringR_flag_execute)
-  172   1          {
-  173   2          case 1:
-  174   2              speed_target = speed_ringR;
-  175   2              target_L = speed_target + correct_L;
-  176   2              target_R = speed_target - correct_L;
-  177   2              break;
-  178   2      
-  179   2          case 4:
-  180   2              speed_target = speed_ringR;
-  181   2              target_L = speed_target + correct_L;
-  182   2              target_R = speed_target - correct_L;
-  183   2              break;
-  184   2      
-  185   2          default:
-  186   2              break;
-  187   2          }
-  188   1      
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  20:13:58  PAGE 4   
+  124   2              start_ramp_flag = 0;
+  125   2              break;
+  126   2      
+  127   2          default:
+  128   2              break;
+  129   2          }
+  130   1      }
+  131          
+  132          static void ringR_task(void)
+  133          {
+  134   1          switch (ringR_flag_task)
+  135   1          {
+  136   2          case 1:
+  137   2              {
+  138   3                  float dyaw = imu660rc_yaw - yaw_last;
+  139   3                  yaw_last = imu660rc_yaw;
+  140   3                  if (dyaw >  180) dyaw -= 360;
+  141   3                  if (dyaw < -180) dyaw += 360;
+  142   3                  yaw_sum += fabs(dyaw);
+  143   3                  if (yaw_sum > 270)
+  144   3                  {
+  145   4                      ringR_flag_task = 4;
+  146   4                      ringR_flag_execute = 4;
+  147   4                      distance_ringR = 0;
+  148   4                      yaw_sum = 0;
+  149   4                      gpio_set_level(IO_P52, 0);
+  150   4                  }
+  151   3              }
+  152   2              break;
+  153   2      
+  154   2          case 4:
+  155   2              distance_ringR += speed_avl;
+  156   2              if (distance_ringR > 45000)
+  157   2              {
+  158   3                  distance_ringR = 0;
+  159   3                  ringR_flag_task = 0;
+  160   3                  ringR_flag_execute = 1;
+  161   3                  element = 0;
+  162   3              }
+  163   2              break;
+  164   2      
+  165   2          default:
+  166   2              break;
+  167   2          }
+  168   1      }
+  169          
+  170          static void ringR_execute(void)
+  171          {
+  172   1          float target_L = 0;
+  173   1          float target_R = 0;
+  174   1      
+  175   1          switch (ringR_flag_execute)
+  176   1          {
+  177   2          case 1:
+  178   2              speed_target = speed_ringR;
+  179   2              target_L = speed_target + correct_L;
+  180   2              target_R = speed_target - correct_L;
+  181   2              break;
+  182   2      
+  183   2          case 4:
+  184   2              speed_target = speed_ringR;
+  185   2              target_L = speed_target + correct_L;
+  186   2              target_R = speed_target - correct_L;
+  187   2              break;
+  188   2      
+  189   2          default:
+C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 4   
 
-  189   1          if (ringR_flag_execute != 0)
-  190   1          {
-  191   2              speed_loop_LR(target_L, target_R);
-  192   2              set_pwm_motor_R(out_R);
-  193   2              set_pwm_motor_L(out_L);
-  194   2              if (L + LM + RM + R < 10)
-  195   2                  start_ramp_flag = 0;
-  196   2          }
-  197   1      }
+  190   2              break;
+  191   2          }
+  192   1      
+  193   1          if (ringR_flag_execute != 0)
+  194   1          {
+  195   2              speed_loop_LR(target_L, target_R);
+  196   2              set_pwm_motor_R(out_R);
+  197   2              set_pwm_motor_L(out_L);
+  198   2              if (L + LM + RM + R < 10)
+  199   2                  start_ramp_flag = 0;
+  200   2          }
+  201   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1776     ------
+  code size            =      1735     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  isr                                                                27/05/26  16:27:39  PAGE 1   
+C251 COMPILER V5.60.0,  isr                                                                27/05/26  22:03:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE isr
@@ -56,231 +56,223 @@ stmt  level    source
    35          
    36          #include "zf_common_headfile.h"
    37          static unsigned char timer_10ms_count = 0;
-   38          static unsigned char timer_40ms_count = 0;
-   39          void DMA_UART1_IRQHandler(void) interrupt 4
-   40          {
-   41   1          static vuint8 dwon_count = 0;
-   42   1      
-   43   1          if (DMA_UR1R_STA & 0x01)
-   44   1          {
-   45   2              DMA_UR1R_STA &= ~0x01;
-   46   2              uart_rx_start_buff(UART_1);
-   47   2      
-C251 COMPILER V5.60.0,  isr                                                                27/05/26  16:27:39  PAGE 2   
+   38          void DMA_UART1_IRQHandler(void) interrupt 4
+   39          {
+   40   1          static vuint8 dwon_count = 0;
+   41   1      
+   42   1          if (DMA_UR1R_STA & 0x01)
+   43   1          {
+   44   2              DMA_UR1R_STA &= ~0x01;
+   45   2              uart_rx_start_buff(UART_1);
+   46   2      
+   47   2              // ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+C251 COMPILER V5.60.0,  isr                                                                27/05/26  22:03:23  PAGE 2   
 
-   48   2              // ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-   49   2              if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
-   50   2              {
-   51   3                  start_ramp_flag = 0;
-   52   3              }
-   53   2      
-   54   2              // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
-   55   2              if (uart_rx_buff[UART_1][0] == 0x7F)
-   56   2              {
-   57   3                  if (dwon_count++ > 20)
-   58   3                  {
-   59   4                      IAP_CONTR = 0x60;
-   60   4                  }
-   61   3              }
-   62   2              else
-   63   2              {
-   64   3                  dwon_count = 0;
-   65   3              }
-   66   2      
-   67   2              if (uart1_irq_handler != NULL)
-   68   2              {
-   69   3                  uart1_irq_handler(uart_rx_buff[UART_1][0]);
-   70   3              }
-   71   2          }
-   72   1      
-   73   1          if (DMA_UR1R_STA & 0x02)
-   74   1          {
-   75   2              DMA_UR1R_STA &= ~0x02;
-   76   2              uart_rx_start_buff(UART_1);
-   77   2          }
-   78   1      }
-   79          
-   80          void DMA_UART2_IRQHandler(void) interrupt 8
-   81          {
-   82   1          if (DMA_UR2R_STA & 0x01)
-   83   1          {
-   84   2              DMA_UR2R_STA &= ~0x01;
-   85   2              uart_rx_start_buff(UART_2);
-   86   2              if (uart2_irq_handler != NULL)
-   87   2                  uart2_irq_handler(uart_rx_buff[UART_2][0]);
-   88   2          }
-   89   1          if (DMA_UR2R_STA & 0x02)
-   90   1          {
-   91   2              DMA_UR2R_STA &= ~0x02;
-   92   2              uart_rx_start_buff(UART_2);
-   93   2          }
-   94   1      }
-   95          
-   96          void DMA_UART3_IRQHandler(void) interrupt 17
-   97          {
-   98   1          if (DMA_UR3R_STA & 0x01)
-   99   1          {
-  100   2              DMA_UR3R_STA &= ~0x01;
-  101   2              uart_rx_start_buff(UART_3);
-  102   2              if (uart3_irq_handler != NULL)
-  103   2                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
-  104   2          }
-  105   1          if (DMA_UR3R_STA & 0x02)
-  106   1          {
-  107   2              DMA_UR3R_STA &= ~0x02;
-  108   2              uart_rx_start_buff(UART_3);
-  109   2          }
-  110   1      }
-  111          
-  112          void DMA_UART4_IRQHandler(void) interrupt 18
-  113          {
-C251 COMPILER V5.60.0,  isr                                                                27/05/26  16:27:39  PAGE 3   
+   48   2              if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
+   49   2              {
+   50   3                  start_ramp_flag = 0;
+   51   3              }
+   52   2      
+   53   2              // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
+   54   2              if (uart_rx_buff[UART_1][0] == 0x7F)
+   55   2              {
+   56   3                  if (dwon_count++ > 20)
+   57   3                  {
+   58   4                      IAP_CONTR = 0x60;
+   59   4                  }
+   60   3              }
+   61   2              else
+   62   2              {
+   63   3                  dwon_count = 0;
+   64   3              }
+   65   2      
+   66   2              if (uart1_irq_handler != NULL)
+   67   2              {
+   68   3                  uart1_irq_handler(uart_rx_buff[UART_1][0]);
+   69   3              }
+   70   2          }
+   71   1      
+   72   1          if (DMA_UR1R_STA & 0x02)
+   73   1          {
+   74   2              DMA_UR1R_STA &= ~0x02;
+   75   2              uart_rx_start_buff(UART_1);
+   76   2          }
+   77   1      }
+   78          
+   79          void DMA_UART2_IRQHandler(void) interrupt 8
+   80          {
+   81   1          if (DMA_UR2R_STA & 0x01)
+   82   1          {
+   83   2              DMA_UR2R_STA &= ~0x01;
+   84   2              uart_rx_start_buff(UART_2);
+   85   2              if (uart2_irq_handler != NULL)
+   86   2                  uart2_irq_handler(uart_rx_buff[UART_2][0]);
+   87   2          }
+   88   1          if (DMA_UR2R_STA & 0x02)
+   89   1          {
+   90   2              DMA_UR2R_STA &= ~0x02;
+   91   2              uart_rx_start_buff(UART_2);
+   92   2          }
+   93   1      }
+   94          
+   95          void DMA_UART3_IRQHandler(void) interrupt 17
+   96          {
+   97   1          if (DMA_UR3R_STA & 0x01)
+   98   1          {
+   99   2              DMA_UR3R_STA &= ~0x01;
+  100   2              uart_rx_start_buff(UART_3);
+  101   2              if (uart3_irq_handler != NULL)
+  102   2                  uart3_irq_handler(uart_rx_buff[UART_3][0]);
+  103   2          }
+  104   1          if (DMA_UR3R_STA & 0x02)
+  105   1          {
+  106   2              DMA_UR3R_STA &= ~0x02;
+  107   2              uart_rx_start_buff(UART_3);
+  108   2          }
+  109   1      }
+  110          
+  111          void DMA_UART4_IRQHandler(void) interrupt 18
+  112          {
+  113   1          if (DMA_UR4R_STA & 0x01)
+C251 COMPILER V5.60.0,  isr                                                                27/05/26  22:03:23  PAGE 3   
 
-  114   1          if (DMA_UR4R_STA & 0x01)
-  115   1          {
-  116   2              DMA_UR4R_STA &= ~0x01;
-  117   2              uart_rx_start_buff(UART_4);
-  118   2      
-  119   2             //´®¿ÚÍ£³µ
-  120   2              if (uart_rx_buff[UART_4][0] == 'S' || uart_rx_buff[UART_4][0] == 's')
-  121   2              {
-  122   3                  start_ramp_flag = 0;
-  123   3              }
-  124   2      
-  125   2              if (uart4_irq_handler != NULL)
-  126   2                  uart4_irq_handler(uart_rx_buff[UART_4][0]);
-  127   2          }
-  128   1          if (DMA_UR4R_STA & 0x02)
-  129   1          {
-  130   2              DMA_UR4R_STA &= ~0x02;
-  131   2              uart_rx_start_buff(UART_4);
-  132   2          }
-  133   1      }
-  134          
-  135          void INT0_IRQHandler() interrupt 0
-  136          {
-  137   1          INT0_CLEAR_FLAG;
-  138   1          if (int0_irq_handler != NULL)
-  139   1              int0_irq_handler();
-  140   1      }
-  141          
-  142          void TM0_IRQHandler() interrupt 1
-  143          {
-  144   1          TIM0_CLEAR_FLAG;
-  145   1          if (tim0_irq_handler != NULL)
-  146   1              tim0_irq_handler();
-  147   1      }
+  114   1          {
+  115   2              DMA_UR4R_STA &= ~0x01;
+  116   2              uart_rx_start_buff(UART_4);
+  117   2      
+  118   2             //´®¿ÚÍ£³µ
+  119   2              if (uart_rx_buff[UART_4][0] == 'S' || uart_rx_buff[UART_4][0] == 's')
+  120   2              {
+  121   3                  start_ramp_flag = 0;
+  122   3              }
+  123   2      
+  124   2              if (uart4_irq_handler != NULL)
+  125   2                  uart4_irq_handler(uart_rx_buff[UART_4][0]);
+  126   2          }
+  127   1          if (DMA_UR4R_STA & 0x02)
+  128   1          {
+  129   2              DMA_UR4R_STA &= ~0x02;
+  130   2              uart_rx_start_buff(UART_4);
+  131   2          }
+  132   1      }
+  133          
+  134          void INT0_IRQHandler() interrupt 0
+  135          {
+  136   1          INT0_CLEAR_FLAG;
+  137   1          if (int0_irq_handler != NULL)
+  138   1              int0_irq_handler();
+  139   1      }
+  140          
+  141          void TM0_IRQHandler() interrupt 1
+  142          {
+  143   1          TIM0_CLEAR_FLAG;
+  144   1          if (tim0_irq_handler != NULL)
+  145   1              tim0_irq_handler();
+  146   1      }
+  147          
   148          
   149          
   150          
-  151          
-  152          void TM1_IRQHandler() interrupt 3
-  153          {
-  154   1          TIM1_CLEAR_FLAG;
-  155   1      
-  156   1          if (tim1_irq_handler != NULL)
-  157   1          {
-  158   2              encoder_update();
-  159   2              angle_get();
-  160   2      
-  161   2            
-  162   2              if (element == 1 && ringR_flag_task == 1)
-  163   2                  ring_entry_dist += speed_avl;
-  164   2      
-  165   2              timer_40ms_count++;
-  166   2              if (timer_40ms_count >= 40)  // 2ms * 20 = 40ms
+  151          void TM1_IRQHandler() interrupt 3
+  152          {
+  153   1          TIM1_CLEAR_FLAG;
+  154   1      
+  155   1          if (tim1_irq_handler != NULL)
+  156   1          {
+  157   2              encoder_update();
+  158   2              angle_get();
+  159   2      
+  160   2            
+  161   2              if (element == 1 && ringR_flag_task == 1)
+  162   2                  ring_entry_dist += speed_avl;
+  163   2      
+  164   2              timer_10ms_count++;
+  165   2      
+  166   2              if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
   167   2              {
-  168   3                  timer_40ms_count = 0;
-  169   3                  tof_update_flag = 1;
-  170   3              }
-  171   2                                
-  172   2              timer_10ms_count++;
-  173   2      
-  174   2              if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
-  175   2              {
-  176   3                  timer_10ms_count = 0;
-  177   3                  caiyang();
-  178   3                  adc_differ();
-  179   3      
-C251 COMPILER V5.60.0,  isr                                                                27/05/26  16:27:39  PAGE 4   
+  168   3                  timer_10ms_count = 0;
+  169   3                  caiyang();
+  170   3                  adc_differ();
+  171   3      
+  172   3                  if (element == 1 && ringR_flag_task == 1 && ring_entry_dist >= 1000)
+  173   3                      deviation = deviation -45;     //30
+  174   3                  if (element == 1 && ringR_flag_task == 4)
+  175   3                      deviation = deviation +30;     //40
+  176   3      
+  177   3                  direction_loop(deviation);
+  178   3              }
+  179   2      //        speed_loop_LR(speed_straight,speed_straight);
+C251 COMPILER V5.60.0,  isr                                                                27/05/26  22:03:23  PAGE 4   
 
-  180   3                  if (element == 1 && ringR_flag_task == 1 && ring_entry_dist >= 1000)
-  181   3                      deviation = deviation -45;     //30
-  182   3                  if (element == 1 && ringR_flag_task == 4)
-  183   3                      deviation = deviation +30;     //40
-  184   3      
-  185   3                  direction_loop(deviation);
-  186   3              }
-  187   2      //        speed_loop_LR(speed_straight,speed_straight);//ï¿½Ù¶È»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿?
-  188   2      //        set_pwm_motor_R(out_R);
-  189   2      //        set_pwm_motor_L(out_L);
-  190   2      //        
-  191   2             {
-  192   3                  static uint16 ramp_cnt = 0;
-  193   3                  static uint8 ramp_output_state = 0;
-  194   3                  switch (start_ramp_flag)
-  195   3                  {
-  196   4                      case 1:
-  197   4                          if (ramp_output_state == 0)
-  198   4                          {
-  199   5                              ramp_output_state = 1;
-  200   5                              fuya_start_request = 1;
-  201   5                          }
-  202   4                          if (ramp_cnt == 0) ips114_clear_request = 1;  // ·¢³µÊ±¹ØÆÁ
-  203   4                          if (ramp_cnt < 250)  // 2ms * 250 = 500ms
-  204   4                              ramp_cnt++;
-  205   4                          else
-  206   4                              xunji();
-  207   4                          break;
-  208   4      
-  209   4                      case 0:
-  210   4                          ramp_cnt = 0;
-  211   4                          if (ramp_output_state != 0)
-  212   4                          {
-  213   5                              ramp_output_state = 0;
-  214   5                              motor_stop_request = 1;
-  215   5                          }
-  216   4                          break;
-  217   4                  }
-  218   3              }
-  219   2      
-  220   2          }
-  221   1          
-  222   1      }
-  223          
-  224          void TM2_IRQHandler() interrupt 12
-  225          {
-  226   1          TIM2_CLEAR_FLAG;
-  227   1          if (tim2_irq_handler != NULL)
-  228   1              tim2_irq_handler();
-  229   1      }
-  230          
-  231          void TM3_IRQHandler() interrupt 19
-  232          {
-  233   1          TIM3_CLEAR_FLAG;
-  234   1          if (tim3_irq_handler != NULL)
-  235   1              tim3_irq_handler();
-  236   1      }
-  237          
-  238          void TM4_IRQHandler() interrupt 20
-  239          {
-  240   1          TIM4_CLEAR_FLAG;
-  241   1          if (tim4_irq_handler != NULL)
-  242   1              tim4_irq_handler();
-  243   1      }
+  180   2      //        set_pwm_motor_R(out_R);
+  181   2      //        set_pwm_motor_L(out_L);
+  182   2            
+  183   2             {
+  184   3                  static uint16 ramp_cnt = 0;
+  185   3                  static uint8 ramp_output_state = 0;
+  186   3                  switch (start_ramp_flag)
+  187   3                  {
+  188   4                      case 1:
+  189   4                          if (ramp_output_state == 0)
+  190   4                          {
+  191   5                              ramp_output_state = 1;
+  192   5                              fuya_start_request = 1;
+  193   5                          }
+  194   4                          if (ramp_cnt == 0) ips114_clear_request = 1;  // ·¢³µÊ±¹ØÆÁ
+  195   4                          if (ramp_cnt < 250)  // 2ms * 250 = 500ms
+  196   4                              ramp_cnt++;
+  197   4                          else
+  198   4                              xunji();
+  199   4                          break;
+  200   4      
+  201   4                      case 0:
+  202   4                          ramp_cnt = 0;
+  203   4                          if (ramp_output_state != 0)
+  204   4                          {
+  205   5                              ramp_output_state = 0;
+  206   5                              motor_stop_request = 1;
+  207   5                          }
+  208   4                          break;
+  209   4                  }
+  210   3              }
+  211   2      
+  212   2          }
+  213   1          
+  214   1      }
+  215          
+  216          void TM2_IRQHandler() interrupt 12
+  217          {
+  218   1          TIM2_CLEAR_FLAG;
+  219   1          if (tim2_irq_handler != NULL)
+  220   1              tim2_irq_handler();
+  221   1      }
+  222          
+  223          void TM3_IRQHandler() interrupt 19
+  224          {
+  225   1          TIM3_CLEAR_FLAG;
+  226   1          if (tim3_irq_handler != NULL)
+  227   1              tim3_irq_handler();
+  228   1      }
+  229          
+  230          void TM4_IRQHandler() interrupt 20
+  231          {
+  232   1          TIM4_CLEAR_FLAG;
+  233   1          if (tim4_irq_handler != NULL)
+  234   1              tim4_irq_handler();
+  235   1      }
 
-
-C251 COMPILER V5.60.0,  isr                                                                27/05/26  16:27:39  PAGE 5   
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1430     ------
+  code size            =      1396     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         6     ------
+  xdata size           =         5     ------
   xdata-const size     =    ------     ------
+C251 COMPILER V5.60.0,  isr                                                                27/05/26  22:03:23  PAGE 5   
+
   edata size           =    ------     ------
   bit size             =    ------     ------
   ebit size            =    ------     ------
@@ -289,7 +281,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        31     ------
+  hconst size          =        25     ------
 End of Module Information.
 
 

@@ -8,8 +8,8 @@ int8 ringR_flag_task = 0;
 static int8 ringR_flag_execute = 1;
 static uint8 ring_flag_ing = 0;
 static float distance_ringR = 0;
-int16 speed_straight = 200;
-int16 speed_ringR = 185;
+int16 speed_straight =180;
+int16 speed_ringR = 180;
 static uint8 ring_data_sent = 0;
 static float yaw_start = 0;
 static float yaw_last  = 0;
@@ -56,8 +56,11 @@ void xunji(void)
             return;
         }
     }
-if (element == 0 && imu660rc_roll < ring_roll_max_angle && imu660rc_roll> 0 && L + R > 115 && LM+RM<30 && dl1a_distance_mm > 5000 && dl1a_distance_mm < 8500 && ring_flag_ing == 0)//环岛判断
+if (element == 0&& L + R > 115 && LM+RM<30 && ring_flag_ing == 0)//环岛判断
     {
+			dl1a_get_distance();
+			if(dl1a_distance_mm >4000&&dl1a_distance_mm <8500)
+			{
 						element = 1;
             ringR_flag_task = 1;
             ringR_flag_execute = 1;
@@ -66,6 +69,7 @@ if (element == 0 && imu660rc_roll < ring_roll_max_angle && imu660rc_roll> 0 && L
             yaw_last  = imu660rc_yaw;
             yaw_sum   = 0;
             ring_entry_dist = 0;
+			}
     }
 
     if (L + LM + RM + R < 10)//出街保护

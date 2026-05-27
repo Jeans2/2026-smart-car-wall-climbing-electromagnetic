@@ -51,12 +51,7 @@ void main()
 
     while (1)
     {
-        if (tof_update_flag)
-        {
-            tof_update_flag = 0;
-            dl1a_get_distance();
-        }
-
+			
         if (ips114_clear_request)
         {
             ips114_clear_request = 0;
@@ -76,6 +71,7 @@ void main()
             fuya_start_request = 0;
             fuya_set_duty(7000);
         }
+
         debug_uart_send();
         if (start_ramp_flag == 0)
         {
