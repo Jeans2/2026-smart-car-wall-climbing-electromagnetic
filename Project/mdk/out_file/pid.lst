@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pid                                                                15/05/26  22:04:31  PAGE 1   
+C251 COMPILER V5.60.0,  pid                                                                27/05/26  16:27:40  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pid
@@ -66,7 +66,7 @@ stmt  level    source
    55   1      
    56   1        correct_L = pid_motor_run.Kp * direction_err1[0]
    57   1                  + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]);
-C251 COMPILER V5.60.0,  pid                                                                15/05/26  22:04:31  PAGE 2   
+C251 COMPILER V5.60.0,  pid                                                                27/05/26  16:27:40  PAGE 2   
 
    58   1      
    59   1        if (correct_L > 10000)  correct_L = 10000;

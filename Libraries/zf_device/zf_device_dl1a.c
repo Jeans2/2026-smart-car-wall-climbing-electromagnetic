@@ -934,7 +934,7 @@ uint8 dl1a_init (void)
         
         dl1a_write_register(DL1A_SYSRANGE_START, 0x02);
         dl1a_init_flag = 1;
-        
+
 #if DL1A_INT_ENABLE
         exti_init(DL1A_INT_PIN, EXTI_TRIGGER_FALLING);
         dl1a_int_handler();
@@ -943,6 +943,12 @@ uint8 dl1a_init (void)
         set_tof_type(TOF_DL1A, dl1a_int_handler);
     }
     while(0);
-    
+
     return return_state;
+}
+
+void dl1a_restart(void)
+{
+    if (dl1a_init_flag)
+        dl1a_write_register(DL1A_SYSRANGE_START, 0x02);
 }

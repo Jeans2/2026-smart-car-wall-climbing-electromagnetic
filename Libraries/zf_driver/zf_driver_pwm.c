@@ -153,6 +153,27 @@ void pwm_set_duty(pwm_channel_enum pin, uint32 duty)
 	
 }
 
+void pwm_set_duty_irq(pwm_channel_enum pin, uint32 duty)
+{
+    uint32 match_temp;
+    uint32 arr = (PWMX_ARRH(pin) << 8) | PWMX_ARRL(pin);
+
+    if(duty > PWM_DUTY_MAX)
+        duty = PWM_DUTY_MAX;
+
+    if(duty != PWM_DUTY_MAX)
+    {
+        match_temp = ((uint32)arr * duty) / PWM_DUTY_MAX;
+    }
+    else
+    {
+        match_temp = arr + 1;
+    }
+
+    PWMX_CCRXH(pin) = match_temp >> 8;
+    PWMX_CCRXL(pin) = (uint8)match_temp;
+}
+
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     PWM初始化
 // 参数说明     pin				PWM通道号及引脚

@@ -30,57 +30,39 @@
 #include "main.h"
 
 #define PIT_CH      (TIM1_PIT)
+#define TOF_PIT_CH  (TIM4_PIT)
 
-
-volatile uint8 tof_update_flag = 0;
-volatile uint8 ips114_clear_request = 0;
-volatile uint8 fuya_start_request = 0;
-volatile uint8 motor_stop_request = 0;
 char dat[64];
+
 void main()
 {
     clock_init(SYSTEM_CLOCK_30M);
     debug_init();
-    System_Init();
+    System_Init();     
     gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
     iap_init();
     Load_Params_From_EEPROM();
-    pit_ms_init(PIT_CH, 2);
-    interrupt_set_priority(TIMER1_IRQn, 3);
-    tim1_irq_handler = encoder_update;
-
+		pit_ms_init(PIT_CH, 2);
+		interrupt_set_priority(TIMER1_IRQn, 3);  // TM1 最高优先级，不�?INT0 打断
+		tim1_irq_handler = encoder_update;
+		pit_ms_init(TOF_PIT_CH, 80);
+		tim4_irq_handler = dl1a_get_distance;		
+		
     while (1)
     {
-        if (tof_update_flag)
-        {
-            tof_update_flag = 0;
-            dl1a_get_distance();
-        }
 
-        if (ips114_clear_request)
-        {
-            ips114_clear_request = 0;
-            ips114_clear(0x0000);
-        }
-
-        if (motor_stop_request)
-        {
-            motor_stop_request = 0;
-            set_pwm_motor_R(0);
-            set_pwm_motor_L(0);
-            fuya_set_duty(0);
-        }
-
-        if (fuya_start_request)
-        {
-            fuya_start_request = 0;
-            fuya_set_duty(7000);
-        }
-        debug_uart_send();
         if (start_ramp_flag == 0)
         {
             Key_Menu_Adjust();
             UI_Display_Update();
         }
+			//dl1a_get_distance();
+					//sprintf(dat, "%d,%d,%d\r\n", speed_L,speed_R,230);
+            //wireless_uart_send_string(dat);
+        //printf("speed_L:%d,speed_R:%d,%d\r\n", speed_L,speed_R,230);
+				//sprintf(dat, "%f,%f,%f,%f\r\n",L ,LM,RM,R);
+				//sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f,distance:%d\r\n", L, LM, RM, R, dl1a_distance_mm);
+			//wireless_uart_send_string(dat);
     }
+		
 }

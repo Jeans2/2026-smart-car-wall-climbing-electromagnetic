@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_driver_exti                                                     05/05/26  19:14:19  PAGE 1   
+C251 COMPILER V5.60.0,  zf_driver_exti                                                     27/05/26  14:38:52  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_driver_exti
@@ -66,7 +66,7 @@ stmt  level    source
    46   1        EX0 = 0;
    47   1        EX1 = 0;
    48   1        EX2 = 0;
-C251 COMPILER V5.60.0,  zf_driver_exti                                                     05/05/26  19:14:19  PAGE 2   
+C251 COMPILER V5.60.0,  zf_driver_exti                                                     27/05/26  14:38:52  PAGE 2   
 
    49   1        EX3 = 0;
    50   1        EX4 = 0;
@@ -134,7 +134,7 @@ stmt  level    source
   105          //  参数说明      eru_pin         选择 EXTI 引脚 (可选择范围由 zf_driver_exti.h 中 exti_pi
              -n_enum 枚举值确定)
   106          //  参数说明      trigger         设置触发方式
-C251 COMPILER V5.60.0,  zf_driver_exti                                                     05/05/26  19:14:19  PAGE 3   
+C251 COMPILER V5.60.0,  zf_driver_exti                                                     27/05/26  14:38:52  PAGE 3   
 
   107          //  返回参数      void
   108          //  使用示例      exti_init(INT0_P32, EXTI_TRIGGER_BOTH);  //初始化P32 为外部中断引脚，双

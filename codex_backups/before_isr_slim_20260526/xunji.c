@@ -16,49 +16,44 @@ static float yaw_last  = 0;
 static float yaw_sum   = 0;
 float ring_entry_dist = 0;
 
-#define QQB_slow_dist_target  20000.0f
-#define QQB_speed               100
-#define QQB_unlock_dist_target 90000.0f
-#define QQB_unlock_roll_angle   150.0f
-#define ring_roll_max_angle     40.0f
+#define QQB_stop_ticks       750
+#define QQB_speed            140
+#define QQB_detect_dist      200//µΩıŒıŒ∞Âæ‡¿Î
 
-static float QQB_slow_dist = 0;
-static uint8 QQB_detect_enable = 0;
-static float QQB_unlock_dist = 0;
-static uint8 QQB_roll_latch = 1;
+static uint8 QQB_after_ring_enable = 0;
+static uint8 QQB_dist_sent = 0;
+static float QQB_after_ring_dist = 0;
+static uint8 QQB_lock = 1;
+static uint16 QQB_stop_cnt = 0;
 
 void xunji(void)
 {
-  
-
-    if (imu660rc_roll < ring_roll_max_angle && imu660rc_roll > 0)
-        QQB_roll_latch = 0;
-
-    if (element == 0 && QQB_detect_enable == 0)
+if (element == 0 &&                             //÷±œﬂ—≠º£ ± ≈–∂œıŒıŒ∞Â æ‡¿Î¥Û”⁄0 –°”⁄350 
+        QQB_lock == 0 &&       
+        dl1a_distance_mm > 0 &&
+        dl1a_distance_mm < QQB_detect_dist)
     {
-        if (QQB_unlock_dist > 0)
-        {
-            QQB_unlock_dist += speed_avl;
-            if (QQB_unlock_dist >= QQB_unlock_dist_target)
-            {
-                QQB_unlock_dist = 0;
-                QQB_slow_dist = 0;
-                element = 2;
-                return;
-            }
-        }
-        else if (QQB_roll_latch == 0 && imu660rc_roll > QQB_unlock_roll_angle)
-        {
-            QQB_unlock_dist = 1;
-            QQB_roll_latch = 1;
-            xunji_debug_roll = imu660rc_roll;
-            xunji_debug_event = 5;
-            return;
-        }
+        char buf[64];
+        element = 2;
+        QQB_lock = 1;
+        QQB_stop_cnt = QQB_stop_ticks;
+        out_L = 0;
+        out_R = 0;
+        err_speed_L_last = 0;
+        err_speed_L = 0;
+        err_speed_R_last = 0;
+        err_speed_R = 0;
+        direction_err1[0] = 0;
+        direction_err1[1] = 0;
+        direction_err1[2] = 0;
+        correct_L = 0;
+        sprintf(buf, "QQB ok,LR:%f,d:%u\r\n", L + R, dl1a_distance_mm);
+        wireless_uart_send_string(buf);
     }
-if (element == 0 && imu660rc_roll < ring_roll_max_angle && imu660rc_roll> 0 && L + R > 115 && LM+RM<30 && dl1a_distance_mm > 5000 && dl1a_distance_mm < 8500 && ring_flag_ing == 0)//ª∑µ∫≈–∂œ
-    {
-						element = 1;
+
+    if (element == 0 && L + R > 115 && LM+RM<30 && dl1a_distance_mm > 5000 && dl1a_distance_mm < 8500 && ring_flag_ing == 0)//ª∑µ∫≈–∂œ
+    {              
+            element = 1;
             ringR_flag_task = 1;
             ringR_flag_execute = 1;
             ring_flag_ing = 200;
@@ -66,6 +61,7 @@ if (element == 0 && imu660rc_roll < ring_roll_max_angle && imu660rc_roll> 0 && L
             yaw_last  = imu660rc_yaw;
             yaw_sum   = 0;
             ring_entry_dist = 0;
+        
     }
 
     if (L + LM + RM + R < 10)//≥ˆΩ÷±£ª§
@@ -89,13 +85,9 @@ if (element == 0 && imu660rc_roll < ring_roll_max_angle && imu660rc_roll> 0 && L
     case 1:
         if (ring_data_sent == 0)
         {
-            xunji_debug_L = L;
-            xunji_debug_LM = LM;
-            xunji_debug_RM = RM;
-            xunji_debug_R = R;
-            xunji_debug_roll = imu660rc_roll;
-            xunji_debug_distance = dl1a_distance_mm;
-            xunji_debug_event = 2;
+            char buf[64];
+            sprintf(buf, "L:%f,LM:%f,RM:%f,R:%f,distance:%u\r\n", L, LM, RM, R, dl1a_distance_mm);
+            wireless_uart_send_string(buf);
             ring_data_sent = 1;
         }
         ringR_task();
@@ -108,10 +100,10 @@ if (element == 0 && imu660rc_roll < ring_roll_max_angle && imu660rc_roll> 0 && L
         set_pwm_motor_R(out_R);
         set_pwm_motor_L(out_L);
 
-        QQB_slow_dist += speed_avl;
-        if (QQB_slow_dist >= QQB_slow_dist_target)//ºıÀŸ“ª∂Œæ‡¿Î∫ÛªÿπÈ—≠º£
+        if (QQB_stop_cnt > 0)//—” ±ÕÍªÿπÈ—≠º£
+            QQB_stop_cnt--;
+        else
         {
-            QQB_slow_dist = 0;
             element = 0;
         }
         break;
@@ -154,6 +146,10 @@ static void ringR_task(void)
             distance_ringR = 0;
             ringR_flag_task = 0;
             ringR_flag_execute = 1;
+            QQB_after_ring_enable = 1;
+            QQB_after_ring_dist = 0;
+            QQB_dist_sent = 0;
+            QQB_lock = 0;
             element = 0;
         }
         break;

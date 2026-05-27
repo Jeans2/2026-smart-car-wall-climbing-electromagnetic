@@ -43,6 +43,7 @@
 ".\out_file\xunji.obj",
 ".\out_file\pid.obj",
 ".\out_file\task.obj",
+".\out_file\debug.obj",
 ".\out_file\adc.obj",
 ".\out_file\motor.obj",
 ".\out_file\encoder.obj",

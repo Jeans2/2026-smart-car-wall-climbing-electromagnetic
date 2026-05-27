@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               23/05/26  18:48:43  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               27/05/26  16:27:39  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -11,94 +11,110 @@ stmt  level    source
 
     1          /********************************************************************************************************
              -*************
-    2          * STC32G Opensourec Library 即（STC32G 开源库）是一个基于官方 SDK 接口的第三方开源�
-             -�
+    2          * STC32G Opensourec Library 即（STC32G 开源库）是一个基于官�?SDK 接口的第三方开源库
     3          * Copyright (c) 2022 SEEKFREE 逐飞科技
     4          *
     5          * 本文件是STC 开源库的一部分
     6          *
-    7          * STC32G 开源库 是免费软件
-    8          * 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许
-             -可证）的条款
-    9          * 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修�
-             -�它
-   10          *
-   11          * 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
-   12          * 甚至没有隐含的适销性或适合特定用途的保证
-   13          * 更多细节请参见 GPL
+    7          * STC32G 开源库 是免费软�?* 您可以根据自由软件基金会发布�?GPL（GNU General Public
+             - License，即 GNU通用公共许可证）的条�?* �?GPL 的第3版（�?GPL3.0）或（您选择的）任何后来�
+             -�版本，重新发布�?或修改它
+    8          *
+    9          * 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
+   10          * 甚至没有隐含的适销性或适合特定用途的保证
+   11          * 更多细节请参�?GPL
+   12          *
+   13          * 您应该在收到本开源库的同时收到一�?GPL 的副�?* 如果没有，请参阅<https://www.
+             -gnu.org/licenses/>
    14          *
-   15          * 您应该在收到本开源库的同时收到一份 GPL 的副本
-   16          * 如果没有，请参阅<https://www.gnu.org/licenses/>
-   17          *
-   18          * 额外注明：
-   19          * 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版本
-   20          * 许可申明英文版在 libraries/doc 文件夹下的 GPL3_permission_statement.txt 文件中
-   21          * 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
-   22          * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本
-             -声明）
+   15          * 额外注明�?* 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版�?* 许
+             -可申明英文版在 libraries/doc 文件夹下�?GPL3_permission_statement.txt 文件�?* 许可证副本在 libraries
+             - 文件夹下 即该文件夹下�?LICENSE 文件
+   16          * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本
+             -声明�?*
+   17          * 文件名称
+   18          * 公司名称          成都逐飞科技有限公司
+   19          * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
+   20          * 开发环�?         MDK FOR C251
+   21          * 适用平台          STC32G
+   22          * 店铺链接          https://seekfree.taobao.com/
    23          *
-   24          * 文件名称
-   25          * 公司名称          成都逐飞科技有限公司
-   26          * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
-   27          * 开发环境          MDK FOR C251
-   28          * 适用平台          STC32G
-   29          * 店铺链接          https://seekfree.taobao.com/
-   30          *
-   31          * 修改记录
-   32          * 日期              作者           备注
-   33          * 2024-08-01        大W            first version
-   34          *********************************************************************************************************
+   24          * 修改记录
+   25          * 日期              作�?          备注
+   26          * 2024-08-01        大W            first version
+   27          *********************************************************************************************************
              -***********/
-   35          
-   36          #include "zf_common_headfile.h"
-   37          #include "main.h"
-   38          
-   39          #define PIT_CH  (TIM1_PIT)
-   40          char dat[64];
-   41          void main()
-   42          {
-   43   1          clock_init(SYSTEM_CLOCK_30M);
-   44   1          debug_init();
-   45   1          System_Init();
-   46   1          
-   47   1          
-   48   1          gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
-   49   1          iap_init();
-   50   1          Load_Params_From_EEPROM();
-   51   1          pit_ms_init(PIT_CH, 2);
-C251 COMPILER V5.60.0,  main                                                               23/05/26  18:48:43  PAGE 2   
+   28          
+   29          #include "zf_common_headfile.h"
+   30          #include "main.h"
+   31          
+   32          #define PIT_CH      (TIM1_PIT)
+   33          
+   34          
+   35          volatile uint8 tof_update_flag = 0;
+   36          volatile uint8 ips114_clear_request = 0;
+   37          volatile uint8 fuya_start_request = 0;
+   38          volatile uint8 motor_stop_request = 0;
+   39          char dat[64];
+   40          void main()
+   41          {
+   42   1          clock_init(SYSTEM_CLOCK_30M);
+   43   1          debug_init();
+   44   1          System_Init();
+   45   1          gpio_init(IO_P52, GPO, 1, GPO_PUSH_PULL);
+   46   1          iap_init();
+   47   1          Load_Params_From_EEPROM();
+   48   1          pit_ms_init(PIT_CH, 2);
+   49   1          interrupt_set_priority(TIMER1_IRQn, 3);
+C251 COMPILER V5.60.0,  main                                                               27/05/26  16:27:39  PAGE 2   
 
-   52   1          interrupt_set_priority(TIMER1_IRQn, 3);  // TM1 最高优先级，不被 INT0 打断
-   53   1          tim1_irq_handler = encoder_update;
-   54   1      
-   55   1      
-   56   1          while (1)
-   57   1          {
-   58   2              if (start_ramp_flag == 0)
-   59   2              {
-   60   3                  Key_Menu_Adjust();
-   61   3                  UI_Display_Update();
-   62   3              }
-   63   2            //dl1a_get_distance();
-   64   2                //sprintf(dat, "%d,%d,%d\r\n", speed_L,speed_R,230);
-   65   2                  //wireless_uart_send_string(dat);
-   66   2              //printf("speed_L:%d,speed_R:%d,%d\r\n", speed_L,speed_R,230);
-   67   2              //sprintf(dat, "%f,%f,%f,%f\r\n",L ,LM,RM,R);
-   68   2              //sprintf(dat, "L:%f,LM:%f,RM:%f,R:%f,distance:%d\r\n", L, LM, RM, R, dl1a_distance_mm);
-   69   2            //wireless_uart_send_string(dat);
-   70   2          }
-   71   1          
-   72   1      }
+   50   1          tim1_irq_handler = encoder_update;
+   51   1      
+   52   1          while (1)
+   53   1          {
+   54   2              if (tof_update_flag)
+   55   2              {
+   56   3                  tof_update_flag = 0;
+   57   3                  dl1a_get_distance();
+   58   3              }
+   59   2      
+   60   2              if (ips114_clear_request)
+   61   2              {
+   62   3                  ips114_clear_request = 0;
+   63   3                  ips114_clear(0x0000);
+   64   3              }
+   65   2      
+   66   2              if (motor_stop_request)
+   67   2              {
+   68   3                  motor_stop_request = 0;
+   69   3                  set_pwm_motor_R(0);
+   70   3                  set_pwm_motor_L(0);
+   71   3                  fuya_set_duty(0);
+   72   3              }
+   73   2      
+   74   2              if (fuya_start_request)
+   75   2              {
+   76   3                  fuya_start_request = 0;
+   77   3                  fuya_set_duty(7000);
+   78   3              }
+   79   2              debug_uart_send();
+   80   2              if (start_ramp_flag == 0)
+   81   2              {
+   82   3                  Key_Menu_Adjust();
+   83   3                  UI_Display_Update();
+   84   3              }
+   85   2          }
+   86   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       153     ------
+  code size            =       242     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        64     ------
+  xdata size           =        68     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -108,7 +124,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         2     ------
+  hconst size          =        26     ------
 End of Module Information.
 
 

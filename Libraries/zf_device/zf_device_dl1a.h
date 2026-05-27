@@ -212,5 +212,7 @@ void   dl1a_get_distance (void);
 
 uint8  dl1a_init         (void);
 
+void   dl1a_restart      (void);
+
 #endif
 

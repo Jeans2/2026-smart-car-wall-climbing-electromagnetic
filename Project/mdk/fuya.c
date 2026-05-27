@@ -7,5 +7,5 @@ void fuya_init()
 
 void fuya_set_duty(uint32 duty)
 {
-	pwm_set_duty(FUYA_CHL, duty);
+	pwm_set_duty_irq(FUYA_CHL, duty);
 }

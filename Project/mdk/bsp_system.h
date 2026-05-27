@@ -6,6 +6,7 @@
 #include "xunji.h"
 #include "pid.h"
 #include "task.h"
+#include "debug.h"
 /******system*******/
 
 #include "aoi_function.h"

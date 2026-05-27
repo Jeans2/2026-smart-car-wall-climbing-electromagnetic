@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  motor                                                              15/05/26  22:04:32  PAGE 1   
+C251 COMPILER V5.60.0,  motor                                                              27/05/26  16:27:40  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE motor
@@ -34,12 +34,12 @@ stmt  level    source
    20   1          if(duty>0)
    21   1          {
    22   2          gpio_set_level(DIR_L, GPIO_HIGH);
-   23   2          pwm_set_duty(PWM_L,duty);
+   23   2          pwm_set_duty_irq(PWM_L,duty);
    24   2          }
    25   1          else
    26   1          {
    27   2          gpio_set_level(DIR_L, GPIO_LOW);
-   28   2          pwm_set_duty(PWM_L,-duty);
+   28   2          pwm_set_duty_irq(PWM_L,-duty);
    29   2          }
    30   1      }
    31          
@@ -52,12 +52,12 @@ stmt  level    source
    38   1          if(duty>0)
    39   1          {
    40   2          gpio_set_level(DIR_R, GPIO_HIGH);
-   41   2          pwm_set_duty(PWM_R,duty);
+   41   2          pwm_set_duty_irq(PWM_R,duty);
    42   2          }
    43   1          else
    44   1          {
    45   2          gpio_set_level(DIR_R, GPIO_LOW);
-   46   2          pwm_set_duty(PWM_R,-duty);
+   46   2          pwm_set_duty_irq(PWM_R,-duty);
    47   2          }
    48   1      }
    49          
@@ -67,7 +67,7 @@ Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =       329     ------
   ecode size           =    ------     ------
-C251 COMPILER V5.60.0,  motor                                                              15/05/26  22:04:32  PAGE 2   
+C251 COMPILER V5.60.0,  motor                                                              27/05/26  16:27:40  PAGE 2   
 
   data size            =    ------     ------
   idata size           =    ------     ------

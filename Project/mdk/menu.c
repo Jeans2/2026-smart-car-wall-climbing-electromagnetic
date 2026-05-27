@@ -237,6 +237,7 @@ void UI_Display_Update(void)
 {
     char p[8];
     uint8 i;
+    static uint8 observe_drawn = 0;
 
     if (start_ramp_flag == 1) {
         ips114_show_string(0, 3*16, "                  ");
@@ -244,6 +245,9 @@ void UI_Display_Update(void)
         ips114_show_string(0, 5*16, " PRESS KEY5 STOP  ");
         return;
     }
+
+    if (menu_state != MENU_OBSERVE)
+        observe_drawn = 0;
 
     for(i=0; i<8; i++) p[i] = ' ';
     p[cursor_index] = '>';
@@ -292,21 +296,24 @@ void UI_Display_Update(void)
             break;
 
         case MENU_OBSERVE:
-            ips114_show_string(10, 16*0, "L :                ");
-            ips114_show_string(10, 16*1, "LM:                ");
-            ips114_show_string(10, 16*2, "RM:                ");
-            ips114_show_string(10, 16*3, "R :                ");
-            ips114_show_string(10, 16*4, "Y :                ");
-            ips114_show_string(10, 16*5, "R :                ");
+            if (observe_drawn == 0)
+            {
+                ips114_show_string(10, 16*0, "L :                ");
+                ips114_show_string(10, 16*1, "LM:                ");
+                ips114_show_string(10, 16*2, "RM:                ");
+                ips114_show_string(10, 16*3, "R :                ");
+                ips114_show_string(10, 16*4, "R :                ");
+                ips114_show_string(10, 16*5, "D :                ");
+                ips114_show_string(0, 16*6, " KEY4: Back        ");
+                observe_drawn = 1;
+            }
 
             ips114_show_float(40, 16*0, ADC_temp[0], 3, 1);
             ips114_show_float(40, 16*1, ADC_temp[1], 3, 1);
             ips114_show_float(40, 16*2, ADC_temp[3], 3, 1);
             ips114_show_float(40, 16*3, ADC_temp[2], 3, 1);
-            ips114_show_float(40, 16*4, imu660rc_yaw, 4, 1);
-            ips114_show_float(40, 16*5, imu660rc_roll, 4, 1);
-
-            ips114_show_string(0, 16*6, " KEY4: Back        ");
+            ips114_show_float(40, 16*4, imu660rc_roll, 4, 1);
+            ips114_show_uint16(40, 16*5, dl1a_distance_mm);
             break;
     }
 }

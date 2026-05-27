@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  zf_device_tsl1401                                                  05/05/26  19:14:22  PAGE 1   
+C251 COMPILER V5.60.0,  zf_device_tsl1401                                                  27/05/26  14:38:53  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE zf_device_tsl1401
@@ -66,7 +66,7 @@ stmt  level    source
    50          #include "zf_driver_delay.h"
    51          #include "zf_driver_gpio.h"
    52          #include "zf_driver_pit.h"
-C251 COMPILER V5.60.0,  zf_device_tsl1401                                                  05/05/26  19:14:22  PAGE 2   
+C251 COMPILER V5.60.0,  zf_device_tsl1401                                                  27/05/26  14:38:53  PAGE 2   
 
    53          
    54          #include "zf_device_tsl1401.h"
@@ -134,7 +134,7 @@ stmt  level    source
   111   1      
   112   1          for(i=0; i<TSL1401_DATA_LEN; i++)
   113   1          {
-C251 COMPILER V5.60.0,  zf_device_tsl1401                                                  05/05/26  19:14:22  PAGE 3   
+C251 COMPILER V5.60.0,  zf_device_tsl1401                                                  27/05/26  14:38:53  PAGE 3   
 
   114   2              uart_write_byte(uart_n, (uint8)(tsl1401_data[index][i] >> 8));                   // 发送高8位
   115   2              uart_write_byte(uart_n, (uint8)(tsl1401_data[index][i] & 0xFF));                 // 发送高低8位

@@ -105,6 +105,7 @@ typedef enum
 #define PWM_DUTY_MAX 10000
 
 void    pwm_set_duty    (pwm_channel_enum pin, uint32 duty);
+void    pwm_set_duty_irq(pwm_channel_enum pin, uint32 duty);
 void    pwm_set_freq    (pwm_channel_enum pin, uint32 freq, uint32 duty);
 void    pwm_init        (pwm_channel_enum pin, uint32 freq, uint32 duty);
 

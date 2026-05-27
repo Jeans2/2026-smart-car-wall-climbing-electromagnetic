@@ -20,12 +20,12 @@ void set_pwm_motor_R(int16 duty)
 		if(duty>0)
 		{
 		gpio_set_level(DIR_L, GPIO_HIGH);
-		pwm_set_duty(PWM_L,duty);
+		pwm_set_duty_irq(PWM_L,duty);
 		}
 		else
 		{
 		gpio_set_level(DIR_L, GPIO_LOW);
-		pwm_set_duty(PWM_L,-duty);
+		pwm_set_duty_irq(PWM_L,-duty);
 		}
 }
 
@@ -38,12 +38,12 @@ void set_pwm_motor_L(int16 duty)
 		if(duty>0)
 		{
 		gpio_set_level(DIR_R, GPIO_HIGH);
-		pwm_set_duty(PWM_R,duty);
+		pwm_set_duty_irq(PWM_R,duty);
 		}
 		else
 		{
 		gpio_set_level(DIR_R, GPIO_LOW);
-		pwm_set_duty(PWM_R,-duty);
+		pwm_set_duty_irq(PWM_R,-duty);
 		}
 }
 
