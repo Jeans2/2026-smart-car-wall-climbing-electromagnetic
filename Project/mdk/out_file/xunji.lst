@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 1   
+C251 COMPILER V5.60.0,  xunji                                                              28/05/26  00:06:03  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE xunji
@@ -66,7 +66,7 @@ stmt  level    source
    55   3                  xunji_debug_event = 5;
    56   3                  return;
    57   3              }
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 2   
+C251 COMPILER V5.60.0,  xunji                                                              28/05/26  00:06:03  PAGE 2   
 
    58   2          }
    59   1      if (element == 0&& L + R > 115 && LM+RM<30 && ring_flag_ing == 0)//»·µºÅÐ¶Ï
@@ -134,7 +134,7 @@ stmt  level    source
   121   2              break;
   122   2      
   123   2          case 9:
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 3   
+C251 COMPILER V5.60.0,  xunji                                                              28/05/26  00:06:03  PAGE 3   
 
   124   2              start_ramp_flag = 0;
   125   2              break;
@@ -202,7 +202,7 @@ stmt  level    source
   187   2              break;
   188   2      
   189   2          default:
-C251 COMPILER V5.60.0,  xunji                                                              27/05/26  23:41:33  PAGE 4   
+C251 COMPILER V5.60.0,  xunji                                                              28/05/26  00:06:03  PAGE 4   
 
   190   2              break;
   191   2          }
