@@ -1,37 +1,43 @@
-# 21届智能车 吸力超强
+# 2026 智能车飞檐走壁电磁组
 
-#### 介绍
-吸力超强
+本项目是基于 STC32G12K128（AI32G12K128）与逐飞科技开源库开发的智能车程序，用于飞檐走壁电磁组比赛。
 
-#### 软件架构
-软件架构说明
+## 主要功能
 
+- 四路电感 ADC 采样与差比和循迹
+- 双电机、编码器测速及 PID 闭环控制
+- IMU660RC 姿态与坡道状态检测
+- 吸附/负压电机 PWM 控制
+- 环岛、坡道等赛道元素处理
+- IPS114 屏幕菜单、参数调节与 EEPROM 保存
+- 无线串口调试数据输出
 
-#### 安装教程
+## 开发环境
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+- 主控：STC32G12K128 / AI32G12K128
+- 工程：Keil MDK C251
+- 开源库：SeekFree STC32G12K128 Library
+- Keil 工程文件：`Project/mdk/seekfree.uvproj`
+- 主程序入口：`Project/user/main.c`
 
-#### 使用说明
+## 目录结构
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+```text
+Libraries/          逐飞底层驱动和设备库
+Project/mdk/        车辆控制、循迹、PID、菜单及 Keil 工程
+Project/user/       主程序和中断调度
+```
 
-#### 参与贡献
+## 编译使用
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+1. 使用支持 C251 的 Keil MDK 打开 `Project/mdk/seekfree.uvproj`。
+2. 检查主控型号、下载器和硬件引脚配置。
+3. 根据车辆机械结构调整电感阈值、速度、PID 与赛道参数。
+4. 编译并下载到主控。
 
+## 重要说明
 
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- 本仓库保留的是比赛调试版本，参数与具体车辆机械结构相关，请勿未经检查直接上车高速运行。
+- 源码中部分中文注释使用 GBK/ANSI 编码，编辑时请保持原编码，避免中文注释损坏。
+- 编译输出、Keil 用户界面配置、调试日志和本地备份不纳入版本管理。
+- `Libraries/` 中的逐飞科技代码按其文件头声明遵循 GNU GPL 3.0 或更高版本，使用与分发时请遵守原许可和版权声明。

@@ -16,7 +16,6 @@ void System_Init(void)
 	  fuya_init();
 	wireless_uart_init();
 		gyro_init_calibration();
-		dl1a_init();
 }
 
 void caiyang(void)

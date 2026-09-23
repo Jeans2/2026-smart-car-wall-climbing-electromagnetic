@@ -3,8 +3,8 @@
 #include "bsp_system.h"
 
 extern float angle_z;
+extern float gyro_z_turn;
 extern float pitch;
-
 void angle_get(void);
 void angle_clear(void);
 void gyro_init_calibration(void);

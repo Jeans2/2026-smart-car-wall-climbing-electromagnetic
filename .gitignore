@@ -50,3 +50,23 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Keil C251 build output and local user state
+Project/mdk/out_file/
+Project/mdk/*.uvgui.*
+Project/mdk/*.log
+Project/mdk/*.htm
+Project/mdk/*.html
+
+# Local Codex working backups
+codex_backups/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.bak
+*.tmp
+*~

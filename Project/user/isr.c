@@ -1,39 +1,13 @@
 /*********************************************************************************************************************
- * STC32G Opensourec Library ï¿½ï¿½ï¿½ï¿½STC32G ï¿½ï¿½Ô´ï¿½â£©ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹Ù·ï¿½ SDK ï¿½Ó¿ÚµÄµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½
- * Copyright (c) 2022 SEEKFREE ï¿½ï¿½É¿Æ¼ï¿?
+ * STC32G ¿ªÔ´¿âÖÐ¶Ï·þÎñÎÄ¼þ
+ * Copyright (c) 2022 SEEKFREE Öð·É¿Æ¼¼
  *
- * ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½STC ï¿½ï¿½Ô´ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿?
- *
- * STC32G ï¿½ï¿½Ô´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?
- * ï¿½ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á·¢ï¿½ï¿½ï¿½ï¿?GPLï¿½ï¿½GNU General Public Licenseï¿½ï¿½ï¿½ï¿½ GNUÍ¨ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
- * ï¿½ï¿½ GPL ï¿½Äµï¿½3ï¿½æ£¨ï¿½ï¿½ GPL3.0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä£ï¿½ï¿½ÎºÎºï¿½ï¿½ï¿½ï¿½Ä°æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½
- *
- * ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎºÎµÄ±ï¿½Ö?
- * ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½Êºï¿½ï¿½Ø¶ï¿½ï¿½ï¿½Í¾ï¿½Ä±ï¿½Ö¤
- * ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ï¿½Î¼ï¿?GPL
- *
- * ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½Í¬Ê±ï¿½Õµï¿½Ò»ï¿½ï¿?GPL ï¿½Ä¸ï¿½ï¿½ï¿½
- * ï¿½ï¿½ï¿½Ã»ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<https://www.gnu.org/licenses/>
- *
- * ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½
- * ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½Ê¹ï¿½ï¿½ GPL3.0 ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Ö¤Ð­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ä°æ±¾
- * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¢ï¿½Ä°ï¿½ï¿½ï¿½ libraries/doc ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Âµï¿½ GPL3_permission_statement.txt ï¿½Ä¼ï¿½ï¿½ï¿½
- * ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ libraries ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Âµï¿½ LICENSE ï¿½Ä¼ï¿½
- * ï¿½ï¿½Ó­ï¿½ï¿½Î»Ê¹ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ë±£ï¿½ï¿½ï¿½ï¿½É¿Æ¼ï¿½ï¿½Ä°ï¿½È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?
- *
- * ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
- * ï¿½ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½          ï¿½É¶ï¿½ï¿½ï¿½É¿Æ¼ï¿½ï¿½ï¿½ï¿½Þ¹ï¿½Ë?
- * ï¿½æ±¾ï¿½ï¿½Ï¢          ï¿½é¿´ libraries/doc ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ version ï¿½Ä¼ï¿½ ï¿½æ±¾Ëµï¿½ï¿½
- * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½          MDK FOR C251
- * ï¿½ï¿½ï¿½ï¿½Æ½Ì¨          STC32G
- * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½          https://seekfree.taobao.com/
- *
- * ï¿½Þ¸Ä¼ï¿½Â¼
- * ï¿½ï¿½ï¿½ï¿½              ï¿½ï¿½ï¿½ï¿½           ï¿½ï¿½×¢
- * 2024-08-01        ï¿½ï¿½W            first version
+ * ±¾ÏîÄ¿ÔÚ´ËÎÄ¼þÖÐ¼¯ÖÐ´¦Àí DMA ´®¿Ú¡¢Íâ²¿ÖÐ¶ÏºÍ¶¨Ê±Æ÷ÖÐ¶Ï¡£
+ * ¿ª·¢»·¾³: MDK FOR C251
+ * ÊÊÓÃÆ½Ì¨: STC32G
  ********************************************************************************************************************/
-
 #include "zf_common_headfile.h"
+static unsigned char timer_4ms_count = 0;
 static unsigned char timer_10ms_count = 0;
 void DMA_UART1_IRQHandler(void) interrupt 4
 {
@@ -44,13 +18,13 @@ void DMA_UART1_IRQHandler(void) interrupt 4
         DMA_UR1R_STA &= ~0x01;
         uart_rx_start_buff(UART_1);
 
-        // ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ´®¿ÚÍ£³µÃüÁî
         if (uart_rx_buff[UART_1][0] == 'S' || uart_rx_buff[UART_1][0] == 's')
         {
             start_ramp_flag = 0;
         }
 
-        // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ³ÌÐò×Ô¶¯ÏÂÔØ
         if (uart_rx_buff[UART_1][0] == 0x7F)
         {
             if (dwon_count++ > 20)
@@ -115,7 +89,7 @@ void DMA_UART4_IRQHandler(void) interrupt 18
         DMA_UR4R_STA &= ~0x01;
         uart_rx_start_buff(UART_4);
 
-       //´®¿ÚÍ£³µ
+       // ÎÞÏß´®¿ÚÍ£³µÃüÁî
         if (uart_rx_buff[UART_4][0] == 'S' || uart_rx_buff[UART_4][0] == 's')
         {
             start_ramp_flag = 0;
@@ -154,33 +128,49 @@ void TM1_IRQHandler() interrupt 3
 
     if (tim1_irq_handler != NULL)
     {
-        encoder_update();
+        tim1_irq_handler();
         angle_get();
 
-      
-        if (element == 1 && ringR_flag_task == 1)
-            ring_entry_dist += speed_avl;
-
+        timer_4ms_count++;
         timer_10ms_count++;
+
+        if (timer_4ms_count >= 2)  // 2ms * 2 = 4ms
+        {
+            timer_4ms_count = 0;
+            caiyang();
+            adc_differ();
+
+            if (element == 1 && ring_flag_task == huan_ru)
+            {
+                deviation = deviation -50	;
+            }
+            if (element == 2 && ring_flag_task == huan_ru)
+            {
+                deviation = deviation +50;
+            }
+            if (element == 1 && ring_flag_task == huan_chu)
+            {
+                deviation = deviation +20 ;
+            }
+            if (element == 2 && ring_flag_task == huan_chu)
+            {
+                deviation = deviation +20 ;
+            }
+
+            direction_loop(deviation);
+        }
 
         if (timer_10ms_count >= 5)  // 2ms * 5 = 10ms
         {
             timer_10ms_count = 0;
-            caiyang();
-            adc_differ();
-
-            if (element == 1 && ringR_flag_task == 1 && ring_entry_dist >= 1000)
-                deviation = deviation -45;     //30
-            if (element == 1 && ringR_flag_task == 4)
-                deviation = deviation +30;     //40
-
-            direction_loop(deviation);
+            speed_debug_send_flag = 1;
         }
-//				speed_loop_LR(speed_straight,speed_straight);
+
+//				speed_loop_LR(speed_straight, speed_straight);
 //        set_pwm_motor_R(out_R);
-//        set_pwm_motor_L(out_L);
-			
-       {
+//        set_pwm_motor_L(0);
+					
+        {
             static uint16 ramp_cnt = 0;
             static uint8 ramp_output_state = 0;
             switch (start_ramp_flag)
@@ -192,7 +182,7 @@ void TM1_IRQHandler() interrupt 3
                         fuya_start_request = 1;
                     }
                     if (ramp_cnt == 0) ips114_clear_request = 1;  // ·¢³µÊ±¹ØÆÁ
-                    if (ramp_cnt < 250)  // 2ms * 250 = 500ms
+                    if (ramp_cnt < 500)  // 2ms * 500 = 1000ms
                         ramp_cnt++;
                     else
                         xunji();
@@ -206,13 +196,11 @@ void TM1_IRQHandler() interrupt 3
                         motor_stop_request = 1;
                     }
                     break;
+										
             }
         }
-
     }
-		
 }
-
 void TM2_IRQHandler() interrupt 12
 {
     TIM2_CLEAR_FLAG;

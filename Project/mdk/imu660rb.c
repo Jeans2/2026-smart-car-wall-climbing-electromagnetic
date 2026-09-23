@@ -8,6 +8,7 @@ static float gyro_z;
 float angle_z = 0;
 static float avl_gyro_z;
 static float gyro_z_filtered = 0;
+float gyro_z_turn = 0;
 static const float alpha = 0.9f;
 
 float pitch;
@@ -17,8 +18,7 @@ void gyro_init_calibration(void)
 	int i;
 	float temp_z = 0;
 
-	system_delay_ms(100);  // ç­‰å¾…å››å…ƒæ•°å›è°ƒå¼€å§‹å¡«å……åŸå§‹æ•°æ®
-
+	system_delay_ms(100);  // µÈ´ıËÄÔªÊı»Øµ÷¿ªÊ¼Ìî³äÔ­Ê¼Êı¾İ
 	for (i = 0; i < 500; i++)
 	{
 		temp_z += imu660rc_gyro_transition(imu660rc_gyro_z);
@@ -29,13 +29,14 @@ void gyro_init_calibration(void)
 
 static void gyro_get_z(void)
 {
-	// å››å…ƒæ•°æ¨¡å¼ä¸‹åŸå§‹æ•°æ®ç”± INT0 å›è°ƒæ›´æ–°ï¼Œç›´æ¥è¯»å…¨å±€å˜é‡
+	// ËÄÔªÊıÄ£Ê½ÏÂÔ­Ê¼Êı¾İÓÉ INT0 »Øµ÷¸üĞÂ£¬Ö±½Ó¶ÁÈ«¾Ö±äÁ¿
 	gyro_z = imu660rc_gyro_transition(imu660rc_gyro_z) - null_drift_z;
 
 	if (gyro_z > -0.5f && gyro_z < 0.5f) gyro_z = 0;
 
 	avl_gyro_z = gyro_z;
 	gyro_z_filtered = alpha * gyro_z_filtered + (1.0f - alpha) * avl_gyro_z;
+	gyro_z_turn = gyro_z_filtered;
 }
 
 
@@ -43,13 +44,12 @@ static void gyro_get_z(void)
 void angle_get(void)
 {
 	gyro_get_z();
-	angle_z += 0.002f * gyro_z_filtered;         // ä¿ç•™ï¼šç¯å²›éœ€è¦ angle_z ç§¯åˆ†
-	pitch  = imu660rc_pitch;                      // æ”¹ç”¨ RC ç¡¬ä»¶å››å…ƒæ•°ä¿¯ä»°è§’
+	angle_z += 0.002f * gyro_z_filtered;         // ±£Áô£º»·µºĞèÒª angle_z »ı·Ö
+	pitch  = imu660rc_pitch;                      // ¸ÄÓÃ RC Ó²¼şËÄÔªÊı¸©Ñö½Ç
 }
 
 void angle_clear(void)
 {
 	angle_z = 0;
 }
-
 
